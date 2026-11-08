@@ -1,0 +1,89 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
+| Date         : Sat Nov  7 14:19:57 2026
+| Host         : DESKTOP-3R1JCJH running 64-bit major release  (build 9200)
+| Command      : report_methodology -file system_wrapper_methodology_drc_routed.rpt -pb system_wrapper_methodology_drc_routed.pb -rpx system_wrapper_methodology_drc_routed.rpx
+| Design       : system_wrapper
+| Device       : xc7z010clg400-1
+| Speed File   : -1
+| Design State : Fully Routed
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max checks: <unlimited>
+             Checks found: 9
++-----------+------------------+------------------------------------------------------+--------+
+| Rule      | Severity         | Description                                          | Checks |
++-----------+------------------+------------------------------------------------------+--------+
+| TIMING-1  | Critical Warning | Invalid clock waveform on Clock Modifying Block      | 2      |
+| LUTAR-1   | Warning          | LUT drives async reset alert                         | 1      |
+| TIMING-28 | Warning          | Auto-derived clock referenced by a timing constraint | 2      |
+| ULMTCS-2  | Warning          | Control Sets use limits require reduction            | 1      |
+| XDCB-5    | Warning          | Runtime inefficient way to find pin objects          | 3      |
++-----------+------------------+------------------------------------------------------+--------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-1#1 Critical Warning
+Invalid clock waveform on Clock Modifying Block  
+Invalid clock waveform for clock game_pck_720p specified at a MMCME2_ADV output system_i/pattern_hdmi_axi_0/inst/pattern_multi/syncgen_multi/pckgen_triple/MMCM_RECONFIG/CLKOUT0 that does not match the CMB settings. The waveform of the clock is 13.47 {0 6.734}. The expected waveform is 39.72 {0 19.86}
+Related violations: <none>
+
+TIMING-1#2 Critical Warning
+Invalid clock waveform on Clock Modifying Block  
+Invalid clock waveform for clock game_serial_720p specified at a MMCME2_ADV output system_i/pattern_hdmi_axi_0/inst/pattern_multi/syncgen_multi/pckgen_triple/MMCM_RECONFIG/CLKOUT1 that does not match the CMB settings. The waveform of the clock is 2.694 {0 1.347}. The expected waveform is 7.943 {0 3.972}
+Related violations: <none>
+
+LUTAR-1#1 Warning
+LUT drives async reset alert  
+LUT cell system_i/pattern_hdmi_axi_0/inst/pattern_multi/syncgen_multi/pckgen_triple/video_reset_sync_inst_i_1, with 2 or more inputs, drives asynchronous preset/clear pin(s) system_i/pattern_hdmi_axi_0/inst/pattern_multi/game_video/reset_inst/video_reset_sync_inst/arststages_ff_reg[0]/PRE,
+system_i/pattern_hdmi_axi_0/inst/pattern_multi/game_video/reset_inst/video_reset_sync_inst/arststages_ff_reg[1]/PRE
+system_i/pattern_hdmi_axi_0/inst/pattern_multi/game_video/reset_inst/video_reset_sync_inst/arststages_ff_reg[2]/PRE. The LUT may glitch and trigger an unexpected reset, even if it is a properly timed path.
+Related violations: <none>
+
+TIMING-28#1 Warning
+Auto-derived clock referenced by a timing constraint  
+The auto-derived clock iPCK is referenced by name inside timing constraint (see constraint position 27 in the Timing Constraint window in Vivado IDE). It is recommended to reference an auto-derived clock by the pin name attached to the clock: get_clocks -of_objects [get_pins system_i/pattern_hdmi_axi_0/inst/pattern_multi/syncgen_multi/pckgen_triple/MMCM_RECONFIG/CLKOUT0]
+Related violations: <none>
+
+TIMING-28#2 Warning
+Auto-derived clock referenced by a timing constraint  
+The auto-derived clock iSerialClk is referenced by name inside timing constraint (see constraint position 27 in the Timing Constraint window in Vivado IDE). It is recommended to reference an auto-derived clock by the pin name attached to the clock: get_clocks -of_objects [get_pins system_i/pattern_hdmi_axi_0/inst/pattern_multi/syncgen_multi/pckgen_triple/MMCM_RECONFIG/CLKOUT1]
+Related violations: <none>
+
+ULMTCS-2#1 Warning
+Control Sets use limits require reduction  
+This design uses 840 control sets (vs. available limit of 4400, determined by 1 control set per CLB). This exceeds the control set use guideline of 15 percent. This is at a level where reduction is REQUIRED (see UG949). Use report_control_sets to get more details.
+Related violations: <none>
+
+XDCB-5#1 Warning
+Runtime inefficient way to find pin objects  
+The option '-to : [get_pins -hier -filter {NAME =~ *button_input_inst/sync_meta_reg*/D}]' of constraint 'set_false_path' uses inefficient query to find pin objects (see constraint position '29' in the Timing Constraint window in Vivado IDE). To reduce runtime, it is recommended to get the pins through the cell objects. Please refer to Using Constraints Guide (Constraints Efficiency). An example of optimal query is: get_pins -filter {REF_PIN_NAME=~yy*} -of_objects [get_cells -hierarchical xx*].
+Current XDC: TCL
+Related violations: <none>
+
+XDCB-5#2 Warning
+Runtime inefficient way to find pin objects  
+The option '-to : [get_pins -hier -filter {NAME =~ *button_input_inst/sync_meta_reg*/D}]' of constraint 'set_false_path' uses inefficient query to find pin objects (see constraint position '5' in the Timing Constraint window in Vivado IDE). To reduce runtime, it is recommended to get the pins through the cell objects. Please refer to Using Constraints Guide (Constraints Efficiency). An example of optimal query is: get_pins -filter {REF_PIN_NAME=~yy*} -of_objects [get_cells -hierarchical xx*].
+Current XDC: E:/Game_Datapath_V2/Game_Datapath_V2.srcs/constrs_1/imports/constraints/hdmi_axi_720p.xdc (Line: 34)
+Related violations: <none>
+
+XDCB-5#3 Warning
+Runtime inefficient way to find pin objects  
+The option '-to : [get_pins -hier -filter {NAME =~ *rgb2dvi_inst/LockLostReset/SyncAsyncx/oSyncStages_reg*/PRE}]' of constraint 'set_false_path' uses inefficient query to find pin objects (see constraint position '28' in the Timing Constraint window in Vivado IDE). To reduce runtime, it is recommended to get the pins through the cell objects. Please refer to Using Constraints Guide (Constraints Efficiency). An example of optimal query is: get_pins -filter {REF_PIN_NAME=~yy*} -of_objects [get_cells -hierarchical xx*].
+Current XDC: TCL
+Related violations: <none>
+
+

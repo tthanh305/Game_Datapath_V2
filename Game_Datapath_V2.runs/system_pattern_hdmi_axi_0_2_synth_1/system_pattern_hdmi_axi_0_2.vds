@@ -1,0 +1,1013 @@
+#-----------------------------------------------------------
+# Vivado v2024.2 (64-bit)
+# SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
+# IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
+# SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
+# Start of session at: Sat Nov  7 14:13:40 2026
+# Process ID         : 11728
+# Current directory  : E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1
+# Command line       : vivado.exe -log system_pattern_hdmi_axi_0_2.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_pattern_hdmi_axi_0_2.tcl
+# Log file           : E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1/system_pattern_hdmi_axi_0_2.vds
+# Journal file       : E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1\vivado.jou
+# Running On         : DESKTOP-3R1JCJH
+# Platform           : Windows Server 2016 or Windows 10
+# Operating System   : 26200
+# Processor Detail   : 12th Gen Intel(R) Core(TM) i5-12500H
+# CPU Frequency      : 3110 MHz
+# CPU Physical cores : 12
+# CPU Logical cores  : 16
+# Host memory        : 16869 MB
+# Swap memory        : 10347 MB
+# Total Virtual      : 27216 MB
+# Available Virtual  : 10124 MB
+#-----------------------------------------------------------
+source system_pattern_hdmi_axi_0_2.tcl -notrace
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1704] No user IP repositories specified
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'D:/vivado/Vivado/2024.2/data/ip'.
+Command: synth_design -top system_pattern_hdmi_axi_0_2 -part xc7z010clg400-1 -incremental_mode off -mode out_of_context
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010'
+INFO: [Device 21-403] Loading part xc7z010clg400-1
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 19672
+---------------------------------------------------------------------------------
+Starting RTL Elaboration : Time (s): cpu = 00:00:08 ; elapsed = 00:00:09 . Memory (MB): peak = 990.902 ; gain = 468.031
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-6901] identifier 'timing_sel_reg' is used before its declaration [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/axi_hdmi_ctrl.v:50]
+INFO: [Synth 8-6157] synthesizing module 'system_pattern_hdmi_axi_0_2' [e:/Game_Datapath_V2/Game_Datapath_V2.gen/sources_1/bd/system/ip/system_pattern_hdmi_axi_0_2/synth/system_pattern_hdmi_axi_0_2.v:53]
+INFO: [Synth 8-6157] synthesizing module 'pattern_hdmi_axi' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pattern_hdmi_axi.v:13]
+	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_S_AXI_ADDR_WIDTH bound to: 4 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'axi_hdmi_ctrl' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/axi_hdmi_ctrl.v:12]
+	Parameter C_S_AXI_DATA_WIDTH bound to: 32 - type: integer 
+	Parameter C_S_AXI_ADDR_WIDTH bound to: 4 - type: integer 
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/axi_hdmi_ctrl.v:118]
+INFO: [Synth 8-6155] done synthesizing module 'axi_hdmi_ctrl' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/axi_hdmi_ctrl.v:12]
+INFO: [Synth 8-6157] synthesizing module 'pattern_multi' [E:/Game_Datapath_V2/rtl/video/pattern_multi.v:8]
+INFO: [Synth 8-6157] synthesizing module 'syncgen_multi' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/syncgen_multi.v:7]
+INFO: [Synth 8-6157] synthesizing module 'pckgen_triple' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:16]
+INFO: [Synth 8-6157] synthesizing module 'MMCME2_ADV' [D:/vivado/Vivado/2024.2/scripts/rt/data/unisim_comp.v:84588]
+	Parameter BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter CLKFBOUT_MULT_F bound to: 17.625000 - type: double 
+	Parameter CLKFBOUT_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKIN1_PERIOD bound to: 10.000000 - type: double 
+	Parameter CLKOUT0_DIVIDE_F bound to: 35.000000 - type: double 
+	Parameter CLKOUT0_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT0_PHASE bound to: 0.000000 - type: double 
+	Parameter CLKOUT1_DIVIDE bound to: 7 - type: integer 
+	Parameter CLKOUT1_DUTY_CYCLE bound to: 0.500000 - type: double 
+	Parameter CLKOUT1_PHASE bound to: 0.000000 - type: double 
+	Parameter DIVCLK_DIVIDE bound to: 2 - type: integer 
+	Parameter REF_JITTER1 bound to: 0.010000 - type: double 
+	Parameter STARTUP_WAIT bound to: FALSE - type: string 
+INFO: [Synth 8-6155] done synthesizing module 'MMCME2_ADV' (0#1) [D:/vivado/Vivado/2024.2/scripts/rt/data/unisim_comp.v:84588]
+WARNING: [Synth 8-7071] port 'CLKFBSTOPPED' of module 'MMCME2_ADV' is unconnected for instance 'MMCM_RECONFIG' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+WARNING: [Synth 8-7071] port 'CLKINSTOPPED' of module 'MMCME2_ADV' is unconnected for instance 'MMCM_RECONFIG' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+WARNING: [Synth 8-7071] port 'PSDONE' of module 'MMCME2_ADV' is unconnected for instance 'MMCM_RECONFIG' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+WARNING: [Synth 8-7071] port 'PSCLK' of module 'MMCME2_ADV' is unconnected for instance 'MMCM_RECONFIG' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+WARNING: [Synth 8-7071] port 'PSEN' of module 'MMCME2_ADV' is unconnected for instance 'MMCM_RECONFIG' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+WARNING: [Synth 8-7071] port 'PSINCDEC' of module 'MMCME2_ADV' is unconnected for instance 'MMCM_RECONFIG' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+WARNING: [Synth 8-7023] instance 'MMCM_RECONFIG' of module 'MMCME2_ADV' has 33 connections declared, but only 27 given [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:195]
+INFO: [Synth 8-6157] synthesizing module 'BUFG' [D:/vivado/Vivado/2024.2/scripts/rt/data/unisim_comp.v:2676]
+INFO: [Synth 8-6155] done synthesizing module 'BUFG' (0#1) [D:/vivado/Vivado/2024.2/scripts/rt/data/unisim_comp.v:2676]
+INFO: [Synth 8-6157] synthesizing module 'mmcm_drp' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:70]
+	Parameter S1_CLKFBOUT_MULT bound to: 17 - type: integer 
+	Parameter S1_CLKFBOUT_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKFBOUT_FRAC bound to: 1649 - type: integer 
+	Parameter S1_CLKFBOUT_FRAC_EN bound to: 1 - type: integer 
+	Parameter S1_BANDWIDTH bound to: OPTIMIZED - type: string 
+	Parameter S1_DIVCLK_DIVIDE bound to: 2 - type: integer 
+	Parameter S1_CLKOUT0_DIVIDE bound to: 35 - type: integer 
+	Parameter S1_CLKOUT0_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT0_DUTY bound to: 50000 - type: integer 
+	Parameter S1_CLKOUT0_FRAC bound to: 0 - type: integer 
+	Parameter S1_CLKOUT0_FRAC_EN bound to: 0 - type: integer 
+	Parameter S1_CLKOUT1_DIVIDE bound to: 7 - type: integer 
+	Parameter S1_CLKOUT1_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT1_DUTY bound to: 50000 - type: integer 
+	Parameter S1_CLKOUT2_DIVIDE bound to: 1 - type: integer 
+	Parameter S1_CLKOUT2_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT2_DUTY bound to: 50000 - type: integer 
+	Parameter S1_CLKOUT3_DIVIDE bound to: 1 - type: integer 
+	Parameter S1_CLKOUT3_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT3_DUTY bound to: 50000 - type: integer 
+	Parameter S1_CLKOUT4_DIVIDE bound to: 1 - type: integer 
+	Parameter S1_CLKOUT4_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT4_DUTY bound to: 50000 - type: integer 
+	Parameter S1_CLKOUT5_DIVIDE bound to: 1 - type: integer 
+	Parameter S1_CLKOUT5_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT5_DUTY bound to: 50000 - type: integer 
+	Parameter S1_CLKOUT6_DIVIDE bound to: 1 - type: integer 
+	Parameter S1_CLKOUT6_PHASE bound to: 0 - type: integer 
+	Parameter S1_CLKOUT6_DUTY bound to: 50000 - type: integer 
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[63]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[62]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[61]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[60]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[59]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[58]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[57]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[56]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[55]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[54]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[53]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[52]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[51]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[50]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[49]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[48]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[47]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[46]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[45]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[44]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[43]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[42]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[41]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[40]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[39]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[38]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[37]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[36]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[35]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[34]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[33]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[32]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[31]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[30]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[29]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[28]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[27]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[26]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[25]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[24]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[23]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[22]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[21]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[20]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[19]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[18]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[17]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[16]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[15]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[14]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[13]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[12]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[11]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[10]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[9]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[8]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[7]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[6]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[5]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[4]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[3]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[2]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[1]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+WARNING: [Synth 8-7186] Applying attribute ram_style = "distributed" is ignored, object 'ram[0]' is not inferred as ram due to incorrect usage [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:246]
+INFO: [Synth 8-6155] done synthesizing module 'mmcm_drp' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/mmcm_drp/mmcm_drp.v:70]
+INFO: [Synth 8-6155] done synthesizing module 'pckgen_triple' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pckgen_triple.v:16]
+INFO: [Synth 8-6157] synthesizing module 'xpm_cdc_async_rst' [D:/vivado/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1175]
+	Parameter DEST_SYNC_FF bound to: 3 - type: integer 
+	Parameter INIT_SYNC_FF bound to: 1 - type: integer 
+	Parameter RST_ACTIVE_HIGH bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'xpm_cdc_async_rst' (0#1) [D:/vivado/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv:1175]
+INFO: [Synth 8-6155] done synthesizing module 'syncgen_multi' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/syncgen_multi.v:7]
+INFO: [Synth 8-6157] synthesizing module 'game_video' [E:/Game_Datapath_V2/rtl/video/game_video.v:6]
+INFO: [Synth 8-6157] synthesizing module 'game_clock_reset' [E:/Game_Datapath_V2/rtl/video/game_clock_reset.v:6]
+	Parameter REQUESTED_720P_IS_SYNCED bound to: 1 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'game_clock_reset' (0#1) [E:/Game_Datapath_V2/rtl/video/game_clock_reset.v:6]
+INFO: [Synth 8-6157] synthesizing module 'frame_tick' [E:/Game_Datapath_V2/rtl/video/frame_tick.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'frame_tick' (0#1) [E:/Game_Datapath_V2/rtl/video/frame_tick.v:5]
+INFO: [Synth 8-6157] synthesizing module 'game_core' [E:/Game_Datapath_V2/rtl/game/game_core.v:5]
+	Parameter AUTO_DEMO bound to: 0 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'datapath' [E:/Game_Datapath_V2/rtl/game/datapath.v:11]
+INFO: [Synth 8-6157] synthesizing module 'physics_engine' [E:/Game_Datapath_V2/rtl/game/physics_engine.v:18]
+INFO: [Synth 8-6155] done synthesizing module 'physics_engine' (0#1) [E:/Game_Datapath_V2/rtl/game/physics_engine.v:18]
+INFO: [Synth 8-6157] synthesizing module 'color_mapper' [E:/Game_Datapath_V2/rtl/game/color_mapper.v:18]
+INFO: [Synth 8-226] default block is never used [E:/Game_Datapath_V2/rtl/game/palette_lut.vh:5]
+INFO: [Synth 8-226] default block is never used [E:/Game_Datapath_V2/rtl/game/palette_lut.vh:5]
+INFO: [Synth 8-6157] synthesizing module 'space_bg_stereden' [E:/Game_Datapath_V2/rtl/game/space_bg_stereden.v:9]
+INFO: [Synth 8-6155] done synthesizing module 'space_bg_stereden' (0#1) [E:/Game_Datapath_V2/rtl/game/space_bg_stereden.v:9]
+INFO: [Synth 8-6157] synthesizing module 'game_hud' [E:/Game_Datapath_V2/rtl/game/game_hud.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'game_hud' (0#1) [E:/Game_Datapath_V2/rtl/game/game_hud.v:5]
+INFO: [Synth 8-6157] synthesizing module 'sprite_rom_32x32' [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:27]
+INFO: [Synth 8-3876] $readmem data file 'E:/Game_Datapath_V2/rtl/game/sprites_32x32.mem' is read successfully [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:40]
+INFO: [Synth 8-6155] done synthesizing module 'sprite_rom_32x32' (0#1) [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:27]
+INFO: [Synth 8-6155] done synthesizing module 'color_mapper' (0#1) [E:/Game_Datapath_V2/rtl/game/color_mapper.v:18]
+INFO: [Synth 8-6155] done synthesizing module 'datapath' (0#1) [E:/Game_Datapath_V2/rtl/game/datapath.v:11]
+INFO: [Synth 8-6155] done synthesizing module 'game_core' (0#1) [E:/Game_Datapath_V2/rtl/game/game_core.v:5]
+INFO: [Synth 8-6157] synthesizing module 'game_buzzer' [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:8]
+INFO: [Synth 8-6155] done synthesizing module 'game_buzzer' (0#1) [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:8]
+INFO: [Synth 8-6157] synthesizing module 'game_control_path' [E:/Game_Datapath_V2/rtl/game/game_control_path.v:13]
+	Parameter BUTTON_ACTIVE_LOW bound to: 1 - type: integer 
+	Parameter DEBOUNCE_FRAMES bound to: 3 - type: integer 
+INFO: [Synth 8-6157] synthesizing module 'game_button_input' [E:/Game_Datapath_V2/rtl/game/game_button_input.v:5]
+	Parameter BUTTON_ACTIVE_LOW bound to: 1 - type: integer 
+	Parameter DEBOUNCE_FRAMES bound to: 3 - type: integer 
+INFO: [Synth 8-6155] done synthesizing module 'game_button_input' (0#1) [E:/Game_Datapath_V2/rtl/game/game_button_input.v:5]
+INFO: [Synth 8-6155] done synthesizing module 'game_control_path' (0#1) [E:/Game_Datapath_V2/rtl/game/game_control_path.v:13]
+INFO: [Synth 8-6157] synthesizing module 'game_menu_renderer_timed' [E:/Game_Datapath_V2/rtl/game/game_menu_renderer.v:157]
+INFO: [Synth 8-6157] synthesizing module 'font_rom' [E:/Game_Datapath_V2/rtl/game/font_rom.v:1]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:12]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:22]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:32]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:42]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:52]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:62]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:72]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:82]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:92]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:102]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:112]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:122]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:132]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:142]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:152]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:162]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:172]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:182]
+INFO: [Synth 8-6155] done synthesizing module 'font_rom' (0#1) [E:/Game_Datapath_V2/rtl/game/font_rom.v:1]
+INFO: [Synth 8-6155] done synthesizing module 'game_menu_renderer_timed' (0#1) [E:/Game_Datapath_V2/rtl/game/game_menu_renderer.v:157]
+INFO: [Synth 8-6155] done synthesizing module 'game_video' (0#1) [E:/Game_Datapath_V2/rtl/video/game_video.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'pattern_multi' (0#1) [E:/Game_Datapath_V2/rtl/video/pattern_multi.v:8]
+INFO: [Synth 8-638] synthesizing module 'rgb2dvi' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/rgb2dvi.vhd:94]
+	Parameter kGenerateSerialClk bound to: 1 - type: bool 
+	Parameter kRstActiveHigh bound to: 1 - type: bool 
+INFO: [Synth 8-638] synthesizing module 'ResetBridge' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/SyncAsyncReset.vhd:72]
+	Parameter kPolarity bound to: 1'b1 
+INFO: [Synth 8-638] synthesizing module 'SyncAsync' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/SyncAsync.vhd:72]
+	Parameter kResetTo bound to: 1'b1 
+	Parameter kStages bound to: 2 - type: integer 
+INFO: [Synth 8-256] done synthesizing module 'SyncAsync' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/SyncAsync.vhd:72]
+INFO: [Synth 8-256] done synthesizing module 'ResetBridge' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/SyncAsyncReset.vhd:72]
+INFO: [Synth 8-638] synthesizing module 'OutputSERDES' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/OutputSERDES.vhd:76]
+	Parameter kParallelWidth bound to: 10 - type: integer 
+	Parameter IOSTANDARD bound to: TMDS_33 - type: string 
+INFO: [Synth 8-113] binding component instance 'OutputBuffer' to cell 'OBUFDS' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/OutputSERDES.vhd:83]
+	Parameter DATA_RATE_OQ bound to: DDR - type: string 
+	Parameter DATA_RATE_TQ bound to: SDR - type: string 
+	Parameter DATA_WIDTH bound to: 10 - type: integer 
+	Parameter SERDES_MODE bound to: MASTER - type: string 
+	Parameter TBYTE_CTL bound to: FALSE - type: string 
+	Parameter TBYTE_SRC bound to: FALSE - type: string 
+	Parameter TRISTATE_WIDTH bound to: 1 - type: integer 
+INFO: [Synth 8-113] binding component instance 'SerializerMaster' to cell 'OSERDESE2' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/OutputSERDES.vhd:92]
+	Parameter DATA_RATE_OQ bound to: DDR - type: string 
+	Parameter DATA_RATE_TQ bound to: SDR - type: string 
+	Parameter DATA_WIDTH bound to: 10 - type: integer 
+	Parameter SERDES_MODE bound to: SLAVE - type: string 
+	Parameter TBYTE_CTL bound to: FALSE - type: string 
+	Parameter TBYTE_SRC bound to: FALSE - type: string 
+	Parameter TRISTATE_WIDTH bound to: 1 - type: integer 
+INFO: [Synth 8-113] binding component instance 'SerializerSlave' to cell 'OSERDESE2' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/OutputSERDES.vhd:135]
+INFO: [Synth 8-256] done synthesizing module 'OutputSERDES' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/OutputSERDES.vhd:76]
+INFO: [Synth 8-638] synthesizing module 'TMDS_Encoder' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/TMDS_Encoder.vhd:80]
+INFO: [Synth 8-256] done synthesizing module 'TMDS_Encoder' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/TMDS_Encoder.vhd:80]
+INFO: [Synth 8-256] done synthesizing module 'rgb2dvi' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/rgb2dvi.vhd:94]
+INFO: [Synth 8-6155] done synthesizing module 'pattern_hdmi_axi' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pattern_hdmi_axi.v:13]
+INFO: [Synth 8-6155] done synthesizing module 'system_pattern_hdmi_axi_0_2' (0#1) [e:/Game_Datapath_V2/Game_Datapath_V2.gen/sources_1/bd/system/ip/system_pattern_hdmi_axi_0_2/synth/system_pattern_hdmi_axi_0_2.v:53]
+WARNING: [Synth 8-6014] Unused sequential element next_wave_calc_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1109]
+WARNING: [Synth 8-6014] Unused sequential element has_free_div_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1257]
+WARNING: [Synth 8-6014] Unused sequential element free_div_slot_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1258]
+WARNING: [Synth 8-6014] Unused sequential element ret_fx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1270]
+WARNING: [Synth 8-6014] Unused sequential element ret_fy_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1271]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_en_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1286]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_x_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1287]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_y_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1288]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_vx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1289]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_type_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1290]
+WARNING: [Synth 8-6014] Unused sequential element hit_eid_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1704]
+WARNING: [Synth 8-6014] Unused sequential element kill_x_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1705]
+WARNING: [Synth 8-6014] Unused sequential element kill_y_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1706]
+WARNING: [Synth 8-6014] Unused sequential element player_hit_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1823]
+WARNING: [Synth 8-6014] Unused sequential element pixel_y_d_reg was removed.  [E:/Game_Datapath_V2/rtl/game/color_mapper.v:882]
+WARNING: [Synth 8-6014] Unused sequential element ch_a_vol_reg was removed.  [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:87]
+WARNING: [Synth 8-6014] Unused sequential element ch_b_vol_reg was removed.  [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:193]
+WARNING: [Synth 8-6014] Unused sequential element ch_c_vol_reg was removed.  [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:241]
+WARNING: [Synth 8-7129] Port SerialClk in module TMDS_Encoder is either unconnected or has no load
+WARNING: [Synth 8-7129] Port aRst in module TMDS_Encoder is either unconnected or has no load
+WARNING: [Synth 8-7129] Port aRst_n in module rgb2dvi is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pixel_x[10] in module space_bg_stereden is either unconnected or has no load
+WARNING: [Synth 8-7129] Port pixel_y[10] in module space_bg_stereden is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[10] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[9] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[8] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[7] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[6] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[5] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[4] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[3] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[2] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[1] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_x[0] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[10] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[9] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[8] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[7] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[6] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[5] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[4] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[3] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[2] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[1] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_y[0] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile_active in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[10] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[9] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[8] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[7] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[6] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[5] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[4] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[3] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[2] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[1] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_x[0] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[10] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[9] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[8] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[7] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[6] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[5] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[4] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[3] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[2] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[1] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_y[0] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port projectile2_active in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[15] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[14] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[13] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[12] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[11] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[10] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[9] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[8] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[7] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[6] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[5] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[4] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[3] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[2] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[1] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port alive_flags[0] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[175] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[174] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[173] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[172] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[171] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[170] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[169] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[168] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[167] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[166] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[165] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[164] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[163] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[162] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[161] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[160] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[159] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[158] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[157] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[156] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[155] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[154] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[153] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[152] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[151] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[150] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[149] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[148] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[147] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[146] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[145] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[144] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[143] in module color_mapper is either unconnected or has no load
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+---------------------------------------------------------------------------------
+Finished RTL Elaboration : Time (s): cpu = 00:00:17 ; elapsed = 00:00:19 . Memory (MB): peak = 1355.180 ; gain = 832.309
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1355.359 ; gain = 832.488
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:20 . Memory (MB): peak = 1355.359 ; gain = 832.488
+---------------------------------------------------------------------------------
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.312 . Memory (MB): peak = 1367.648 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 5 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-570] Preparing netlist for logic optimization
+
+Processing XDC Constraints
+Initializing timing engine
+INFO: [Project 1-1714] 2 XPM XDC files have been applied to the design.
+Completed Processing XDC Constraints
+
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1473.711 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.264 . Memory (MB): peak = 1473.758 ; gain = 0.047
+INFO: [Designutils 20-5008] Incremental synthesis strategy off
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:34 ; elapsed = 00:00:36 . Memory (MB): peak = 1473.758 ; gain = 950.887
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z010clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:34 ; elapsed = 00:00:36 . Memory (MB): peak = 1473.758 ; gain = 950.887
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying 'set_property' XDC Constraints
+---------------------------------------------------------------------------------
+Applied set_property KEEP_HIERARCHY = SOFT for inst/pattern_multi/syncgen_multi/pck_reset_sync_inst. (constraint file  auto generated constraint).
+Applied set_property KEEP_HIERARCHY = SOFT for inst/pattern_multi/game_video/reset_inst/video_reset_sync_inst. (constraint file  auto generated constraint).
+---------------------------------------------------------------------------------
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:34 ; elapsed = 00:00:36 . Memory (MB): peak = 1473.758 ; gain = 950.887
+---------------------------------------------------------------------------------
+INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'mmcm_drp'
+INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'pckgen_triple'
+INFO: [Synth 8-6159] Found Keep on FSM register 'current_state_reg' in module 'mmcm_drp', re-encoding will not be performed
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+*
+                 RESTART |                             0001 |                             0001
+               WAIT_LOCK |                             0010 |                             0010
+                WAIT_SEN |                             0011 |                             0011
+                 ADDRESS |                             0100 |                             0100
+             WAIT_A_DRDY |                             0101 |                             0101
+                 BITMASK |                             0110 |                             0110
+                  BITSET |                             0111 |                             0111
+                   WRITE |                             1000 |                             1000
+               WAIT_DRDY |                             1001 |                             1001
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+                   State |                     New Encoding |                Previous Encoding 
+---------------------------------------------------------------------------------------------------
+             S_BOOT_WAIT |                              000 |                              000
+                  S_IDLE |                              001 |                              001
+                  S_LOAD |                              010 |                              010
+                   S_SEN |                              011 |                              011
+             S_WAIT_SRDY |                              100 |                              100
+                  S_DONE |                              101 |                              101
+---------------------------------------------------------------------------------------------------
+INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'pckgen_triple'
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:50 ; elapsed = 00:00:52 . Memory (MB): peak = 1473.758 ; gain = 950.887
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Adders : 
+	   2 Input   32 Bit       Adders := 1     
+	   2 Input   19 Bit       Adders := 2     
+	   2 Input   17 Bit       Adders := 1     
+	   3 Input   12 Bit       Adders := 20    
+	   2 Input   12 Bit       Adders := 3     
+	   2 Input   11 Bit       Adders := 399   
+	   3 Input   11 Bit       Adders := 162   
+	   4 Input   11 Bit       Adders := 2     
+	   2 Input   10 Bit       Adders := 7     
+	   3 Input   10 Bit       Adders := 1     
+	   2 Input    9 Bit       Adders := 2     
+	   4 Input    8 Bit       Adders := 2     
+	   2 Input    8 Bit       Adders := 4     
+	   3 Input    8 Bit       Adders := 1     
+	   2 Input    7 Bit       Adders := 11    
+	   3 Input    7 Bit       Adders := 1     
+	   2 Input    6 Bit       Adders := 29    
+	   3 Input    6 Bit       Adders := 13    
+	   2 Input    5 Bit       Adders := 48    
+	   3 Input    5 Bit       Adders := 13    
+	   4 Input    5 Bit       Adders := 3     
+	   2 Input    4 Bit       Adders := 62    
+	   8 Input    4 Bit       Adders := 6     
+	   2 Input    3 Bit       Adders := 66    
+	   2 Input    2 Bit       Adders := 18    
++---XORs : 
+	   3 Input     10 Bit         XORs := 3     
+	   4 Input      1 Bit         XORs := 2     
+	   2 Input      1 Bit         XORs := 46    
++---Registers : 
+	               44 Bit    Registers := 1     
+	               39 Bit    Registers := 26    
+	               32 Bit    Registers := 1     
+	               24 Bit    Registers := 4     
+	               20 Bit    Registers := 4     
+	               19 Bit    Registers := 2     
+	               17 Bit    Registers := 1     
+	               16 Bit    Registers := 5     
+	               12 Bit    Registers := 1     
+	               11 Bit    Registers := 139   
+	               10 Bit    Registers := 7     
+	                9 Bit    Registers := 4     
+	                8 Bit    Registers := 18    
+	                7 Bit    Registers := 9     
+	                6 Bit    Registers := 18    
+	                5 Bit    Registers := 89    
+	                4 Bit    Registers := 53    
+	                3 Bit    Registers := 45    
+	                2 Bit    Registers := 39    
+	                1 Bit    Registers := 99    
++---Multipliers : 
+	               4x32  Multipliers := 1     
+	               6x32  Multipliers := 1     
++---ROMs : 
+	                    ROMs := 2     
++---Muxes : 
+	   2 Input   44 Bit        Muxes := 20    
+	   4 Input   44 Bit        Muxes := 3     
+	   3 Input   44 Bit        Muxes := 2     
+	   3 Input   39 Bit        Muxes := 6     
+	   2 Input   39 Bit        Muxes := 6     
+	   2 Input   35 Bit        Muxes := 10    
+	   6 Input   35 Bit        Muxes := 4     
+	   5 Input   35 Bit        Muxes := 2     
+	   4 Input   35 Bit        Muxes := 2     
+	   2 Input   32 Bit        Muxes := 2     
+	   2 Input   24 Bit        Muxes := 51    
+	   3 Input   24 Bit        Muxes := 4     
+	   4 Input   24 Bit        Muxes := 1     
+	   5 Input   24 Bit        Muxes := 1     
+	   5 Input   23 Bit        Muxes := 1     
+	   2 Input   23 Bit        Muxes := 1     
+	   2 Input   20 Bit        Muxes := 4     
+	   2 Input   19 Bit        Muxes := 1     
+	   4 Input   18 Bit        Muxes := 1     
+	   4 Input   17 Bit        Muxes := 1     
+	   2 Input   17 Bit        Muxes := 1     
+	  10 Input   16 Bit        Muxes := 1     
+	   2 Input   16 Bit        Muxes := 21    
+	   4 Input   16 Bit        Muxes := 1     
+	   3 Input   16 Bit        Muxes := 2     
+	   2 Input   14 Bit        Muxes := 6     
+	   3 Input   12 Bit        Muxes := 3     
+	   2 Input   12 Bit        Muxes := 17    
+	   4 Input   12 Bit        Muxes := 2     
+	   3 Input   11 Bit        Muxes := 5     
+	   2 Input   11 Bit        Muxes := 464   
+	   4 Input   11 Bit        Muxes := 53    
+	   5 Input   11 Bit        Muxes := 1     
+	   4 Input   10 Bit        Muxes := 10    
+	   3 Input   10 Bit        Muxes := 2     
+	   2 Input   10 Bit        Muxes := 18    
+	   5 Input   10 Bit        Muxes := 1     
+	   2 Input    9 Bit        Muxes := 6     
+	   5 Input    9 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 47    
+	   4 Input    8 Bit        Muxes := 11    
+	   3 Input    8 Bit        Muxes := 2     
+	   7 Input    8 Bit        Muxes := 1     
+	   2 Input    7 Bit        Muxes := 52    
+	  10 Input    7 Bit        Muxes := 1     
+	   3 Input    7 Bit        Muxes := 6     
+	   4 Input    7 Bit        Muxes := 4     
+	   5 Input    7 Bit        Muxes := 2     
+	   7 Input    7 Bit        Muxes := 3     
+	   6 Input    7 Bit        Muxes := 6     
+	   9 Input    7 Bit        Muxes := 2     
+	   8 Input    7 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 49    
+	  10 Input    6 Bit        Muxes := 1     
+	   4 Input    6 Bit        Muxes := 6     
+	   3 Input    6 Bit        Muxes := 2     
+	   5 Input    6 Bit        Muxes := 2     
+	  10 Input    5 Bit        Muxes := 1     
+	   2 Input    5 Bit        Muxes := 93    
+	   4 Input    5 Bit        Muxes := 17    
+	   5 Input    5 Bit        Muxes := 4     
+	   3 Input    5 Bit        Muxes := 9     
+	   6 Input    5 Bit        Muxes := 3     
+	   8 Input    5 Bit        Muxes := 18    
+	  10 Input    4 Bit        Muxes := 1     
+	   2 Input    4 Bit        Muxes := 208   
+	   3 Input    4 Bit        Muxes := 37    
+	   4 Input    4 Bit        Muxes := 35    
+	   5 Input    4 Bit        Muxes := 1     
+	   2 Input    3 Bit        Muxes := 76    
+	   6 Input    3 Bit        Muxes := 4     
+	   4 Input    3 Bit        Muxes := 10    
+	   3 Input    3 Bit        Muxes := 3     
+	   5 Input    3 Bit        Muxes := 4     
+	   2 Input    2 Bit        Muxes := 119   
+	   4 Input    2 Bit        Muxes := 25    
+	   3 Input    2 Bit        Muxes := 9     
+	   6 Input    2 Bit        Muxes := 1     
+	   7 Input    2 Bit        Muxes := 1     
+	  10 Input    1 Bit        Muxes := 9     
+	   2 Input    1 Bit        Muxes := 1319  
+	   6 Input    1 Bit        Muxes := 4     
+	   3 Input    1 Bit        Muxes := 90    
+	   4 Input    1 Bit        Muxes := 169   
+	   5 Input    1 Bit        Muxes := 3     
+	   7 Input    1 Bit        Muxes := 11    
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+Part Resources:
+DSPs: 80 (col length:40)
+BRAMs: 120 (col length: RAMB18 40 RAMB36 20)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5544] ROM "(null)[0].base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "(null)[1].base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "(null)[2].base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "(null)[3].base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-3886] merging instance 'pending_pts_reg[3]' (FDRE) to 'pending_pts_reg[7]'
+INFO: [Synth 8-3886] merging instance 'pending_pts_reg[2]' (FDRE) to 'pending_pts_reg[7]'
+INFO: [Synth 8-3886] merging instance 'pending_pts_reg[0]' (FDRE) to 'pending_pts_reg[7]'
+INFO: [Synth 8-3886] merging instance 'pending_pts_reg[1]' (FDRE) to 'pending_pts_reg[7]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pending_pts_reg[7] )
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[0][2]' (FDRE) to 'r_debris_vx_reg[0][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[0][3]' (FDRE) to 'r_debris_vx_reg[0][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[1][2]' (FDRE) to 'r_debris_vx_reg[1][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[1][3]' (FDRE) to 'r_debris_vx_reg[1][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[2][2]' (FDRE) to 'r_debris_vx_reg[2][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[2][3]' (FDRE) to 'r_debris_vx_reg[2][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[3][2]' (FDRE) to 'r_debris_vx_reg[3][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[3][3]' (FDRE) to 'r_debris_vx_reg[3][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[4][2]' (FDRE) to 'r_debris_vx_reg[4][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[4][3]' (FDRE) to 'r_debris_vx_reg[4][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[5][2]' (FDRE) to 'r_debris_vx_reg[5][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[5][3]' (FDRE) to 'r_debris_vx_reg[5][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[6][2]' (FDRE) to 'r_debris_vx_reg[6][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[6][3]' (FDRE) to 'r_debris_vx_reg[6][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[7][2]' (FDRE) to 'r_debris_vx_reg[7][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[7][3]' (FDRE) to 'r_debris_vx_reg[7][4]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[1][0]' (FDRE) to 'r_debris_vy_reg[1][2]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[1][2]' (FDRE) to 'r_debris_vy_reg[1][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[1][3]' (FDRE) to 'r_debris_vy_reg[1][4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\r_debris_vy_reg[1][4] )
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[2][2]' (FDRE) to 'r_debris_vy_reg[2][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[2][3]' (FDRE) to 'r_debris_vy_reg[2][4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\r_debris_vy_reg[2][4] )
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[3][0]' (FDRE) to 'r_debris_vy_reg[3][2]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[3][2]' (FDRE) to 'r_debris_vy_reg[3][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[3][3]' (FDRE) to 'r_debris_vy_reg[3][4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\r_debris_vy_reg[3][4] )
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[6][0]' (FDRE) to 'r_debris_vy_reg[6][2]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[6][2]' (FDRE) to 'r_debris_vy_reg[6][3]'
+INFO: [Synth 8-3886] merging instance 'r_debris_vy_reg[6][3]' (FDRE) to 'r_debris_vy_reg[6][4]'
+INFO: [Synth 8-3886] merging instance 'ast_vx_reg[0][1]' (FDRE) to 'ast_vx_reg[0][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\ast_vy_reg[0][2] )
+INFO: [Synth 8-3886] merging instance 'ast_vx_reg[1][1]' (FDRE) to 'ast_vx_reg[1][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\ast_vy_reg[1][2] )
+INFO: [Synth 8-3886] merging instance 'ast_vx_reg[2][1]' (FDRE) to 'ast_vx_reg[2][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\ast_vy_reg[2][2] )
+INFO: [Synth 8-3886] merging instance 'ebul_spawn_vx_q_reg[2]' (FDRE) to 'ebul_spawn_vx_q_reg[3]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[0]' (FDRE) to 'alien_explode_x_reg[1]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[1]' (FDRE) to 'alien_explode_x_reg[2]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[2]' (FDRE) to 'alien_explode_x_reg[3]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[3]' (FDRE) to 'alien_explode_x_reg[4]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[4]' (FDRE) to 'alien_explode_x_reg[5]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[5]' (FDRE) to 'alien_explode_x_reg[6]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[6]' (FDRE) to 'alien_explode_x_reg[7]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[7]' (FDRE) to 'alien_explode_x_reg[8]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[8]' (FDRE) to 'alien_explode_x_reg[9]'
+INFO: [Synth 8-3886] merging instance 'alien_explode_x_reg[9]' (FDRE) to 'alien_explode_x_reg[10]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\alien_explode_x_reg[10] )
+INFO: [Synth 8-3886] merging instance 'shake_dx_reg[3]' (FDRE) to 'shake_dx_reg[4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\shake_dy_reg[0] )
+INFO: [Synth 8-3886] merging instance 'shake_dy_reg[3]' (FDRE) to 'shake_dy_reg[4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\boss_max_hp_reg[0] )
+INFO: [Synth 8-3886] merging instance 'cur_bul_dmg_q_reg[2]' (FDRE) to 'cur_bul_dmg_q_reg[3]'
+INFO: [Synth 8-3886] merging instance 'cur_bul_dmg_q_reg[3]' (FDRE) to 'cur_bul_dmg_q_reg[4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\cur_bul_dmg_q_reg[4] )
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[9][2]' (FDRE) to 'ebul_vx_reg[9][3]'
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[8][2]' (FDRE) to 'ebul_vx_reg[8][3]'
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[6][2]' (FDRE) to 'ebul_vx_reg[6][3]'
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[2][2]' (FDRE) to 'ebul_vx_reg[2][3]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\score_reg[0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\score_reg[1] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\score_reg[2] )
+INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[6][0]' (FDRE) to 'r_debris_vy_reg[6][1]'
+INFO: [Synth 8-3886] merging instance 'ebul_spawn_y_q_reg[9]' (FDRE) to 'ebul_spawn_y_q_reg[10]'
+INFO: [Synth 8-3886] merging instance 'boss_y_reg[7]' (FDRE) to 'boss_y_reg[10]'
+INFO: [Synth 8-3886] merging instance 'boss_y_reg[9]' (FDRE) to 'boss_y_reg[10]'
+INFO: [Synth 8-3886] merging instance 'boss_y_reg[8]' (FDRE) to 'boss_y_reg[10]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\boss_y_reg[10] )
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (3) smaller than threshold (5)
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[15][0]' (FDRE) to 'pbul_vx_reg[15][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[15][2] )
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[14][0]' (FDRE) to 'pbul_vx_reg[14][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[14][2] )
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[13][0]' (FDRE) to 'pbul_vx_reg[13][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[13][2] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[12][0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[11][0] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[10][0] )
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[8][1]' (FDRE) to 'pbul_vx_reg[8][2]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[7][1]' (FDRE) to 'pbul_vx_reg[7][2]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[6][1]' (FDRE) to 'pbul_vx_reg[6][2]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[5][0]' (FDRE) to 'pbul_vx_reg[5][1]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[5][1]' (FDRE) to 'pbul_vx_reg[5][2]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[4][0]' (FDRE) to 'pbul_vx_reg[4][1]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[4][1]' (FDRE) to 'pbul_vx_reg[4][2]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[3][0]' (FDRE) to 'pbul_vx_reg[3][1]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[3][1]' (FDRE) to 'pbul_vx_reg[3][2]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[2][0]' (FDRE) to 'pbul_vx_reg[2][1]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[2][1]' (FDRE) to 'pbul_vx_reg[2][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[2][2] )
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[1][0]' (FDRE) to 'pbul_vx_reg[1][1]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[1][1]' (FDRE) to 'pbul_vx_reg[1][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[1][2] )
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[0][0]' (FDRE) to 'pbul_vx_reg[0][1]'
+INFO: [Synth 8-3886] merging instance 'pbul_vx_reg[0][1]' (FDRE) to 'pbul_vx_reg[0][2]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[0][2] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (sound_fire_reg)
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (win_reg)
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5544] ROM "data41" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data51" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data61" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data91" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data121" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data41" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data51" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data61" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data91" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "data121" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bot_hud_rgb_d_reg[0]' (FDS) to 'color_mapper_inst/bot_hud_rgb_d_reg[4]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[0]' (FD) to 'color_mapper_inst/hud_color_d_reg[5]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[1]' (FD) to 'color_mapper_inst/bg_color_d_reg[5]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bot_hud_rgb_d_reg[1]' (FDS) to 'color_mapper_inst/bot_hud_rgb_d_reg[5]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[1]' (FD) to 'color_mapper_inst/hud_color_d_reg[4]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[2]' (FD) to 'color_mapper_inst/bg_color_d_reg[6]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bot_hud_rgb_d_reg[2]' (FDR) to 'color_mapper_inst/bot_hud_rgb_d_reg[6]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[2]' (FD) to 'color_mapper_inst/hud_color_d_reg[6]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[3]' (FD) to 'color_mapper_inst/bg_color_d_reg[7]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bot_hud_rgb_d_reg[5]' (FDS) to 'color_mapper_inst/bot_hud_rgb_d_reg[20]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[6]' (FD) to 'color_mapper_inst/bg_color_d_reg[15]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bot_hud_rgb_d_reg[6]' (FDR) to 'color_mapper_inst/bot_hud_rgb_d_reg[15]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[6]' (FD) to 'color_mapper_inst/hud_color_d_reg[7]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[8]' (FD) to 'color_mapper_inst/bg_color_d_reg[12]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[9]' (FD) to 'color_mapper_inst/bg_color_d_reg[13]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[10]' (FD) to 'color_mapper_inst/bg_color_d_reg[14]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bot_hud_rgb_d_reg[10]' (FDR) to 'color_mapper_inst/bot_hud_rgb_d_reg[14]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[10]' (FD) to 'color_mapper_inst/hud_color_d_reg[14]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[14]' (FD) to 'color_mapper_inst/hud_color_d_reg[15]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[16]' (FD) to 'color_mapper_inst/bg_color_d_reg[20]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[16]' (FD) to 'color_mapper_inst/hud_color_d_reg[20]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[17]' (FD) to 'color_mapper_inst/bg_color_d_reg[21]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/hud_color_d_reg[17]' (FD) to 'color_mapper_inst/hud_color_d_reg[21]'
+INFO: [Synth 8-3886] merging instance 'color_mapper_inst/bg_color_d_reg[18]' (FD) to 'color_mapper_inst/bg_color_d_reg[22]'
+INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (color_mapper_inst/\debris_color_idx_d_reg[2] )
+INFO: [Synth 8-3333] propagating constant 1 across sequential element (color_mapper_inst/\beam_color_idx_d_reg[2] )
+INFO: [Synth 8-5544] ROM "ch_a_half_period" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+DSP Report: Generating DSP ch_b_half_period_reg, operation Mode is: (C:0x3c6c)+((D:0xc)+A)*(B:0x1068).
+DSP Report: register ch_b_half_period_reg is absorbed into DSP ch_b_half_period_reg.
+DSP Report: operator ch_b_half_period0 is absorbed into DSP ch_b_half_period_reg.
+DSP Report: operator ch_b_half_period1 is absorbed into DSP ch_b_half_period_reg.
+DSP Report: operator ch_b_half_period2 is absorbed into DSP ch_b_half_period_reg.
+DSP Report: Generating DSP noise_period_reg, operation Mode is: (C:0x2ee0)+((D:0x25)+A)*(B:0x44c).
+DSP Report: register noise_period_reg is absorbed into DSP noise_period_reg.
+DSP Report: operator noise_period0 is absorbed into DSP noise_period_reg.
+DSP Report: operator noise_period1 is absorbed into DSP noise_period_reg.
+DSP Report: operator noise_period2 is absorbed into DSP noise_period_reg.
+INFO: [Synth 8-5544] ROM "character" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "character" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\buzzer_inst/ch_a_half_period_reg[18] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\menu_renderer_inst/stage1_color_q_reg[23] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\menu_renderer_inst/character_q_reg[7] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\control_path_inst/return_state_reg[2] )
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:09 ; elapsed = 00:02:16 . Memory (MB): peak = 1473.758 ; gain = 950.887
+---------------------------------------------------------------------------------
+ Sort Area is game_video__GC0 noise_period_reg_2 : 0 0 : 669 669 : Used 1 time 0
+ Sort Area is game_video__GC0 ch_b_half_period_reg_0 : 0 0 : 511 511 : Used 1 time 0
+---------------------------------------------------------------------------------
+Start ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+
+DSP: Preliminary Mapping Report (see note below. The ' indicates corresponding REG is set)
++------------+-----------------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping                       | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-----------------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|game_buzzer | (C:0x3c6c)+((D:0xc)+A)*(B:0x1068) | 19     | 13     | 14     | 4      | 19     | 0    | 0    | 0    | 0    | 0     | 0    | 1    | 
+|game_buzzer | (C:0x2ee0)+((D:0x25)+A)*(B:0x44c) | 17     | 11     | 14     | 6      | 17     | 0    | 0    | 0    | 0    | 0     | 0    | 1    | 
++------------+-----------------------------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+Note: The table above is a preliminary report that shows the DSPs inferred at the current stage of the synthesis flow. Some DSP may be reimplemented as non DSP primitives later in the synthesis flow. Multiple instantiated DSPs are reported only once.
+---------------------------------------------------------------------------------
+Finished ROM, RAM, DSP, Shift Register and Retiming Reporting
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Applying XDC Timing Constraints
+---------------------------------------------------------------------------------
+INFO: [Synth 8-5578] Moved timing constraint from pin 'reset_inst/video_reset_sync_inst/src_arst' to pin 'reset_inst/async_reset_inferred/i_0/O'
+INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
+---------------------------------------------------------------------------------
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:19 ; elapsed = 00:02:27 . Memory (MB): peak = 1520.434 ; gain = 997.562
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:02:25 ; elapsed = 00:02:33 . Memory (MB): peak = 1571.219 ; gain = 1048.348
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance datapath_insti_7/inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance datapath_insti_7/inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance datapath_insti_7/inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance datapath_insti_7/inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:02:30 ; elapsed = 00:02:48 . Memory (MB): peak = 1600.617 ; gain = 1077.746
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:02:36 ; elapsed = 00:02:54 . Memory (MB): peak = 1739.184 ; gain = 1216.312
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:36 ; elapsed = 00:02:54 . Memory (MB): peak = 1739.184 ; gain = 1216.312
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:38 ; elapsed = 00:02:56 . Memory (MB): peak = 1739.184 ; gain = 1216.312
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:38 ; elapsed = 00:02:56 . Memory (MB): peak = 1739.184 ; gain = 1216.312
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:39 ; elapsed = 00:02:57 . Memory (MB): peak = 1749.789 ; gain = 1226.918
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:39 ; elapsed = 00:02:57 . Memory (MB): peak = 1749.789 ; gain = 1226.918
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+DSP Final Report (the ' indicates corresponding REG is set)
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|Module Name | DSP Mapping | A Size | B Size | C Size | D Size | P Size | AREG | BREG | CREG | DREG | ADREG | MREG | PREG | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+|game_buzzer | (C+D+A*B)'  | 19     | 13     | 14     | 4      | 19     | 0    | 0    | 0    | 0    | 0     | 0    | 1    | 
+|game_buzzer | (C+D+A*B)'  | 17     | 11     | 14     | 6      | 17     | 0    | 0    | 0    | 0    | 0     | 0    | 1    | 
++------------+-------------+--------+--------+--------+--------+--------+------+------+------+------+-------+------+------+
+
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----------+------+
+|      |Cell       |Count |
++------+-----------+------+
+|1     |BUFG       |     3|
+|2     |CARRY4     |  1489|
+|3     |DSP48E1    |     2|
+|4     |LUT1       |   331|
+|5     |LUT2       |  3348|
+|6     |LUT3       |  1008|
+|7     |LUT4       |  3105|
+|8     |LUT5       |  2461|
+|9     |LUT6       |  5838|
+|10    |MMCME2_ADV |     1|
+|11    |MUXF7      |   310|
+|12    |MUXF8      |    33|
+|13    |OSERDESE2  |     8|
+|15    |RAMB36E1   |     2|
+|17    |FDCE       |     1|
+|18    |FDPE       |     9|
+|19    |FDRE       |  2994|
+|20    |FDSE       |   190|
+|21    |OBUFDS     |     4|
++------+-----------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:39 ; elapsed = 00:02:57 . Memory (MB): peak = 1749.789 ; gain = 1226.918
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 100 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:15 ; elapsed = 00:02:52 . Memory (MB): peak = 1749.789 ; gain = 1108.520
+Synthesis Optimization Complete : Time (s): cpu = 00:02:39 ; elapsed = 00:02:58 . Memory (MB): peak = 1749.789 ; gain = 1226.918
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.160 . Memory (MB): peak = 1749.789 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1841 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+WARNING: [Netlist 29-101] Netlist 'system_pattern_hdmi_axi_0_2' is not ideal for floorplanning, since the cellview 'physics_engine' contains a large number of primitives.  Please consider enabling hierarchy in synthesis if you want to do floorplanning.
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1763.582 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: d3bf8419
+INFO: [Common 17-83] Releasing license: Synthesis
+328 Infos, 191 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:02:47 ; elapsed = 00:03:17 . Memory (MB): peak = 1763.582 ; gain = 1449.770
+INFO: [Coretcl 2-1174] Renamed 31 cell refs.
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.035 . Memory (MB): peak = 1763.582 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1/system_pattern_hdmi_axi_0_2.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file system_pattern_hdmi_axi_0_2_utilization_synth.rpt -pb system_pattern_hdmi_axi_0_2_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sat Nov  7 14:17:03 2026...

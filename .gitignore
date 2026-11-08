@@ -1,0 +1,17 @@
+# Ignore all Markdown files except the root README.md
+*.md
+!/README.md
+
+# Vivado / Vitis temporary logs, journals, and crash files
+*.jou
+*.log
+*.str
+*.pb
+*.dmp
+.Xil/
+_ide/
+xsim.dir/
+Game_Datapath_V2.cache/
+Game_Datapath_V2.hw/
+Game_Datapath_V2.sim/
+verification/
