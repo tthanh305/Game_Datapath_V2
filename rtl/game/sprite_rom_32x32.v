@@ -24,6 +24,7 @@
 //   Tile 11 (0x2C00): Laser Beam Body & Impact Shockwave Ring
 // =============================================================================
 
+(* keep_hierarchy = "yes" *)
 module sprite_rom_32x32 (
     input  wire        clk,
     // Port A (Main entities: Player Ship, Enemies, Explosions, Meteor)

@@ -8,6 +8,7 @@
 // with the Dual-Port BRAM Color Mapper & Slow Parallax Starfield Renderer.
 // =============================================================================
 
+(* keep_hierarchy = "yes" *)
 module datapath (
     input wire clk,
     input wire rst,

@@ -56,8 +56,6 @@ if {$::dispatch::connected} {
 }
 
 OPTRACE "system_pattern_hdmi_axi_0_2_synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 4
-set_param xicom.use_bs_reader 1
 set_param project.vivado.isBlockSynthRun true
 OPTRACE "Creating in-memory project" START { }
 set_param ips.modRefOverrideMrefDirPath e:/Game_Datapath_V2/Game_Datapath_V2.gen/sources_1/bd/mref

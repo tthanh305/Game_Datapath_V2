@@ -15,3 +15,5 @@ Game_Datapath_V2.cache/
 Game_Datapath_V2.hw/
 Game_Datapath_V2.sim/
 verification/
+.jobs/
+*.wdf

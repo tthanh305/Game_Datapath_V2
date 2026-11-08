@@ -186,7 +186,35 @@ Mỗi Tile có kích thước chuẩn **`32 × 32 = 1.024 pixels`** ($2^5 \times
 
 ---
 
-## 📂 6. Cấu trúc Thư mục Dự án
+## 📊 6. Báo cáo Tiêu thụ Tài nguyên Kit & Timing Closure
+
+Dự án được tối ưu hóa sâu ở mức kiến trúc RTL (gom bảng màu Palette tập trung, FSM va chạm 3 pha chia nhỏ combinational path, khử phép nhân bằng phép dịch bit, pipeline đạn/divers, cách ly thứ bậc `keep_hierarchy`). Kết quả tổng hợp và thực thi (Place & Route) thực tế trên chip **AMD/Xilinx Zynq-7010 (`xc7z010clg400-1`)**:
+
+### 6.1. Bảng Sử dụng Tài nguyên Logic & Bộ nhớ (Post-Route Utilization)
+
+| Loại tài nguyên phần cứng (Resource) | Đã sử dụng (Used) | Tổng dung lượng kit (Available) | Tỷ lệ sử dụng (%) | Ghi chú & Tối ưu hóa |
+| :--- | :---: | :---: | :---: | :--- |
+| **Slice LUTs** | **12,787** | 17,600 | **72.65%** | **Tiết kiệm 665 LUTs** so với bản gốc (13,452 LUTs - 76.43%) |
+| **Slice Registers (Flip-Flops)** | **3,661** | 35,200 | **10.40%** | Dồi dào, gần 90% FF còn trống |
+| **Total Slices** | **3,927** | 4,400 | **89.25%** | **Giảm 188 Slices** (từ 4,115 Slices - 93.52% xuống 89.25%) |
+| **Block RAM (BRAM Tile RAMB36)** | **2** | 60 | **3.33%** | Chứa 12 sprite tile 32×32; còn trống 58 khối sẵn sàng mở rộng animation |
+| **DSP48E1 Slices** | **2** | 66 | **3.03%** | Điều chế sóng âm còi Buzzer; hitbox & render dùng 0 DSP (toàn bộ dùng shift-and-add) |
+| **Khối MMCM (`MMCME2_ADV`)** | **1** | 2 | **50.00%** | Khóa xung nhịp kép 74.25 MHz (Pixel) và 371.25 MHz (Serial 5×) |
+| **Bộ tuần tự hóa `OSERDESE2`** | **8** | 64 | **12.50%** | 4 kênh TMDS DDR 10:1 xuất hình trực tiếp ra cổng HDMI |
+
+### 6.2. Kết quả Đóng gói Thời gian thực (Timing Closure @ 720p 60FPS)
+
+Toàn bộ hệ thống quét hình HDMI đạt chuẩn thời gian khắt khe mà không bị trượt chu kỳ (Zero Timing Violations):
+- **Tần số Pixel Clock thực tế**: `74.25 MHz` (chu kỳ `13.468 ns`)
+- **Tần số Serial TMDS Clock**: `371.25 MHz` (chu kỳ `2.693 ns`)
+- **Worst Negative Slack (WNS)**: `+0.246 ns` (Dương – hoàn toàn đạt chuẩn Timing Closure)
+- **Worst Hold Slack (WHS)**: `+0.059 ns` (Dương)
+- **Worst Pulse Width Slack (WPWS)**: `+0.538 ns`
+- **Failing Endpoints**: **`0 / 0 / 0`** (100% đường truyền đạt chuẩn)
+
+---
+
+## 📂 7. Cấu trúc Thư mục Dự án
 
 ```text
 Game_Datapath_V2/
@@ -230,11 +258,11 @@ Game_Datapath_V2/
 
 ---
 
-## 🚀 7. Hướng dẫn Mô phỏng, Tổng hợp & Nạp Mạch
+## 🚀 8. Hướng dẫn Mô phỏng, Tổng hợp & Nạp Mạch
 
 > **Tính khả chuyển (Portability):** Toàn bộ các file cấu hình (`boot.bif`, `scripts/*.tcl`, `*.bat`) đều sử dụng **đường dẫn tương đối (relative paths)** nên bạn có thể `git clone` dự án về bất kỳ ổ đĩa hoặc thư mục nào trên máy tính và chạy ngay.
 
-### 7.1. Chạy mô phỏng kiểm thử RTL (`sim/tb_shooter.sv` — 32 bài test tự động)
+### 8.1. Chạy mô phỏng kiểm thử RTL (`sim/tb_shooter.sv` — 32 bài test tự động)
 Mở PowerShell tại thư mục gốc của dự án (sau khi đã thêm thư mục `bin` của Vivado vào `PATH` hoặc mở từ *Vivado Command Prompt*):
 ```powershell
 $files = (Get-ChildItem rtl/game/*.v, sim/tb_shooter.sv).FullName
@@ -247,20 +275,20 @@ Kết quả mong đợi:
 PASS: tb_shooter all 32 verification checks succeeded!
 ```
 
-### 7.2. Tổng hợp lại Bitstream và tạo file `BOOT.BIN`
+### 8.2. Tổng hợp lại Bitstream và tạo file `BOOT.BIN`
 ```powershell
 vivado -mode batch -source scripts/build_all_v2.tcl
 bootgen -image boot.bif -arch zynq -o BOOT.BIN -w on
 ```
 
-### 7.3. Nạp chạy trực tiếp qua cáp JTAG (1-Click)
+### 8.3. Nạp chạy trực tiếp qua cáp JTAG (1-Click)
 Khi cắm cáp JTAG vào máy tính, nhấp đúp vào file `CHAY_GAME_JTAG.bat` (hoặc chạy lệnh):
 ```powershell
 xsdb scripts/program_jtag.tcl
 ```
 > **Lưu ý:** Không chỉ bấm riêng nút *Program Device* trong Vivado Hardware Manager sau khi rút nguồn, vì khối FPGA trên Zynq-7010 cần nhân ARM Cortex-A9 chạy `ps7_init` và `hdmi_game_app_v2.elf` để cấp xung nhịp `100 MHz` và bật chế độ HDMI 720p. File `CHAY_GAME_JTAG.bat` thực hiện tự động toàn bộ quy trình này.
 
-### 7.4. Chạy tự động mỗi khi cấp nguồn (SD Card Boot — Không cần máy tính)
+### 8.4. Chạy tự động mỗi khi cấp nguồn (SD Card Boot — Không cần máy tính)
 Bo mạch EBAZ4205 của dự án được cấu hình ở chế độ **SD Boot (`BOOT_MODE = 0x00000005`)**:
 1. Chuẩn bị 1 thẻ nhớ **MicroSD** định dạng **FAT32**.
 2. Copy file `BOOT.BIN` ở thư mục gốc dự án vào thư mục gốc của thẻ nhớ.
@@ -268,7 +296,7 @@ Bo mạch EBAZ4205 của dự án được cấu hình ở chế độ **SD Boot
 
 ---
 
-## 📚 8. Tài liệu Tham khảo (References)
+## 📚 9. Tài liệu Tham khảo (References)
 
 1. **Bo mạch & Phần cứng mở rộng EBAZ4205:**
    - [EBAZ4205 Tutorial & Extension Board Schematics — tomorrow56 (GitHub)](https://github.com/tomorrow56/EBAZ4205_tutorial.git): Tài liệu tham khảo gốc về sơ đồ chân bo mạch điều khiển EBAZ4205, mạch mở rộng HDMI, 5 nút nhấn, còi Buzzer và khối tạo xung nhịp video `MMCME2_ADV` / `OSERDESE2`.

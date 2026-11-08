@@ -15,6 +15,7 @@
 //   - Dual-Port BRAM with synchronized 1-Cycle Pipeline Stage
 // =============================================================================
 
+(* keep_hierarchy = "yes" *)
 module color_mapper (
     input wire clk,
     input wire rst,
@@ -145,22 +146,7 @@ module color_mapper (
 
 `include "palette_lut.vh"
 
-// Helper palette lookup with optional gold-orange tint for Row 3 enemies
-function automatic [23:0] get_rgb888_tinted(input [3:0] idx, input hit_flash, input gold_tint);
-    reg [3:0] mapped_idx;
-    begin
-        if (gold_tint) begin
-            case (idx)
-                4'h5, 4'h6, 4'h8: mapped_idx = 4'hB; // Cyan/Blue/Pink -> Yellow Gold
-                4'h7:             mapped_idx = 4'hA; // Purple -> Orange Fire
-                default:          mapped_idx = idx;
-            endcase
-        end else begin
-            mapped_idx = idx;
-        end
-        get_rgb888_tinted = get_rgb888(mapped_idx, hit_flash);
-    end
-endfunction
+
 
 // =============================================================================
 // 1. HARDWARE SCREEN SHAKE COORDINATES
@@ -633,7 +619,8 @@ wire any_mini_hp_fill = (|in_ast_hp_fill) | in_row0_hp_fill;
 
 wire in_boss_hp_frame = boss_active && (pixel_y >= 11'd46 && pixel_y < 11'd54) &&
                         (pixel_x >= 11'd480 && pixel_x <= 11'd800);
-wire [10:0] boss_bar_fill_w = (boss_max_hp > 8'd80) ? ({3'b000, boss_hp} * 11'd3) : ({3'b000, boss_hp} << 2);
+wire [10:0] boss_bar_fill_w = (boss_max_hp > 8'd80) ?
+    (({3'b000, boss_hp} << 1) + {3'b000, boss_hp}) : ({3'b000, boss_hp} << 2);
 wire in_boss_hp_fill  = in_boss_hp_frame && (pixel_y >= 11'd47 && pixel_y < 11'd53) &&
                         (pixel_x >= 11'd481) && (pixel_x <= 11'd799) && ((pixel_x - 11'd481) < boss_bar_fill_w);
 
@@ -675,7 +662,8 @@ wire any_hbul_core = |hbul_core;
 //    2'd2 (SNIPER):   4x16px High-Speed Yellow-Gold Needle Bolt (4'hB/4'hA) + White Core (4'h4)
 //    2'd3 (SEEKER):   10x10px Heavy Spiked Mine (Teal Spikes 4'hC, Crimson Body 4'h9, Pulsing Core)
 wire [9:0] ebul_hit;
-wire [3:0] ebul_color_arr [0:9];
+wire [3:0] hit_edx [0:9];
+wire [3:0] hit_edy [0:9];
 generate
     for (gi = 0; gi < 10; gi = gi + 1) begin : GEN_EBUL_RENDER
         wire [10:0] edx = eff_x - ebul_x[gi];
@@ -691,31 +679,67 @@ generate
                              (edx == 11'd4 || edx == 11'd5 || edy == 11'd4 || edy == 11'd5));
 
         assign ebul_hit[gi] = ebul_active[gi] && (hit_fireball | hit_wave | hit_sniper | hit_seeker);
-
-        assign ebul_color_arr[gi] =
-            (et == `EBUL_TYPE_WAVE) ?
-                ((edx >= 11'd3 && edx <= 11'd4 && edy >= 11'd3 && edy <= 11'd4) ? 4'h4 :
-                 (edx >= 11'd2 && edx <= 11'd5 && edy >= 11'd2 && edy <= 11'd5) ? 4'h8 : 4'h7) :
-            (et == `EBUL_TYPE_SNIPER) ?
-                ((edx == 11'd2 || edx == 11'd3) && (edy >= 11'd6) ? 4'h4 :
-                 (edy >= 11'd4) ? 4'hB : 4'hA) :
-            (et == `EBUL_TYPE_SEEKER) ?
-                ((edx >= 11'd4 && edx <= 11'd5 && edy >= 11'd4 && edy <= 11'd5) ? (alien_anim_phase[0] ? 4'h4 : 4'hB) :
-                 (edx >= 11'd2 && edx <= 11'd7 && edy >= 11'd2 && edy <= 11'd7) ? 4'h9 : 4'hC) :
-            // Default: FIREBALL
-                ((edx >= 11'd2 && edx <= 11'd3 && edy >= 11'd4) ? 4'hB :
-                 (edy < 11'd3) ? 4'hA : 4'h9);
+        assign hit_edx[gi]  = edx[3:0];
+        assign hit_edy[gi]  = edy[3:0];
     end
 endgenerate
 wire any_ebul = |ebul_hit;
-reg [3:0] sel_ebul_color;
+
+// Select hit bullet parameters once
+reg [3:0] sel_edx;
+reg [3:0] sel_edy;
+reg [1:0] sel_ebul_type;
 integer eci;
 always @* begin
-    sel_ebul_color = 4'h9;
+    sel_edx       = 4'd0;
+    sel_edy       = 4'd0;
+    sel_ebul_type = `EBUL_TYPE_FIREBALL;
     for (eci = 0; eci < 10; eci = eci + 1) begin
-        if (ebul_hit[eci])
-            sel_ebul_color = ebul_color_arr[eci];
+        if (ebul_hit[eci]) begin
+            sel_edx       = hit_edx[eci];
+            sel_edy       = hit_edy[eci];
+            sel_ebul_type = ebul_type[eci];
+        end
     end
+end
+
+// Single centralized color evaluator for the hit bullet
+reg [3:0] sel_ebul_color;
+always @* begin
+    case (sel_ebul_type)
+        `EBUL_TYPE_WAVE: begin
+            if (sel_edx >= 4'd3 && sel_edx <= 4'd4 && sel_edy >= 4'd3 && sel_edy <= 4'd4)
+                sel_ebul_color = 4'h4;
+            else if (sel_edx >= 4'd2 && sel_edx <= 4'd5 && sel_edy >= 4'd2 && sel_edy <= 4'd5)
+                sel_ebul_color = 4'h8;
+            else
+                sel_ebul_color = 4'h7;
+        end
+        `EBUL_TYPE_SNIPER: begin
+            if ((sel_edx == 4'd2 || sel_edx == 4'd3) && (sel_edy >= 4'd6))
+                sel_ebul_color = 4'h4;
+            else if (sel_edy >= 4'd4)
+                sel_ebul_color = 4'hB;
+            else
+                sel_ebul_color = 4'hA;
+        end
+        `EBUL_TYPE_SEEKER: begin
+            if (sel_edx >= 4'd4 && sel_edx <= 4'd5 && sel_edy >= 4'd4 && sel_edy <= 4'd5)
+                sel_ebul_color = alien_anim_phase[0] ? 4'h4 : 4'hB;
+            else if (sel_edx >= 4'd2 && sel_edx <= 4'd7 && sel_edy >= 4'd2 && sel_edy <= 4'd7)
+                sel_ebul_color = 4'h9;
+            else
+                sel_ebul_color = 4'hC;
+        end
+        default: begin // EBUL_TYPE_FIREBALL
+            if (sel_edx >= 4'd2 && sel_edx <= 4'd3 && sel_edy >= 4'd4)
+                sel_ebul_color = 4'hB;
+            else if (sel_edy < 4'd3)
+                sel_ebul_color = 4'hA;
+            else
+                sel_ebul_color = 4'h9;
+        end
+    endcase
 end
 
 // E. 8 Debris Particles
@@ -733,7 +757,7 @@ wire [3:0] debris_color_idx = in_debris_arr[0] ? ((deb_life[0] >= 5'd10) ? 4'hB 
 // F. Bottom Status Bar (pixel_y >= 688: Lives, Power Level, Overdrive Rage Bar)
 reg        bot_hud_on;
 reg [23:0] bot_hud_rgb;
-wire [10:0] rage_fill_width = rage_cnt * 11'd10; // 0..200 px
+wire [10:0] rage_fill_width = ({6'd0, rage_cnt} << 3) + ({6'd0, rage_cnt} << 1); // 0..200 px (rage_cnt * 10)
 
 always @* begin
     bot_hud_on  = 1'b0;
@@ -884,98 +908,126 @@ always @(posedge clk) begin
 end
 
 // =============================================================================
-// 8. CYCLE T1 FINAL PIXEL COMPOSITOR
+// 8. CYCLE T1 FINAL PIXEL COMPOSITOR (Centralized Single-Palette Lookup)
 // =============================================================================
-wire [23:0] rgb_entity_a = get_rgb888_tinted(bram_data_a, hit_flash_d, gold_tint_d);
-
 // Color-code Item Drops: 0=Gold P (4'hB), 1=Emerald S (4'hC), 2=Cyan-Blue R (4'h5)
 wire [3:0] pu_mapped_idx = (sel_entity_b_d == OVL_PU && bram_data_b == 4'hB) ?
                            ((sel_pu_type_d == `ITEM_TYPE_SHIELD) ? 4'hC :
                             (sel_pu_type_d == `ITEM_TYPE_RAGE)   ? 4'h5 : 4'hB) : bram_data_b;
-wire [23:0] rgb_entity_b = get_rgb888(pu_mapped_idx, 1'b0);
 
-reg [23:0] final_rgb;
+reg [3:0] mapped_entity_a_idx;
+always @* begin
+    if (gold_tint_d) begin
+        case (bram_data_a)
+            4'h5, 4'h6, 4'h8: mapped_entity_a_idx = 4'hB; // Cyan/Blue/Pink -> Yellow Gold
+            4'h7:             mapped_entity_a_idx = 4'hA; // Purple -> Orange Fire
+            default:          mapped_entity_a_idx = bram_data_a;
+        endcase
+    end else begin
+        mapped_entity_a_idx = bram_data_a;
+    end
+end
+
+reg        use_raw_rgb;
+reg [23:0] raw_rgb_val;
+reg [3:0]  comp_idx;
+reg        comp_flash;
 
 always @* begin
-    final_rgb = 24'h000000;
+    use_raw_rgb = 1'b1;
+    raw_rgb_val = 24'h000000;
+    comp_idx    = 4'h0;
+    comp_flash  = 1'b0;
 
     if (pixel_active_d) begin
         // 1. Top HUD or Center Game Over / Win Banner
         if (hud_pixel_d) begin
-            final_rgb = hud_color_d;
+            raw_rgb_val = hud_color_d;
         end
         // 1B. Top Mothership Boss Health Bar
         else if (in_boss_hp_frame_d) begin
-            final_rgb = in_boss_hp_fill_d ? 24'hFF3322 : 24'h334155;
+            raw_rgb_val = in_boss_hp_fill_d ? 24'hFF3322 : 24'h334155;
         end
         // 2. Bottom Status Bar (Ships, Power, Overdrive Laser Bar)
         else if (bot_hud_on_d) begin
-            final_rgb = bot_hud_rgb_d;
+            raw_rgb_val = bot_hud_rgb_d;
         end
         // 3. Playfield Compositing
         else begin
             // Bullet Impact Effect (Bright White Starburst + Expanding Cyan/Gold Shockwave Ring)
             if (any_imp_core_d) begin
-                final_rgb = 24'hFFFFFF;
+                raw_rgb_val = 24'hFFFFFF;
             end
             else if (any_imp_ring_d) begin
-                final_rgb = 24'h33EEFF;
+                raw_rgb_val = 24'h33EEFF;
             end
             // Mini HP Bars above damaged 64x64 Asteroids & Row 0 Elite Enemies
             else if (any_mini_hp_bar_d) begin
-                final_rgb = any_mini_hp_fill_d ? 24'h44FFCC : 24'h1E293B;
+                raw_rgb_val = any_mini_hp_fill_d ? 24'h44FFCC : 24'h1E293B;
             end
             // Overdrive Laser Beam
             else if (in_overdrive_beam_d) begin
-                final_rgb = get_rgb888(beam_color_idx_d, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = beam_color_idx_d;
             end
             // Boss Mega Death-Ray (36px wide column)
             else if (in_boss_death_ray_d) begin
-                final_rgb = get_rgb888(boss_ray_color_idx_d, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = boss_ray_color_idx_d;
             end
             // Boss Telegraph Red Warning Laser Sight
             else if (in_boss_warn_sight_d) begin
-                final_rgb = 24'hFF2244;
+                raw_rgb_val = 24'hFF2244;
             end
             // Overlay Sprites (Laser Shockwave Ring, Muzzle Flash, Purple Shield, Power-Up Item P/S/R)
             else if ((sel_entity_b_d != OVL_NONE) && (bram_data_b != 4'h0)) begin
-                final_rgb = rgb_entity_b;
+                use_raw_rgb = 1'b0;
+                comp_idx    = pu_mapped_idx;
             end
             // Main Entities (Explosions, Player Ship, Wingmen, Mothership Boss, 11x4 Aliens, 64x64 Asteroids)
             else if ((sel_entity_a_d != ENT_NONE) && (bram_data_a != 4'h0)) begin
-                final_rgb = rgb_entity_a;
+                use_raw_rgb = 1'b0;
+                comp_idx    = mapped_entity_a_idx;
+                comp_flash  = hit_flash_d;
             end
             // Animated Player Thruster Flame
             else if (in_thruster_d) begin
-                final_rgb = in_thruster_core_d ? 24'hFFEE66 : 24'hFF5522;
+                raw_rgb_val = in_thruster_core_d ? 24'hFFEE66 : 24'hFF5522;
             end
             // 4-Type Enemy Bullets (Fireball, Sine-Wave Orb, High-Speed Sniper Bolt, Spiked Seeker Mine)
             else if (any_ebul_d) begin
-                final_rgb = get_rgb888(sel_ebul_color_d, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = sel_ebul_color_d;
             end
             // Player Main Bullets (White Core + Cyan Border)
             else if (any_pbul_head_d) begin
-                final_rgb = any_pbul_core_d ? get_rgb888(4'h4, 1'b0) : get_rgb888(4'h5, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = any_pbul_core_d ? 4'h4 : 4'h5;
             end
             // Wingman Homing Bullets (White Core + Pink Orb)
             else if (any_hbul_d) begin
-                final_rgb = any_hbul_core_d ? get_rgb888(4'h4, 1'b0) : get_rgb888(4'h8, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = any_hbul_core_d ? 4'h4 : 4'h8;
             end
             // Player Bullet Pixel Dust Trail
             else if (any_pbul_trail_d) begin
-                final_rgb = get_rgb888(4'h5, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = 4'h5;
             end
             // Explosion Debris Sparks
             else if (in_debris_d) begin
-                final_rgb = get_rgb888(debris_color_idx_d, 1'b0);
+                use_raw_rgb = 1'b0;
+                comp_idx    = debris_color_idx_d;
             end
             // Slow Parallax Starfield Background
             else begin
-                final_rgb = bg_color_d;
+                raw_rgb_val = bg_color_d;
             end
         end
     end
 end
+
+wire [23:0] final_rgb = use_raw_rgb ? raw_rgb_val : get_rgb888(comp_idx, comp_flash);
 
 always @(posedge clk) begin
     if (rst) begin
