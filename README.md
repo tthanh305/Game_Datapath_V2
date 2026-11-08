@@ -162,12 +162,12 @@ Game_Datapath_V2/
 ## 5. Hướng dẫn Chạy Mô phỏng, Tổng hợp & Nạp Mạch
 
 ### 5.1. Chạy mô phỏng kiểm thử RTL (`sim/tb_shooter.sv` — 32 bài test tự động)
-Từ PowerShell tại thư mục gốc dự án:
+Mở PowerShell tại thư mục gốc của dự án (sau khi đã thêm thư mục `bin` của Vivado vào `PATH` hoặc chạy từ *Vivado Command Prompt*):
 ```powershell
 $files = (Get-ChildItem rtl/game/*.v, sim/tb_shooter.sv).FullName
-& "D:\vivado\Vivado\2024.2\bin\xvlog.bat" --sv -i rtl/game $files
-& "D:\vivado\Vivado\2024.2\bin\xelab.bat" tb_shooter -s tb_shooter_sim
-& "D:\vivado\Vivado\2024.2\bin\xsim.bat" tb_shooter_sim -R
+xvlog --sv -i rtl/game $files
+xelab tb_shooter -s tb_shooter_sim
+xsim tb_shooter_sim -R
 ```
 Kết quả mong đợi:
 ```text
@@ -176,14 +176,14 @@ PASS: tb_shooter all 32 verification checks succeeded!
 
 ### 5.2. Tổng hợp lại Bitstream và tạo file `BOOT.BIN`
 ```powershell
-& "D:\vivado\Vivado\2024.2\bin\vivado.bat" -mode batch -source scripts/build_all_v2.tcl
-& "D:\vivado\Vivado\2024.2\bin\bootgen.bat" -image boot.bif -arch zynq -o BOOT.BIN -w on
+vivado -mode batch -source scripts/build_all_v2.tcl
+bootgen -image boot.bif -arch zynq -o BOOT.BIN -w on
 ```
 
 ### 5.3. Nạp chạy trực tiếp qua cáp JTAG (1-Click)
 Khi cắm cáp JTAG vào máy tính, nhấp đúp vào file `CHAY_GAME_JTAG.bat` (hoặc chạy lệnh):
 ```powershell
-& "D:\vivado\Vitis\2024.2\bin\xsdb.bat" scripts/program_jtag.tcl
+xsdb scripts/program_jtag.tcl
 ```
 > **Lưu ý:** Không chỉ bấm riêng nút *Program Device* trong Vivado Hardware Manager sau khi rút nguồn, vì khối FPGA trên Zynq-7010 cần nhân ARM Cortex-A9 chạy `ps7_init` và `hdmi_game_app_v2.elf` để cấp xung nhịp 100 MHz và bật chế độ HDMI 720p. File `CHAY_GAME_JTAG.bat` thực hiện tự động toàn bộ quy trình này.
 

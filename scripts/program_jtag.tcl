@@ -1,3 +1,6 @@
+# Determine project root directory relative to this script
+set proj_root [file normalize [file dirname [file dirname [info script]]]]
+
 # Connect to JTAG hardware server
 connect
 
@@ -12,7 +15,7 @@ after 1000
 # 2. Download FPGA Bitstream (Galaxian game core + HDMI 720p 60Hz)
 puts "Step 1: Downloading FPGA bitstream..."
 targets -set -nocase -filter {name =~ "*xc7z010*"}
-fpga "E:/Game_Datapath_V2/Game_Datapath_V2.runs/impl_1/system_wrapper.bit"
+fpga "$proj_root/Game_Datapath_V2.runs/impl_1/system_wrapper.bit"
 
 # 3. Initialize PS7 (ARM Cortex-A9 Clocks & DDR3 Memory Controller)
 puts "Step 2: Selecting Cortex-A9 Core 0..."
@@ -21,13 +24,13 @@ rst -processor
 after 500
 
 puts "Step 3: Initializing Zynq PS7 & DDR3..."
-source "E:/Game_Datapath_V2/vitis_game_v2/platformgame_platform_v2/export/platformgame_platform_v2/hw/sdt/ps7_init.tcl"
+source "$proj_root/vitis_game_v2/platformgame_platform_v2/export/platformgame_platform_v2/hw/sdt/ps7_init.tcl"
 ps7_init
 ps7_post_config
 
 # 4. Download and run software application ELF
 puts "Step 4: Downloading hdmi_game_app_v2.elf..."
-dow "E:/Game_Datapath_V2/vitis_game_v2/hdmi_game_app_v2/build/hdmi_game_app_v2.elf"
+dow "$proj_root/vitis_game_v2/hdmi_game_app_v2/build/hdmi_game_app_v2.elf"
 
 puts "Step 5: Starting execution..."
 con
