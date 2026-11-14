@@ -29,7 +29,7 @@ module game_core #(
     output wire [`GAME_SCORE_WIDTH-1:0] score,
     output wire win,
     output wire game_over,
-    output wire [3:0] wave_num,
+    output wire [6:0] wave_num,
     output wire [`GAME_TARGET_COUNT-1:0] alive_flags,
     output wire [`GAME_COORD_WIDTH-1:0] ship_x,
     output wire [`GAME_COORD_WIDTH-1:0] ship_y,

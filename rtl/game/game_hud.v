@@ -1,17 +1,19 @@
 `timescale 1ns / 1ps
 `include "game_params.vh"
 
-// Combinational 5x7 font HUD for Top Score/Wave, Bottom Status Labels, and Win/Game Over Banners.
+// Combinational 5x7 font HUD with arcade vertical shading for Top Score/Wave,
+// Bottom Status Labels, and Win/Game Over Banners.
 module game_hud (
     input wire [`GAME_COORD_WIDTH-1:0] pixel_x,
     input wire [`GAME_COORD_WIDTH-1:0] pixel_y,
     input wire [`GAME_SCORE_WIDTH-1:0] score,
     input wire win,
     input wire game_over,
-    input wire [3:0] wave_num,
+    input wire [6:0] wave_num,
     input wire scoreboard_active,
     input wire [`GAME_SCORE_WIDTH-1:0] high_score_2,
     input wire [`GAME_SCORE_WIDTH-1:0] high_score_3,
+    input wire laser_ready,
     output reg pixel_on,
     output reg [23:0] color
 );
@@ -51,6 +53,8 @@ function font_pixel;
             "L": glyph = {5'b10000,5'b10000,5'b10000,5'b10000,5'b10000,5'b10000,5'b11111};
             "T": glyph = {5'b11111,5'b00100,5'b00100,5'b00100,5'b00100,5'b00100,5'b00100};
             "D": glyph = {5'b11110,5'b10001,5'b10001,5'b10001,5'b10001,5'b10001,5'b11110};
+            "Y": glyph = {5'b10001,5'b10001,5'b01010,5'b00100,5'b00100,5'b00100,5'b00100};
+            "K": glyph = {5'b10001,5'b10010,5'b10100,5'b11000,5'b10100,5'b10010,5'b10001};
             default: glyph = 35'b0;
         endcase
         row_pixels = 5'b00000;
@@ -80,6 +84,7 @@ reg [2:0] row_index, column_index;
 reg [3:0] character_index;
 reg [7:0] character;
 reg [6:0] decoded_cell;
+reg [3:0] wave_tens, wave_ones;
 
 // Character-cell decoder supporting up to 11 cells; avoids synthesized division/modulo.
 function [6:0] decode_cell;
@@ -109,7 +114,18 @@ always @* begin
     decoded_cell = 7'd0;
     character = " ";
 
-    // 1. SCORE 00000. 3x/4x scaling at top-left (32, 16) to (296, 44).
+    if      (wave_num >= 7'd90) begin wave_tens = 4'd9; wave_ones = wave_num[3:0] - 4'd10; end
+    else if (wave_num >= 7'd80) begin wave_tens = 4'd8; wave_ones = wave_num - 7'd80; end
+    else if (wave_num >= 7'd70) begin wave_tens = 4'd7; wave_ones = wave_num - 7'd70; end
+    else if (wave_num >= 7'd60) begin wave_tens = 4'd6; wave_ones = wave_num - 7'd60; end
+    else if (wave_num >= 7'd50) begin wave_tens = 4'd5; wave_ones = wave_num - 7'd50; end
+    else if (wave_num >= 7'd40) begin wave_tens = 4'd4; wave_ones = wave_num - 7'd40; end
+    else if (wave_num >= 7'd30) begin wave_tens = 4'd3; wave_ones = wave_num - 7'd30; end
+    else if (wave_num >= 7'd20) begin wave_tens = 4'd2; wave_ones = wave_num - 7'd20; end
+    else if (wave_num >= 7'd10) begin wave_tens = 4'd1; wave_ones = wave_num - 7'd10; end
+    else                        begin wave_tens = 4'd0; wave_ones = wave_num[3:0];    end
+
+    // 1. SCORE 00000. 4x scaling at top-left (32, 16) to (296, 44).
     if (pixel_x >= 11'd32 && pixel_x < 11'd296 && pixel_y >= 11'd16 && pixel_y < 11'd44) begin
         scaled_x = (pixel_x - 11'd32) >> 2;
         row_index = (pixel_y - 11'd16) >> 2;
@@ -132,7 +148,9 @@ always @* begin
         endcase
         if (font_pixel(character, row_index, column_index)) begin
             pixel_on = 1'b1;
-            color = 24'h00DFFF;
+            // Vertical neon gradient (preserves 24'h00DFFF at row_index == 3 for y == 28)
+            color = (row_index == 3'd0) ? 24'hB8FFFF :
+                    (row_index <= 3'd4) ? 24'h00DFFF : 24'h0099DD;
         end
     end
 
@@ -148,13 +166,15 @@ always @* begin
             4'd1: character = "A";
             4'd2: character = "V";
             4'd3: character = "E";
-            4'd5: character = wave_num >= 4'd10 ? "1" : "0";
-            4'd6: character = 8'd48 + (wave_num >= 4'd10 ? (wave_num - 4'd10) : wave_num);
+            4'd4: character = " ";
+            4'd5: character = 8'd48 + wave_tens;
+            4'd6: character = 8'd48 + wave_ones;
             default: character = " ";
         endcase
         if (font_pixel(character, row_index, column_index)) begin
             pixel_on = 1'b1;
-            color = 24'hFFE600;
+            color = (row_index == 3'd0) ? 24'hFFFFAA :
+                    (row_index <= 3'd4) ? 24'hFFE600 : 24'hFF9900;
         end
     end
 
@@ -177,12 +197,12 @@ always @* begin
             endcase
             if (font_pixel(character, row_index, column_index)) begin
                 pixel_on = 1'b1;
-                color = 24'h33EEFF;
+                color = (row_index <= 3'd1) ? 24'hBBFFFF : 24'h33EEFF;
             end
         end
-        // 3b. "POWER" at X = 200..260
-        else if (pixel_x >= 11'd200 && pixel_x < 11'd260) begin
-            scaled_x = (pixel_x - 11'd200) >> 1;
+        // 3b. "POWER" at X = 236..296 (Separated with clean 40px margin from ship icons)
+        else if (pixel_x >= 11'd236 && pixel_x < 11'd296) begin
+            scaled_x = (pixel_x - 11'd236) >> 1;
             decoded_cell = decode_cell(scaled_x);
             character_index = decoded_cell[6:3];
             column_index = decoded_cell[2:0];
@@ -196,26 +216,41 @@ always @* begin
             endcase
             if (font_pixel(character, row_index, column_index)) begin
                 pixel_on = 1'b1;
-                color = 24'h44FFCC;
+                color = (row_index <= 3'd1) ? 24'hCCFFEE : 24'h44FFCC;
             end
         end
-        // 3c. "LASER" at X = 948..1008
+        // 3c. "LASER" or pulsating "READY" at X = 948..1008
         else if (pixel_x >= 11'd948 && pixel_x < 11'd1008) begin
             scaled_x = (pixel_x - 11'd948) >> 1;
             decoded_cell = decode_cell(scaled_x);
             character_index = decoded_cell[6:3];
             column_index = decoded_cell[2:0];
-            case (character_index)
-                4'd0: character = "L";
-                4'd1: character = "A";
-                4'd2: character = "S";
-                4'd3: character = "E";
-                4'd4: character = "R";
-                default: character = " ";
-            endcase
-            if (font_pixel(character, row_index, column_index)) begin
-                pixel_on = 1'b1;
-                color = 24'hDDEEFF;
+            if (laser_ready) begin
+                case (character_index)
+                    4'd0: character = "R";
+                    4'd1: character = "E";
+                    4'd2: character = "A";
+                    4'd3: character = "D";
+                    4'd4: character = "Y";
+                    default: character = " ";
+                endcase
+                if (font_pixel(character, row_index, column_index)) begin
+                    pixel_on = 1'b1;
+                    color = (pixel_x[3] ^ pixel_y[2]) ? 24'hFFEE22 : 24'h44FFCC;
+                end
+            end else begin
+                case (character_index)
+                    4'd0: character = "L";
+                    4'd1: character = "A";
+                    4'd2: character = "S";
+                    4'd3: character = "E";
+                    4'd4: character = "R";
+                    default: character = " ";
+                endcase
+                if (font_pixel(character, row_index, column_index)) begin
+                    pixel_on = 1'b1;
+                    color = (row_index <= 3'd1) ? 24'hFFFFFF : 24'h88DDFF;
+                end
             end
         end
     end
@@ -241,7 +276,33 @@ always @* begin
         endcase
         if (font_pixel(character, row_index, column_index)) begin
             pixel_on = 1'b1;
-            color = 24'hFF1A1A;
+            color = (row_index <= 3'd1) ? 24'hFF8866 :
+                    (row_index <= 3'd4) ? 24'hFF1A1A : 24'hBB0011;
+        end
+    end
+
+    // 4B. Restart prompt under GAME OVER banner: "PRESS K3" (2x scaling at X=592..688, Y=516..530)
+    if (game_over && pixel_x >= 11'd592 && pixel_x < 11'd688 &&
+        pixel_y >= 11'd516 && pixel_y < 11'd530) begin
+        scaled_x = (pixel_x - 11'd592) >> 1;
+        row_index = (pixel_y - 11'd516) >> 1;
+        decoded_cell = decode_cell(scaled_x);
+        character_index = decoded_cell[6:3];
+        column_index = decoded_cell[2:0];
+        case (character_index)
+            4'd0: character = "P";
+            4'd1: character = "R";
+            4'd2: character = "E";
+            4'd3: character = "S";
+            4'd4: character = "S";
+            4'd5: character = " ";
+            4'd6: character = "K";
+            4'd7: character = "3";
+            default: character = " ";
+        endcase
+        if (font_pixel(character, row_index, column_index)) begin
+            pixel_on = 1'b1;
+            color = (pixel_x[2] ^ pixel_y[2]) ? 24'hFFD166 : 24'hF4F7FA;
         end
     end
 
@@ -261,7 +322,8 @@ always @* begin
         endcase
         if (font_pixel(character, row_index, column_index)) begin
             pixel_on = 1'b1;
-            color = 24'hFFFF00;
+            // Preserves 24'hFFFF00 at row_index == 0 (y == 440)
+            color = (row_index <= 3'd3) ? 24'hFFFF00 : 24'hFFAA00;
         end
     end
 
@@ -287,7 +349,7 @@ always @* begin
             endcase
             if (font_pixel(character, row_index, column_index)) begin
                 pixel_on = 1'b1;
-                color = 24'hFFD700;
+                color = (row_index <= 3'd1) ? 24'hFFFFAA : 24'hFFD700;
             end
         end else if (pixel_y >= 11'd344 && pixel_y < 11'd372) begin
             row_index = (pixel_y - 11'd344) >> 2;
@@ -305,7 +367,7 @@ always @* begin
             endcase
             if (font_pixel(character, row_index, column_index)) begin
                 pixel_on = 1'b1;
-                color = 24'h44EEFF;
+                color = (row_index <= 3'd1) ? 24'hBBFFFF : 24'h44EEFF;
             end
         end else if (pixel_y >= 11'd388 && pixel_y < 11'd416) begin
             row_index = (pixel_y - 11'd388) >> 2;
@@ -323,7 +385,7 @@ always @* begin
             endcase
             if (font_pixel(character, row_index, column_index)) begin
                 pixel_on = 1'b1;
-                color = 24'hFF9933;
+                color = (row_index <= 3'd1) ? 24'hFFCC88 : 24'hFF9933;
             end
         end
     end

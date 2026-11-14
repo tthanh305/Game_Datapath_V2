@@ -22,3 +22,11 @@ function automatic [11:0] get_rgb444(input [3:0] idx, input hit_flash);
     default: get_rgb444 = 12'h000;
   endcase
 endfunction
+
+function automatic [23:0] get_rgb888(input [3:0] idx, input hit_flash);
+  reg [11:0] c;
+  begin
+    c = get_rgb444(idx, hit_flash);
+    get_rgb888 = {c[11:8], c[11:8], c[7:4], c[7:4], c[3:0], c[3:0]};
+  end
+endfunction

@@ -5,7 +5,7 @@
 // The game/Control Path interface remains available at game_core.
 module game_video #(
     parameter integer BUTTON_ACTIVE_LOW = 1,
-    parameter integer DEBOUNCE_FRAMES = 3,
+    parameter integer DEBOUNCE_FRAMES = 1,
     parameter integer CRT_SCANLINE_EN = 0
 )(
     input wire pck,
@@ -85,7 +85,7 @@ frame_tick frame_tick_inst (
 wire sound_fire, sound_hit, sound_dive, sound_player_die, sound_win, sound_game_over;
 wire sound_powerup, sound_laser;
 wire game_over;
-wire [3:0] wave_num;
+wire [6:0] wave_num;
 wire [`GAME_SCORE_WIDTH-1:0] high_score_2;
 wire [`GAME_SCORE_WIDTH-1:0] high_score_3;
 
@@ -159,9 +159,10 @@ game_menu_renderer_timed menu_renderer_inst (
 );
 
 game_hud hud_inst (
-    .pixel_x(game_pixel_x_720p), .pixel_y(game_pixel_y_720p), .score(hud_score), .win(hud_win),
-    .game_over(game_over), .wave_num(wave_num),
+    .pixel_x(game_pixel_x_720p), .pixel_y(game_pixel_y_720p), .score(hud_score), .win(1'b0),
+    .game_over(1'b0), .wave_num(wave_num),
     .scoreboard_active(scoreboard_active), .high_score_2(high_score_2), .high_score_3(high_score_3),
+    .laser_ready(1'b0),
     .pixel_on(hud_pixel_on), .color(hud_color)
 );
 

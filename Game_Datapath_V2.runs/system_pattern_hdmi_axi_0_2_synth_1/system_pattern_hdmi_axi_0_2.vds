@@ -3,8 +3,8 @@
 # SW Build 5239630 on Fri Nov 08 22:35:27 MST 2024
 # IP Build 5239520 on Sun Nov 10 16:12:51 MST 2024
 # SharedData Build 5239561 on Fri Nov 08 14:39:27 MST 2024
-# Start of session at: Sun Nov  8 22:13:26 2026
-# Process ID         : 4852
+# Start of session at: Sat Nov 14 15:02:06 2026
+# Process ID         : 21252
 # Current directory  : E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1
 # Command line       : vivado.exe -log system_pattern_hdmi_axi_0_2.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source system_pattern_hdmi_axi_0_2.tcl
 # Log file           : E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1/system_pattern_hdmi_axi_0_2.vds
@@ -17,9 +17,9 @@
 # CPU Physical cores : 12
 # CPU Logical cores  : 16
 # Host memory        : 16869 MB
-# Swap memory        : 10347 MB
-# Total Virtual      : 27216 MB
-# Available Virtual  : 6504 MB
+# Swap memory        : 10980 MB
+# Total Virtual      : 27850 MB
+# Available Virtual  : 946 MB
 #-----------------------------------------------------------
 source system_pattern_hdmi_axi_0_2.tcl -notrace
 INFO: [IP_Flow 19-234] Refreshing IP repositories
@@ -32,9 +32,9 @@ INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z010
 INFO: [Device 21-403] Loading part xc7z010clg400-1
 INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
 INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
-INFO: [Synth 8-7075] Helper process launched with PID 4900
+INFO: [Synth 8-7075] Helper process launched with PID 26260
 ---------------------------------------------------------------------------------
-Starting RTL Elaboration : Time (s): cpu = 00:00:06 ; elapsed = 00:00:07 . Memory (MB): peak = 988.738 ; gain = 465.566
+Starting RTL Elaboration : Time (s): cpu = 00:00:07 ; elapsed = 00:00:09 . Memory (MB): peak = 989.996 ; gain = 466.254
 ---------------------------------------------------------------------------------
 WARNING: [Synth 8-6901] identifier 'timing_sel_reg' is used before its declaration [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/axi_hdmi_ctrl.v:50]
 INFO: [Synth 8-6157] synthesizing module 'system_pattern_hdmi_axi_0_2' [e:/Game_Datapath_V2/Game_Datapath_V2.gen/sources_1/bd/system/ip/system_pattern_hdmi_axi_0_2/synth/system_pattern_hdmi_axi_0_2.v:53]
@@ -188,13 +188,13 @@ INFO: [Synth 8-6157] synthesizing module 'physics_engine' [E:/Game_Datapath_V2/r
 INFO: [Synth 8-6155] done synthesizing module 'physics_engine' (0#1) [E:/Game_Datapath_V2/rtl/game/physics_engine.v:18]
 INFO: [Synth 8-6157] synthesizing module 'color_mapper' [E:/Game_Datapath_V2/rtl/game/color_mapper.v:18]
 INFO: [Synth 8-226] default block is never used [E:/Game_Datapath_V2/rtl/game/palette_lut.vh:5]
-INFO: [Synth 8-6157] synthesizing module 'space_bg_stereden' [E:/Game_Datapath_V2/rtl/game/space_bg_stereden.v:9]
-INFO: [Synth 8-6155] done synthesizing module 'space_bg_stereden' (0#1) [E:/Game_Datapath_V2/rtl/game/space_bg_stereden.v:9]
-INFO: [Synth 8-6157] synthesizing module 'game_hud' [E:/Game_Datapath_V2/rtl/game/game_hud.v:5]
-INFO: [Synth 8-6155] done synthesizing module 'game_hud' (0#1) [E:/Game_Datapath_V2/rtl/game/game_hud.v:5]
-INFO: [Synth 8-6157] synthesizing module 'sprite_rom_32x32' [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:27]
-INFO: [Synth 8-3876] $readmem data file 'E:/Game_Datapath_V2/rtl/game/sprites_32x32.mem' is read successfully [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:41]
-INFO: [Synth 8-6155] done synthesizing module 'sprite_rom_32x32' (0#1) [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:27]
+INFO: [Synth 8-6157] synthesizing module 'space_bg_stereden' [E:/Game_Datapath_V2/rtl/game/space_bg_stereden.v:12]
+INFO: [Synth 8-6155] done synthesizing module 'space_bg_stereden' (0#1) [E:/Game_Datapath_V2/rtl/game/space_bg_stereden.v:12]
+INFO: [Synth 8-6157] synthesizing module 'game_hud' [E:/Game_Datapath_V2/rtl/game/game_hud.v:6]
+INFO: [Synth 8-6155] done synthesizing module 'game_hud' (0#1) [E:/Game_Datapath_V2/rtl/game/game_hud.v:6]
+INFO: [Synth 8-6157] synthesizing module 'sprite_rom_32x32' [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:35]
+INFO: [Synth 8-3876] $readmem data file 'sprites_32x32.mem' is read successfully [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:51]
+INFO: [Synth 8-6155] done synthesizing module 'sprite_rom_32x32' (0#1) [E:/Game_Datapath_V2/rtl/game/sprite_rom_32x32.v:35]
 INFO: [Synth 8-6155] done synthesizing module 'color_mapper' (0#1) [E:/Game_Datapath_V2/rtl/game/color_mapper.v:18]
 INFO: [Synth 8-6155] done synthesizing module 'datapath' (0#1) [E:/Game_Datapath_V2/rtl/game/datapath.v:11]
 INFO: [Synth 8-6155] done synthesizing module 'game_core' (0#1) [E:/Game_Datapath_V2/rtl/game/game_core.v:5]
@@ -202,13 +202,13 @@ INFO: [Synth 8-6157] synthesizing module 'game_buzzer' [E:/Game_Datapath_V2/rtl/
 INFO: [Synth 8-6155] done synthesizing module 'game_buzzer' (0#1) [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:8]
 INFO: [Synth 8-6157] synthesizing module 'game_control_path' [E:/Game_Datapath_V2/rtl/game/game_control_path.v:13]
 	Parameter BUTTON_ACTIVE_LOW bound to: 1 - type: integer 
-	Parameter DEBOUNCE_FRAMES bound to: 3 - type: integer 
+	Parameter DEBOUNCE_FRAMES bound to: 1 - type: integer 
 INFO: [Synth 8-6157] synthesizing module 'game_button_input' [E:/Game_Datapath_V2/rtl/game/game_button_input.v:5]
 	Parameter BUTTON_ACTIVE_LOW bound to: 1 - type: integer 
-	Parameter DEBOUNCE_FRAMES bound to: 3 - type: integer 
+	Parameter DEBOUNCE_FRAMES bound to: 1 - type: integer 
 INFO: [Synth 8-6155] done synthesizing module 'game_button_input' (0#1) [E:/Game_Datapath_V2/rtl/game/game_button_input.v:5]
 INFO: [Synth 8-6155] done synthesizing module 'game_control_path' (0#1) [E:/Game_Datapath_V2/rtl/game/game_control_path.v:13]
-INFO: [Synth 8-6157] synthesizing module 'game_menu_renderer_timed' [E:/Game_Datapath_V2/rtl/game/game_menu_renderer.v:157]
+INFO: [Synth 8-6157] synthesizing module 'game_menu_renderer_timed' [E:/Game_Datapath_V2/rtl/game/game_menu_renderer.v:3]
 INFO: [Synth 8-6157] synthesizing module 'font_rom' [E:/Game_Datapath_V2/rtl/game/font_rom.v:1]
 INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:12]
 INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:22]
@@ -228,8 +228,19 @@ INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datap
 INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:162]
 INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:172]
 INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:182]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:192]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:202]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:212]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:222]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:225]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:228]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:231]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:234]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:237]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:240]
+INFO: [Synth 8-155] case statement is not full and has no default [E:/Game_Datapath_V2/rtl/game/font_rom.v:243]
 INFO: [Synth 8-6155] done synthesizing module 'font_rom' (0#1) [E:/Game_Datapath_V2/rtl/game/font_rom.v:1]
-INFO: [Synth 8-6155] done synthesizing module 'game_menu_renderer_timed' (0#1) [E:/Game_Datapath_V2/rtl/game/game_menu_renderer.v:157]
+INFO: [Synth 8-6155] done synthesizing module 'game_menu_renderer_timed' (0#1) [E:/Game_Datapath_V2/rtl/game/game_menu_renderer.v:3]
 INFO: [Synth 8-6155] done synthesizing module 'game_video' (0#1) [E:/Game_Datapath_V2/rtl/video/game_video.v:6]
 INFO: [Synth 8-6155] done synthesizing module 'pattern_multi' (0#1) [E:/Game_Datapath_V2/rtl/video/pattern_multi.v:8]
 INFO: [Synth 8-638] synthesizing module 'rgb2dvi' [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/rgb2dvi.vhd:94]
@@ -268,31 +279,31 @@ INFO: [Synth 8-256] done synthesizing module 'TMDS_Encoder' (0#1) [E:/Game_Datap
 INFO: [Synth 8-256] done synthesizing module 'rgb2dvi' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/ip/rgb2dvi/src/rgb2dvi.vhd:94]
 INFO: [Synth 8-6155] done synthesizing module 'pattern_hdmi_axi' (0#1) [E:/Game_Datapath_V2/Game_Datapath_V2.srcs/sources_1/imports/hdmi_axi_src_720p/rtl/pattern_hdmi_axi.v:13]
 INFO: [Synth 8-6155] done synthesizing module 'system_pattern_hdmi_axi_0_2' (0#1) [e:/Game_Datapath_V2/Game_Datapath_V2.gen/sources_1/bd/system/ip/system_pattern_hdmi_axi_0_2/synth/system_pattern_hdmi_axi_0_2.v:53]
-WARNING: [Synth 8-6014] Unused sequential element next_wave_calc_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1127]
-WARNING: [Synth 8-6014] Unused sequential element has_free_div_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1276]
-WARNING: [Synth 8-6014] Unused sequential element free_div_slot_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1277]
-WARNING: [Synth 8-6014] Unused sequential element ret_fx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1289]
-WARNING: [Synth 8-6014] Unused sequential element ret_fy_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1290]
-WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_en_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1308]
-WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_x_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1309]
-WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_y_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1310]
-WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_vx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1311]
-WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_type_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1312]
-WARNING: [Synth 8-6014] Unused sequential element ebul_step_dy_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1401]
-WARNING: [Synth 8-6014] Unused sequential element ebul_step_dx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1402]
-WARNING: [Synth 8-6014] Unused sequential element hit_eid_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1725]
-WARNING: [Synth 8-6014] Unused sequential element kill_x_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1726]
-WARNING: [Synth 8-6014] Unused sequential element kill_y_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1727]
-WARNING: [Synth 8-6014] Unused sequential element player_hit_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1845]
-WARNING: [Synth 8-6014] Unused sequential element pixel_y_d_reg was removed.  [E:/Game_Datapath_V2/rtl/game/color_mapper.v:906]
-WARNING: [Synth 8-6014] Unused sequential element ch_a_vol_reg was removed.  [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:87]
-WARNING: [Synth 8-6014] Unused sequential element ch_b_vol_reg was removed.  [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:193]
-WARNING: [Synth 8-6014] Unused sequential element ch_c_vol_reg was removed.  [E:/Game_Datapath_V2/rtl/game/game_buzzer.v:241]
+WARNING: [Synth 8-6014] Unused sequential element i_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:687]
+WARNING: [Synth 8-6014] Unused sequential element next_wave_calc_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1144]
+WARNING: [Synth 8-6014] Unused sequential element has_free_div_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1301]
+WARNING: [Synth 8-6014] Unused sequential element free_div_slot_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1302]
+WARNING: [Synth 8-6014] Unused sequential element ret_fx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1319]
+WARNING: [Synth 8-6014] Unused sequential element ret_fy_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1320]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_en_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1338]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_x_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1339]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_y_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1340]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_vx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1341]
+WARNING: [Synth 8-6014] Unused sequential element ebul_spawn_type_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1342]
+WARNING: [Synth 8-6014] Unused sequential element ebul_step_dy_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1487]
+WARNING: [Synth 8-6014] Unused sequential element ebul_step_dx_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1489]
+WARNING: [Synth 8-6014] Unused sequential element hit_eid_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1833]
+WARNING: [Synth 8-6014] Unused sequential element kill_x_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1834]
+WARNING: [Synth 8-6014] Unused sequential element kill_y_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1835]
+WARNING: [Synth 8-6014] Unused sequential element player_hit_reg was removed.  [E:/Game_Datapath_V2/rtl/game/physics_engine.v:1983]
+WARNING: [Synth 8-6014] Unused sequential element stable_count_reg[0] was removed.  [E:/Game_Datapath_V2/rtl/game/game_button_input.v:32]
+WARNING: [Synth 8-6014] Unused sequential element stable_count_reg[1] was removed.  [E:/Game_Datapath_V2/rtl/game/game_button_input.v:32]
+WARNING: [Synth 8-6014] Unused sequential element stable_count_reg[2] was removed.  [E:/Game_Datapath_V2/rtl/game/game_button_input.v:32]
+WARNING: [Synth 8-6014] Unused sequential element stable_count_reg[3] was removed.  [E:/Game_Datapath_V2/rtl/game/game_button_input.v:32]
+WARNING: [Synth 8-6014] Unused sequential element stable_count_reg[4] was removed.  [E:/Game_Datapath_V2/rtl/game/game_button_input.v:32]
 WARNING: [Synth 8-7129] Port SerialClk in module TMDS_Encoder is either unconnected or has no load
 WARNING: [Synth 8-7129] Port aRst in module TMDS_Encoder is either unconnected or has no load
 WARNING: [Synth 8-7129] Port aRst_n in module rgb2dvi is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pixel_x[10] in module space_bg_stereden is either unconnected or has no load
-WARNING: [Synth 8-7129] Port pixel_y[10] in module space_bg_stereden is either unconnected or has no load
 WARNING: [Synth 8-7129] Port projectile_x[10] in module color_mapper is either unconnected or has no load
 WARNING: [Synth 8-7129] Port projectile_x[9] in module color_mapper is either unconnected or has no load
 WARNING: [Synth 8-7129] Port projectile_x[8] in module color_mapper is either unconnected or has no load
@@ -388,20 +399,22 @@ WARNING: [Synth 8-7129] Port target_x_flat[146] in module color_mapper is either
 WARNING: [Synth 8-7129] Port target_x_flat[145] in module color_mapper is either unconnected or has no load
 WARNING: [Synth 8-7129] Port target_x_flat[144] in module color_mapper is either unconnected or has no load
 WARNING: [Synth 8-7129] Port target_x_flat[143] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[142] in module color_mapper is either unconnected or has no load
+WARNING: [Synth 8-7129] Port target_x_flat[141] in module color_mapper is either unconnected or has no load
 INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 ---------------------------------------------------------------------------------
-Finished RTL Elaboration : Time (s): cpu = 00:00:14 ; elapsed = 00:00:17 . Memory (MB): peak = 1354.652 ; gain = 831.480
+Finished RTL Elaboration : Time (s): cpu = 00:00:17 ; elapsed = 00:00:20 . Memory (MB): peak = 1410.230 ; gain = 886.488
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 1354.652 ; gain = 831.480
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 1410.230 ; gain = 886.488
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:15 ; elapsed = 00:00:18 . Memory (MB): peak = 1354.652 ; gain = 831.480
+Finished RTL Optimization Phase 1 : Time (s): cpu = 00:00:18 ; elapsed = 00:00:21 . Memory (MB): peak = 1410.230 ; gain = 886.488
 ---------------------------------------------------------------------------------
-Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.347 . Memory (MB): peak = 1354.652 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.351 . Memory (MB): peak = 1410.230 ; gain = 0.000
 INFO: [Netlist 29-17] Analyzing 5 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
@@ -411,21 +424,21 @@ Initializing timing engine
 INFO: [Project 1-1714] 2 XPM XDC files have been applied to the design.
 Completed Processing XDC Constraints
 
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1438.352 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.008 . Memory (MB): peak = 1488.730 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.243 . Memory (MB): peak = 1438.449 ; gain = 0.098
+Constraint Validation Runtime : Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.349 . Memory (MB): peak = 1489.309 ; gain = 0.578
 INFO: [Designutils 20-5008] Incremental synthesis strategy off
 ---------------------------------------------------------------------------------
-Finished Constraint Validation : Time (s): cpu = 00:00:31 ; elapsed = 00:00:34 . Memory (MB): peak = 1438.449 ; gain = 915.277
+Finished Constraint Validation : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 1489.309 ; gain = 965.566
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Loading Part and Timing Information
 ---------------------------------------------------------------------------------
 Loading part: xc7z010clg400-1
 ---------------------------------------------------------------------------------
-Finished Loading Part and Timing Information : Time (s): cpu = 00:00:31 ; elapsed = 00:00:34 . Memory (MB): peak = 1438.449 ; gain = 915.277
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 1489.309 ; gain = 965.566
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Applying 'set_property' XDC Constraints
@@ -433,7 +446,7 @@ Start Applying 'set_property' XDC Constraints
 Applied set_property KEEP_HIERARCHY = SOFT for inst/pattern_multi/syncgen_multi/pck_reset_sync_inst. (constraint file  auto generated constraint).
 Applied set_property KEEP_HIERARCHY = SOFT for inst/pattern_multi/game_video/reset_inst/video_reset_sync_inst. (constraint file  auto generated constraint).
 ---------------------------------------------------------------------------------
-Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:31 ; elapsed = 00:00:34 . Memory (MB): peak = 1438.449 ; gain = 915.277
+Finished applying 'set_property' XDC Constraints : Time (s): cpu = 00:00:37 ; elapsed = 00:00:42 . Memory (MB): peak = 1489.309 ; gain = 965.566
 ---------------------------------------------------------------------------------
 INFO: [Synth 8-802] inferred FSM for state register 'current_state_reg' in module 'mmcm_drp'
 INFO: [Synth 8-802] inferred FSM for state register 'state_reg' in module 'pckgen_triple'
@@ -464,7 +477,7 @@ INFO: [Synth 8-6159] Found Keep on FSM register 'current_state_reg' in module 'm
 ---------------------------------------------------------------------------------------------------
 INFO: [Synth 8-3354] encoded FSM with state register 'state_reg' using encoding 'sequential' in module 'pckgen_triple'
 ---------------------------------------------------------------------------------
-Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:44 ; elapsed = 00:00:48 . Memory (MB): peak = 1438.449 ; gain = 915.277
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:55 ; elapsed = 00:01:02 . Memory (MB): peak = 1489.309 ; gain = 965.566
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start RTL Component Statistics 
@@ -474,33 +487,38 @@ Detailed RTL Component Info :
 	   2 Input   32 Bit       Adders := 1     
 	   2 Input   19 Bit       Adders := 2     
 	   2 Input   17 Bit       Adders := 1     
-	   3 Input   12 Bit       Adders := 20    
 	   2 Input   12 Bit       Adders := 3     
+	   3 Input   12 Bit       Adders := 35    
 	   4 Input   12 Bit       Adders := 1     
-	   2 Input   11 Bit       Adders := 366   
-	   3 Input   11 Bit       Adders := 146   
+	   2 Input   11 Bit       Adders := 410   
+	   3 Input   11 Bit       Adders := 151   
 	   4 Input   11 Bit       Adders := 2     
 	   2 Input   10 Bit       Adders := 8     
 	   3 Input   10 Bit       Adders := 1     
-	   2 Input    9 Bit       Adders := 2     
+	   2 Input    9 Bit       Adders := 3     
 	   4 Input    8 Bit       Adders := 2     
-	   2 Input    8 Bit       Adders := 4     
-	   3 Input    8 Bit       Adders := 2     
-	   2 Input    7 Bit       Adders := 10    
+	   2 Input    8 Bit       Adders := 6     
+	   3 Input    8 Bit       Adders := 1     
+	   2 Input    7 Bit       Adders := 18    
 	   3 Input    7 Bit       Adders := 3     
-	   2 Input    6 Bit       Adders := 31    
+	   2 Input    6 Bit       Adders := 34    
 	   3 Input    6 Bit       Adders := 13    
-	   2 Input    5 Bit       Adders := 48    
+	   2 Input    5 Bit       Adders := 47    
 	   3 Input    5 Bit       Adders := 13    
 	   4 Input    5 Bit       Adders := 3     
-	   2 Input    4 Bit       Adders := 50    
+	   2 Input    4 Bit       Adders := 66    
 	   8 Input    4 Bit       Adders := 6     
-	   2 Input    3 Bit       Adders := 64    
-	   2 Input    2 Bit       Adders := 17    
+	   2 Input    3 Bit       Adders := 71    
+	   2 Input    2 Bit       Adders := 13    
+	   3 Input    2 Bit       Adders := 1     
 +---XORs : 
-	   3 Input     10 Bit         XORs := 3     
+	   3 Input     10 Bit         XORs := 4     
+	   4 Input     10 Bit         XORs := 1     
+	   5 Input     10 Bit         XORs := 3     
+	   5 Input      8 Bit         XORs := 1     
+	   2 Input      2 Bit         XORs := 1     
 	   4 Input      1 Bit         XORs := 2     
-	   2 Input      1 Bit         XORs := 46    
+	   2 Input      1 Bit         XORs := 67    
 +---Registers : 
 	               44 Bit    Registers := 2     
 	               39 Bit    Registers := 26    
@@ -511,110 +529,117 @@ Detailed RTL Component Info :
 	               17 Bit    Registers := 1     
 	               16 Bit    Registers := 5     
 	               12 Bit    Registers := 1     
-	               11 Bit    Registers := 147   
+	               11 Bit    Registers := 148   
 	               10 Bit    Registers := 7     
 	                9 Bit    Registers := 4     
 	                8 Bit    Registers := 18    
-	                7 Bit    Registers := 9     
-	                6 Bit    Registers := 18    
-	                5 Bit    Registers := 89    
-	                4 Bit    Registers := 53    
-	                3 Bit    Registers := 45    
-	                2 Bit    Registers := 40    
-	                1 Bit    Registers := 100   
+	                7 Bit    Registers := 11    
+	                6 Bit    Registers := 17    
+	                5 Bit    Registers := 90    
+	                4 Bit    Registers := 52    
+	                3 Bit    Registers := 46    
+	                2 Bit    Registers := 32    
+	                1 Bit    Registers := 102   
 +---Multipliers : 
 	               4x32  Multipliers := 1     
 	               6x32  Multipliers := 1     
 +---ROMs : 
 	                    ROMs := 2     
 +---Muxes : 
-	   2 Input   44 Bit        Muxes := 50    
-	   4 Input   44 Bit        Muxes := 3     
+	   2 Input   44 Bit        Muxes := 49    
 	   3 Input   44 Bit        Muxes := 2     
+	   4 Input   44 Bit        Muxes := 2     
+	   6 Input   44 Bit        Muxes := 1     
 	   3 Input   39 Bit        Muxes := 6     
 	   2 Input   39 Bit        Muxes := 6     
-	   2 Input   35 Bit        Muxes := 10    
-	   6 Input   35 Bit        Muxes := 4     
+	   2 Input   35 Bit        Muxes := 12    
+	   6 Input   35 Bit        Muxes := 6     
 	   5 Input   35 Bit        Muxes := 2     
 	   4 Input   35 Bit        Muxes := 2     
 	   2 Input   32 Bit        Muxes := 2     
 	   2 Input   24 Bit        Muxes := 53    
-	   3 Input   24 Bit        Muxes := 4     
-	   4 Input   24 Bit        Muxes := 1     
+	   3 Input   24 Bit        Muxes := 23    
 	   5 Input   24 Bit        Muxes := 1     
-	   5 Input   23 Bit        Muxes := 1     
-	   2 Input   23 Bit        Muxes := 1     
-	   2 Input   20 Bit        Muxes := 4     
+	   4 Input   24 Bit        Muxes := 6     
+	   2 Input   23 Bit        Muxes := 8     
+	   4 Input   23 Bit        Muxes := 1     
+	   2 Input   22 Bit        Muxes := 5     
+	   2 Input   21 Bit        Muxes := 3     
+	   2 Input   20 Bit        Muxes := 7     
+	   3 Input   20 Bit        Muxes := 1     
+	   3 Input   19 Bit        Muxes := 1     
 	   2 Input   19 Bit        Muxes := 1     
+	   6 Input   18 Bit        Muxes := 1     
 	   4 Input   18 Bit        Muxes := 1     
 	   4 Input   17 Bit        Muxes := 1     
 	   2 Input   17 Bit        Muxes := 1     
 	  10 Input   16 Bit        Muxes := 1     
-	   2 Input   16 Bit        Muxes := 21    
+	   2 Input   16 Bit        Muxes := 23    
 	   4 Input   16 Bit        Muxes := 1     
 	   3 Input   16 Bit        Muxes := 2     
-	   2 Input   14 Bit        Muxes := 6     
+	   2 Input   15 Bit        Muxes := 3     
 	   3 Input   12 Bit        Muxes := 3     
-	   2 Input   12 Bit        Muxes := 18    
+	   2 Input   12 Bit        Muxes := 6     
 	   4 Input   12 Bit        Muxes := 2     
-	   3 Input   11 Bit        Muxes := 5     
-	   2 Input   11 Bit        Muxes := 433   
+	   3 Input   11 Bit        Muxes := 8     
+	   2 Input   11 Bit        Muxes := 480   
 	   4 Input   11 Bit        Muxes := 51    
-	   5 Input   11 Bit        Muxes := 1     
+	   6 Input   11 Bit        Muxes := 2     
 	   4 Input   10 Bit        Muxes := 10    
 	   3 Input   10 Bit        Muxes := 2     
-	   2 Input   10 Bit        Muxes := 20    
-	   5 Input   10 Bit        Muxes := 1     
-	   2 Input    9 Bit        Muxes := 6     
-	   5 Input    9 Bit        Muxes := 1     
-	   2 Input    8 Bit        Muxes := 48    
+	   2 Input   10 Bit        Muxes := 28    
+	   2 Input    9 Bit        Muxes := 7     
+	   3 Input    9 Bit        Muxes := 1     
+	   7 Input    9 Bit        Muxes := 1     
+	   2 Input    8 Bit        Muxes := 67    
 	   4 Input    8 Bit        Muxes := 8     
-	   3 Input    8 Bit        Muxes := 3     
-	   7 Input    8 Bit        Muxes := 1     
-	   2 Input    7 Bit        Muxes := 51    
+	   3 Input    8 Bit        Muxes := 4     
+	   6 Input    8 Bit        Muxes := 1     
+	   2 Input    7 Bit        Muxes := 64    
 	  10 Input    7 Bit        Muxes := 1     
 	   3 Input    7 Bit        Muxes := 6     
-	   5 Input    7 Bit        Muxes := 3     
-	   4 Input    7 Bit        Muxes := 3     
-	   6 Input    7 Bit        Muxes := 7     
-	   7 Input    7 Bit        Muxes := 3     
+	   5 Input    7 Bit        Muxes := 4     
+	   4 Input    7 Bit        Muxes := 6     
+	   6 Input    7 Bit        Muxes := 9     
+	   8 Input    7 Bit        Muxes := 5     
 	   9 Input    7 Bit        Muxes := 2     
-	   8 Input    7 Bit        Muxes := 1     
-	   2 Input    6 Bit        Muxes := 49    
+	   7 Input    7 Bit        Muxes := 1     
+	   2 Input    6 Bit        Muxes := 74    
 	  10 Input    6 Bit        Muxes := 1     
-	   4 Input    6 Bit        Muxes := 6     
+	   4 Input    6 Bit        Muxes := 8     
 	   5 Input    6 Bit        Muxes := 2     
 	   3 Input    6 Bit        Muxes := 2     
 	  10 Input    5 Bit        Muxes := 1     
-	   2 Input    5 Bit        Muxes := 92    
-	   4 Input    5 Bit        Muxes := 28    
-	   5 Input    5 Bit        Muxes := 4     
-	   3 Input    5 Bit        Muxes := 8     
-	   6 Input    5 Bit        Muxes := 3     
-	   8 Input    5 Bit        Muxes := 18    
+	   2 Input    5 Bit        Muxes := 90    
+	   4 Input    5 Bit        Muxes := 26    
+	   6 Input    5 Bit        Muxes := 16    
+	   3 Input    5 Bit        Muxes := 10    
+	   5 Input    5 Bit        Muxes := 1     
+	   8 Input    5 Bit        Muxes := 27    
 	  10 Input    4 Bit        Muxes := 1     
-	   2 Input    4 Bit        Muxes := 202   
-	   3 Input    4 Bit        Muxes := 11    
-	   4 Input    4 Bit        Muxes := 41    
-	   5 Input    4 Bit        Muxes := 1     
-	   2 Input    3 Bit        Muxes := 96    
-	   6 Input    3 Bit        Muxes := 4     
-	   4 Input    3 Bit        Muxes := 9     
-	   3 Input    3 Bit        Muxes := 4     
-	   5 Input    3 Bit        Muxes := 4     
-	   2 Input    2 Bit        Muxes := 122   
-	   4 Input    2 Bit        Muxes := 19    
-	   3 Input    2 Bit        Muxes := 9     
+	   2 Input    4 Bit        Muxes := 234   
+	   3 Input    4 Bit        Muxes := 12    
+	   4 Input    4 Bit        Muxes := 34    
+	   5 Input    4 Bit        Muxes := 2     
+	   6 Input    4 Bit        Muxes := 1     
+	   7 Input    4 Bit        Muxes := 1     
+	   8 Input    4 Bit        Muxes := 2     
+	   2 Input    3 Bit        Muxes := 101   
+	   6 Input    3 Bit        Muxes := 5     
+	   4 Input    3 Bit        Muxes := 7     
+	   3 Input    3 Bit        Muxes := 3     
+	   5 Input    3 Bit        Muxes := 3     
+	   2 Input    2 Bit        Muxes := 137   
+	   4 Input    2 Bit        Muxes := 20    
+	   3 Input    2 Bit        Muxes := 6     
 	   5 Input    2 Bit        Muxes := 1     
-	   6 Input    2 Bit        Muxes := 1     
-	   7 Input    2 Bit        Muxes := 1     
+	   6 Input    2 Bit        Muxes := 3     
 	  10 Input    1 Bit        Muxes := 9     
-	   2 Input    1 Bit        Muxes := 1290  
-	   6 Input    1 Bit        Muxes := 4     
-	   3 Input    1 Bit        Muxes := 89    
-	   4 Input    1 Bit        Muxes := 161   
-	   5 Input    1 Bit        Muxes := 3     
-	   7 Input    1 Bit        Muxes := 11    
+	   2 Input    1 Bit        Muxes := 1336  
+	   6 Input    1 Bit        Muxes := 12    
+	   3 Input    1 Bit        Muxes := 84    
+	   4 Input    1 Bit        Muxes := 163   
+	   5 Input    1 Bit        Muxes := 2     
 ---------------------------------------------------------------------------------
 Finished RTL Component Statistics 
 ---------------------------------------------------------------------------------
@@ -637,15 +662,17 @@ INFO: [Synth 8-5587] ROM size for "get_col15" is below threshold of ROM address 
 INFO: [Synth 8-5587] ROM size for "get_col15" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "get_col15" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5544] ROM "base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "boss_warn_timer" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "base_y" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-INFO: [Synth 8-5544] ROM "p_0_out" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "ebul_step_dy" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Synth 8-3886] merging instance 'pending_pts_reg[3]' (FDRE) to 'pending_pts_reg[7]'
 INFO: [Synth 8-3886] merging instance 'pending_pts_reg[2]' (FDRE) to 'pending_pts_reg[7]'
 INFO: [Synth 8-3886] merging instance 'pending_pts_reg[0]' (FDRE) to 'pending_pts_reg[7]'
@@ -705,10 +732,7 @@ INFO: [Synth 8-3886] merging instance 'shake_dx_reg[3]' (FDRE) to 'shake_dx_reg[
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\shake_dy_reg[0] )
 INFO: [Synth 8-3886] merging instance 'shake_dy_reg[3]' (FDRE) to 'shake_dy_reg[4]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\boss_max_hp_reg[0] )
-INFO: [Synth 8-3886] merging instance 'ebul_spawn_vx_q_reg[2]' (FDRE) to 'ebul_spawn_vx_q_reg[3]'
-INFO: [Synth 8-3886] merging instance 'cur_bul_dmg_q_reg[2]' (FDRE) to 'cur_bul_dmg_q_reg[3]'
-INFO: [Synth 8-3886] merging instance 'cur_bul_dmg_q_reg[3]' (FDRE) to 'cur_bul_dmg_q_reg[4]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\cur_bul_dmg_q_reg[4] )
+INFO: [Synth 8-3886] merging instance 'ebul_spawn_vx_q_reg[2]' (FDE) to 'ebul_spawn_vx_q_reg[3]'
 INFO: [Synth 8-3886] merging instance 'div_base_x_reg[0][0]' (FDRE) to 'div_base_y_reg[0][0]'
 INFO: [Synth 8-3886] merging instance 'div_base_x_reg[0][1]' (FDRE) to 'div_base_y_reg[0][0]'
 INFO: [Synth 8-3886] merging instance 'div_base_x_reg[0][2]' (FDRE) to 'div_base_y_reg[0][0]'
@@ -721,55 +745,55 @@ INFO: [Synth 8-3886] merging instance 'div_base_y_reg[0][2]' (FDRE) to 'div_base
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[0][8] )
 INFO: [Synth 8-3886] merging instance 'div_base_y_reg[0][9]' (FDRE) to 'div_base_y_reg[0][10]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[0][10] )
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][0]' (FDRE) to 'div_base_x_reg[1][1]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][1]' (FDRE) to 'div_base_x_reg[1][2]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][2]' (FDRE) to 'div_base_x_reg[1][3]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][3]' (FDRE) to 'div_base_x_reg[1][4]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][4]' (FDRE) to 'div_base_y_reg[1][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][5]' (FDRE) to 'div_base_y_reg[1][3]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][0]' (FDRE) to 'div_base_y_reg[1][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][1]' (FDRE) to 'div_base_y_reg[1][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][2]' (FDRE) to 'div_base_y_reg[1][8]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[1][8] )
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][9]' (FDRE) to 'div_base_y_reg[1][10]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[1][10] )
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][0]' (FDRE) to 'div_base_x_reg[2][1]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][1]' (FDRE) to 'div_base_x_reg[2][2]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][2]' (FDRE) to 'div_base_x_reg[2][3]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][3]' (FDRE) to 'div_base_x_reg[2][4]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][4]' (FDRE) to 'div_base_y_reg[2][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][5]' (FDRE) to 'div_base_y_reg[2][3]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][0]' (FDRE) to 'div_base_y_reg[2][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][1]' (FDRE) to 'div_base_y_reg[2][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][2]' (FDRE) to 'div_base_y_reg[2][8]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[2][8] )
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][9]' (FDRE) to 'div_base_y_reg[2][10]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[2][10] )
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][0]' (FDRE) to 'div_base_x_reg[3][1]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][1]' (FDRE) to 'div_base_x_reg[3][2]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][2]' (FDRE) to 'div_base_x_reg[3][3]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][3]' (FDRE) to 'div_base_x_reg[3][4]'
-INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][4]' (FDRE) to 'div_base_y_reg[3][8]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][0]' (FDRE) to 'div_base_y_reg[3][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][1]' (FDRE) to 'div_base_y_reg[3][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][2]' (FDRE) to 'div_base_y_reg[3][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][3]' (FDRE) to 'div_base_y_reg[3][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][4]' (FDRE) to 'div_base_y_reg[3][0]'
 INFO: [Synth 8-3886] merging instance 'div_base_x_reg[3][5]' (FDRE) to 'div_base_y_reg[3][3]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[3][0]' (FDRE) to 'div_base_y_reg[3][8]'
-INFO: [Synth 8-3886] merging instance 'div_base_y_reg[3][1]' (FDRE) to 'div_base_y_reg[3][8]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[3][0]' (FDRE) to 'div_base_y_reg[3][1]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[3][1]' (FDRE) to 'div_base_y_reg[3][2]'
 INFO: [Synth 8-3886] merging instance 'div_base_y_reg[3][2]' (FDRE) to 'div_base_y_reg[3][8]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[3][8] )
 INFO: [Synth 8-3886] merging instance 'div_base_y_reg[3][9]' (FDRE) to 'div_base_y_reg[3][10]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[3][10] )
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][0]' (FDRE) to 'div_base_y_reg[2][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][1]' (FDRE) to 'div_base_y_reg[2][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][2]' (FDRE) to 'div_base_y_reg[2][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][3]' (FDRE) to 'div_base_y_reg[2][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][4]' (FDRE) to 'div_base_y_reg[2][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[2][5]' (FDRE) to 'div_base_y_reg[2][3]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][0]' (FDRE) to 'div_base_y_reg[2][1]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][1]' (FDRE) to 'div_base_y_reg[2][2]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][2]' (FDRE) to 'div_base_y_reg[2][8]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[2][8] )
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[2][9]' (FDRE) to 'div_base_y_reg[2][10]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[2][10] )
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][0]' (FDRE) to 'div_base_y_reg[1][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][1]' (FDRE) to 'div_base_y_reg[1][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][2]' (FDRE) to 'div_base_y_reg[1][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][3]' (FDRE) to 'div_base_y_reg[1][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][4]' (FDRE) to 'div_base_y_reg[1][0]'
+INFO: [Synth 8-3886] merging instance 'div_base_x_reg[1][5]' (FDRE) to 'div_base_y_reg[1][3]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][0]' (FDRE) to 'div_base_y_reg[1][1]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][1]' (FDRE) to 'div_base_y_reg[1][2]'
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][2]' (FDRE) to 'div_base_y_reg[1][8]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[1][8] )
+INFO: [Synth 8-3886] merging instance 'div_base_y_reg[1][9]' (FDRE) to 'div_base_y_reg[1][10]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_y_reg[1][10] )
+INFO: [Synth 8-3886] merging instance 'cur_bul_dmg_q_reg[2]' (FDRE) to 'cur_bul_dmg_q_reg[3]'
+INFO: [Synth 8-3886] merging instance 'cur_bul_dmg_q_reg[3]' (FDRE) to 'cur_bul_dmg_q_reg[4]'
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\cur_bul_dmg_q_reg[4] )
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[1][2]' (FDRE) to 'ebul_vx_reg[1][3]'
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[2][2]' (FDRE) to 'ebul_vx_reg[2][3]'
 INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[3][2]' (FDRE) to 'ebul_vx_reg[3][3]'
+INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[6][2]' (FDRE) to 'ebul_vx_reg[6][3]'
 INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[7][2]' (FDRE) to 'ebul_vx_reg[7][3]'
-INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[8][2]' (FDRE) to 'ebul_vx_reg[8][3]'
-INFO: [Synth 8-3886] merging instance 'ebul_vx_reg[9][2]' (FDRE) to 'ebul_vx_reg[9][3]'
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\score_reg[0] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\score_reg[1] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\score_reg[2] )
 INFO: [Synth 8-3886] merging instance 'r_debris_vx_reg[6][0]' (FDRE) to 'r_debris_vy_reg[6][1]'
-INFO: [Synth 8-3886] merging instance 'ebul_spawn_y_q_reg[9]' (FDRE) to 'ebul_spawn_y_q_reg[10]'
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_x_reg[0][10] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_x_reg[1][10] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_x_reg[2][10] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_x_reg[3][10] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_x_reg[2][10] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (\div_base_x_reg[1][10] )
 INFO: [Synth 8-3886] merging instance 'boss_y_reg[7]' (FDRE) to 'boss_y_reg[10]'
 INFO: [Synth 8-3886] merging instance 'boss_y_reg[9]' (FDRE) to 'boss_y_reg[10]'
 INFO: [Synth 8-3886] merging instance 'boss_y_reg[8]' (FDRE) to 'boss_y_reg[10]'
@@ -792,74 +816,107 @@ INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[2][2] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[1][2] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\pbul_vx_reg[0][2] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (sound_fire_reg)
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (win_reg)
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5544] ROM "alien_bram_addr1" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+INFO: [Synth 8-5544] ROM "alien_bram_addr1" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
 INFO: [Common 17-14] Message 'Synth 8-7129' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 INFO: [Common 17-14] Message 'Synth 8-3886' appears 100 times and further instances of the messages will be disabled. Use the Tcl command set_msg_config to change the current settings.
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (color_mapper_inst/\debris_color_idx_d_reg[2] )
 INFO: [Synth 8-3333] propagating constant 1 across sequential element (color_mapper_inst/\beam_color_idx_d_reg[2] )
-INFO: [Synth 8-5544] ROM "ch_a_half_period" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
-DSP Report: Generating DSP ch_b_half_period_reg, operation Mode is: (C:0x3c6c)+((D:0xc)+A)*(B:0x1068).
-DSP Report: register ch_b_half_period_reg is absorbed into DSP ch_b_half_period_reg.
-DSP Report: operator ch_b_half_period0 is absorbed into DSP ch_b_half_period_reg.
-DSP Report: operator ch_b_half_period1 is absorbed into DSP ch_b_half_period_reg.
-DSP Report: operator ch_b_half_period2 is absorbed into DSP ch_b_half_period_reg.
-DSP Report: Generating DSP noise_period_reg, operation Mode is: (C:0x2ee0)+((D:0x25)+A)*(B:0x44c).
-DSP Report: register noise_period_reg is absorbed into DSP noise_period_reg.
-DSP Report: operator noise_period0 is absorbed into DSP noise_period_reg.
-DSP Report: operator noise_period1 is absorbed into DSP noise_period_reg.
-DSP Report: operator noise_period2 is absorbed into DSP noise_period_reg.
+INFO: [Synth 8-5544] ROM "character" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "character" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5544] ROM "character" won't be mapped to Block RAM because address size (4) smaller than threshold (5)
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
-INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
-INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
 INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5546] ROM "row_pixels0" won't be mapped to RAM because it is too sparse
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5587] ROM size for "row_pixels0" is below threshold of ROM address width. It will be mapped to LUTs
+INFO: [Synth 8-5544] ROM "buzzer_inst/ch_a_half_period" won't be mapped to Block RAM because address size (2) smaller than threshold (5)
+DSP Report: Generating DSP buzzer_inst/ch_b_half_period_reg, operation Mode is: (C:0x3c6c)+((D:0xc)+A)*(B:0x1068).
+DSP Report: register buzzer_inst/ch_b_half_period_reg is absorbed into DSP buzzer_inst/ch_b_half_period_reg.
+DSP Report: operator buzzer_inst/ch_b_half_period0 is absorbed into DSP buzzer_inst/ch_b_half_period_reg.
+DSP Report: operator buzzer_inst/ch_b_half_period1 is absorbed into DSP buzzer_inst/ch_b_half_period_reg.
+DSP Report: operator buzzer_inst/ch_b_half_period2 is absorbed into DSP buzzer_inst/ch_b_half_period_reg.
+DSP Report: Generating DSP buzzer_inst/noise_period_reg, operation Mode is: (C:0x2ee0)+((D:0x25)+A)*(B:0x44c).
+DSP Report: register buzzer_inst/noise_period_reg is absorbed into DSP buzzer_inst/noise_period_reg.
+DSP Report: operator buzzer_inst/noise_period0 is absorbed into DSP buzzer_inst/noise_period_reg.
+DSP Report: operator buzzer_inst/noise_period1 is absorbed into DSP buzzer_inst/noise_period_reg.
+DSP Report: operator buzzer_inst/noise_period2 is absorbed into DSP buzzer_inst/noise_period_reg.
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\buzzer_inst/ch_a_half_period_reg[18] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\menu_renderer_inst/stage1_color_q_reg[23] )
-INFO: [Synth 8-3333] propagating constant 0 across sequential element (\menu_renderer_inst/character_q_reg[7] )
+INFO: [Synth 8-3333] propagating constant 0 across sequential element (menu_renderer_inst/\character_q_reg[7] )
 INFO: [Synth 8-3333] propagating constant 0 across sequential element (\control_path_inst/return_state_reg[2] )
 ---------------------------------------------------------------------------------
-Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:03 ; elapsed = 00:02:08 . Memory (MB): peak = 1438.449 ; gain = 915.277
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:02:21 ; elapsed = 00:02:33 . Memory (MB): peak = 1489.309 ; gain = 965.566
 ---------------------------------------------------------------------------------
- Sort Area is game_video__GC0 noise_period_reg_2 : 0 0 : 669 669 : Used 1 time 0
- Sort Area is game_video__GC0 ch_b_half_period_reg_0 : 0 0 : 511 511 : Used 1 time 0
+ Sort Area is game_video__GC0 buzzer_inst/noise_period_reg_2 : 0 0 : 669 669 : Used 1 time 0
+ Sort Area is game_video__GC0 buzzer_inst/ch_b_half_period_reg_0 : 0 0 : 511 511 : Used 1 time 0
 ---------------------------------------------------------------------------------
 Start ROM, RAM, DSP, Shift Register and Retiming Reporting
 ---------------------------------------------------------------------------------
@@ -882,23 +939,27 @@ Start Applying XDC Timing Constraints
 INFO: [Synth 8-5578] Moved timing constraint from pin 'reset_inst/video_reset_sync_inst/src_arst' to pin 'reset_inst/async_reset_inferred/i_0/O'
 INFO: [Synth 8-5819] Moved 1 constraints on hierarchical pins to their respective driving/loading pins
 ---------------------------------------------------------------------------------
-Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:14 ; elapsed = 00:02:20 . Memory (MB): peak = 1515.977 ; gain = 992.805
+Finished Applying XDC Timing Constraints : Time (s): cpu = 00:02:31 ; elapsed = 00:02:43 . Memory (MB): peak = 1564.051 ; gain = 1040.309
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Timing Optimization
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Timing Optimization : Time (s): cpu = 00:02:19 ; elapsed = 00:02:26 . Memory (MB): peak = 1549.188 ; gain = 1026.016
+Finished Timing Optimization : Time (s): cpu = 00:02:37 ; elapsed = 00:02:50 . Memory (MB): peak = 1601.352 ; gain = 1077.609
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Technology Mapping
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/i_0/color_mapper_inst/sprite_rom_inst/data_a_reg_0_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
-Finished Technology Mapping : Time (s): cpu = 00:02:24 ; elapsed = 00:02:39 . Memory (MB): peak = 1587.594 ; gain = 1064.422
+Finished Technology Mapping : Time (s): cpu = 00:02:44 ; elapsed = 00:03:09 . Memory (MB): peak = 1663.785 ; gain = 1140.043
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start IO Insertion
@@ -912,45 +973,49 @@ Finished Flattening Before IO Insertion
 ---------------------------------------------------------------------------------
 Start Final Netlist Cleanup
 ---------------------------------------------------------------------------------
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
-INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_0 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_1 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_2 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
+INFO: [Synth 8-7052] The timing for the instance inst/pattern_multi/game_video/game_core_inst/datapath_inst/color_mapper_inst/sprite_rom_inst/data_a_reg_0_3 (implemented as a Block RAM) might be sub-optimal as no optional output register could be merged into the ram block. Providing additional output register may help in improving timing.
 ---------------------------------------------------------------------------------
 Finished Final Netlist Cleanup
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished IO Insertion : Time (s): cpu = 00:02:30 ; elapsed = 00:02:46 . Memory (MB): peak = 1735.680 ; gain = 1212.508
+Finished IO Insertion : Time (s): cpu = 00:02:51 ; elapsed = 00:03:16 . Memory (MB): peak = 1768.105 ; gain = 1244.363
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Instances
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Instances : Time (s): cpu = 00:02:30 ; elapsed = 00:02:46 . Memory (MB): peak = 1735.680 ; gain = 1212.508
+Finished Renaming Generated Instances : Time (s): cpu = 00:02:51 ; elapsed = 00:03:17 . Memory (MB): peak = 1768.105 ; gain = 1244.363
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Rebuilding User Hierarchy
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:31 ; elapsed = 00:02:47 . Memory (MB): peak = 1735.680 ; gain = 1212.508
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:02:53 ; elapsed = 00:03:18 . Memory (MB): peak = 1768.105 ; gain = 1244.363
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Ports
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Ports : Time (s): cpu = 00:02:31 ; elapsed = 00:02:47 . Memory (MB): peak = 1735.680 ; gain = 1212.508
+Finished Renaming Generated Ports : Time (s): cpu = 00:02:53 ; elapsed = 00:03:18 . Memory (MB): peak = 1768.105 ; gain = 1244.363
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Handling Custom Attributes
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Handling Custom Attributes : Time (s): cpu = 00:02:32 ; elapsed = 00:02:48 . Memory (MB): peak = 1743.125 ; gain = 1219.953
+Finished Handling Custom Attributes : Time (s): cpu = 00:02:53 ; elapsed = 00:03:19 . Memory (MB): peak = 1775.070 ; gain = 1251.328
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Renaming Generated Nets
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
-Finished Renaming Generated Nets : Time (s): cpu = 00:02:32 ; elapsed = 00:02:48 . Memory (MB): peak = 1743.125 ; gain = 1219.953
+Finished Renaming Generated Nets : Time (s): cpu = 00:02:54 ; elapsed = 00:03:19 . Memory (MB): peak = 1775.070 ; gain = 1251.328
 ---------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------
 Start Writing Synthesis Report
@@ -976,48 +1041,48 @@ Report Cell Usage:
 |      |Cell       |Count |
 +------+-----------+------+
 |1     |BUFG       |     3|
-|2     |CARRY4     |  1420|
+|2     |CARRY4     |  1588|
 |3     |DSP48E1    |     2|
-|4     |LUT1       |   297|
-|5     |LUT2       |  3127|
-|6     |LUT3       |  1077|
-|7     |LUT4       |  2979|
-|8     |LUT5       |  2364|
-|9     |LUT6       |  5634|
+|4     |LUT1       |   358|
+|5     |LUT2       |  3430|
+|6     |LUT3       |  1307|
+|7     |LUT4       |  3581|
+|8     |LUT5       |  2749|
+|9     |LUT6       |  6906|
 |10    |MMCME2_ADV |     1|
-|11    |MUXF7      |   347|
-|12    |MUXF8      |    34|
+|11    |MUXF7      |   296|
+|12    |MUXF8      |    32|
 |13    |OSERDESE2  |     8|
-|15    |RAMB36E1   |     2|
-|17    |FDCE       |     1|
-|18    |FDPE       |     9|
-|19    |FDRE       |  3146|
-|20    |FDSE       |   205|
-|21    |OBUFDS     |     4|
+|15    |RAMB36E1   |     4|
+|19    |FDCE       |     1|
+|20    |FDPE       |     9|
+|21    |FDRE       |  3216|
+|22    |FDSE       |   200|
+|23    |OBUFDS     |     4|
 +------+-----------+------+
 ---------------------------------------------------------------------------------
-Finished Writing Synthesis Report : Time (s): cpu = 00:02:32 ; elapsed = 00:02:48 . Memory (MB): peak = 1743.125 ; gain = 1219.953
+Finished Writing Synthesis Report : Time (s): cpu = 00:02:54 ; elapsed = 00:03:19 . Memory (MB): peak = 1775.070 ; gain = 1251.328
 ---------------------------------------------------------------------------------
-Synthesis finished with 0 errors, 0 critical warnings and 100 warnings.
-Synthesis Optimization Runtime : Time (s): cpu = 00:02:11 ; elapsed = 00:02:42 . Memory (MB): peak = 1743.125 ; gain = 1136.156
-Synthesis Optimization Complete : Time (s): cpu = 00:02:32 ; elapsed = 00:02:49 . Memory (MB): peak = 1743.125 ; gain = 1219.953
+Synthesis finished with 0 errors, 0 critical warnings and 101 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:02:29 ; elapsed = 00:03:13 . Memory (MB): peak = 1775.070 ; gain = 1172.250
+Synthesis Optimization Complete : Time (s): cpu = 00:02:54 ; elapsed = 00:03:21 . Memory (MB): peak = 1775.070 ; gain = 1251.328
 INFO: [Project 1-571] Translating synthesized netlist
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.207 . Memory (MB): peak = 1743.125 ; gain = 0.000
-INFO: [Netlist 29-17] Analyzing 1810 Unisim elements for replacement
+Netlist sorting complete. Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.242 . Memory (MB): peak = 1775.070 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 1927 Unisim elements for replacement
 INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
 INFO: [Project 1-570] Preparing netlist for logic optimization
 INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
-Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.005 . Memory (MB): peak = 1756.930 ; gain = 0.000
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.006 . Memory (MB): peak = 1788.891 ; gain = 0.000
 INFO: [Project 1-111] Unisim Transformation Summary:
 No Unisim elements were transformed.
 
-Synth Design complete | Checksum: e1e3229a
+Synth Design complete | Checksum: 3c38e160
 INFO: [Common 17-83] Releasing license: Synthesis
-335 Infos, 192 Warnings, 0 Critical Warnings and 0 Errors encountered.
+386 Infos, 194 Warnings, 0 Critical Warnings and 0 Errors encountered.
 synth_design completed successfully
-synth_design: Time (s): cpu = 00:02:40 ; elapsed = 00:03:00 . Memory (MB): peak = 1756.930 ; gain = 1445.258
+synth_design: Time (s): cpu = 00:03:02 ; elapsed = 00:03:44 . Memory (MB): peak = 1788.891 ; gain = 1474.578
 INFO: [Coretcl 2-1174] Renamed 31 cell refs.
-Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.057 . Memory (MB): peak = 1756.930 ; gain = 0.000
+Write ShapeDB Complete: Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.094 . Memory (MB): peak = 1788.891 ; gain = 0.000
 INFO: [Common 17-1381] The checkpoint 'E:/Game_Datapath_V2/Game_Datapath_V2.runs/system_pattern_hdmi_axi_0_2_synth_1/system_pattern_hdmi_axi_0_2.dcp' has been generated.
 INFO: [Vivado 12-24828] Executing command : report_utilization -file system_pattern_hdmi_axi_0_2_utilization_synth.rpt -pb system_pattern_hdmi_axi_0_2_utilization_synth.pb
-INFO: [Common 17-206] Exiting Vivado at Sun Nov  8 22:16:32 2026...
+INFO: [Common 17-206] Exiting Vivado at Sat Nov 14 15:05:59 2026...

@@ -39,7 +39,7 @@ module physics_engine #(
     output reg [`GAME_SCORE_WIDTH-1:0] score,
     output reg win,
     output reg game_over,
-    output reg [3:0] wave_num,
+    output reg [6:0] wave_num,
 
     output reg [`GAME_COORD_WIDTH-1:0] ship_x,
     output reg [`GAME_COORD_WIDTH-1:0] ship_y,
@@ -105,7 +105,8 @@ module physics_engine #(
     output reg  [1:0]          wingmen_count,    // 0..2 wingmen
     output reg  [4:0]          rage_cnt,         // 0..20 kills
     output reg  [6:0]          laser_timer,      // 0..120 frames (2s beam)
-    output reg  [6:0]          invuln_timer,     // 0..120 frames respawn shield
+    output reg  [6:0]          invuln_timer,     // 0..120 frames item shield
+    output wire                respawn_invuln,   // 1 while true respawn god mode is active
 
     // 16 Player Main Bullets
     output wire [15:0]         pbul_active_out,
@@ -262,11 +263,11 @@ function [10:0] get_form_y(input [5:0] id);
     end
 endfunction
 
-function [4:0] calc_init_hp(input [1:0] r, input [3:0] w);
+function [4:0] calc_init_hp(input [1:0] r, input [6:0] w);
     reg [6:0] raw_hp;
     reg [6:0] w_minus_1;
     begin
-        w_minus_1 = {3'b000, (w > 4'd0 ? (w - 4'd1) : 4'd0)};
+        w_minus_1 = (w > 7'd0) ? (w - 7'd1) : 7'd0;
         case (r)
             2'd0: raw_hp = 7'd6 + (w_minus_1 << 1) + w_minus_1; // Boss
             2'd1: raw_hp = 7'd4 + (w_minus_1 << 1);             // Escort
@@ -468,7 +469,9 @@ assign hit_flash_mask     = (enemy_flash_timer > 3'd0) ? (16'b1 << flash_alien_i
 assign fire_ready         = 1'b1;
 
 reg [5:0] player_respawn_timer;
+reg [6:0] respawn_invuln_timer;
 assign player_exp_phase = player_respawn_timer[4:3];
+assign respawn_invuln   = (respawn_invuln_timer > 7'd0);
 
 // Fast nibble-wise BCD Adder for arcade scores
 function [19:0] bcd_add;
@@ -494,9 +497,10 @@ function [19:0] bcd_add;
         if (c3) d3 = d3 + 5'd6;
 
         d4 = {1'b0, a[19:16]} + {4'd0, c3};
-        if (d4 >= 5'd10) d4 = d4 + 5'd6;
-
-        bcd_add = {d4[3:0], d3[3:0], d2[3:0], d1[3:0], d0[3:0]};
+        if (d4 >= 5'd10)
+            bcd_add = 20'h99999;
+        else
+            bcd_add = {d4[3:0], d3[3:0], d2[3:0], d1[3:0], d0[3:0]};
     end
 endfunction
 
@@ -541,11 +545,11 @@ reg [4:0]  cur_bul_dmg_q;
 reg        laser_hits_q;
 reg        r_player_hit_q;
 
-// Player Ship Hitbox and Center point shortcuts for collision and tracking
-wire [10:0] ship_hb_l     = ship_x + 11'd6;
-wire [10:0] ship_hb_r     = ship_x + 11'd26;
-wire [10:0] ship_hb_t     = ship_y + 11'd6;
-wire [10:0] ship_hb_b     = ship_y + 11'd26;
+// Player Ship Hitbox and Center point shortcuts for collision and tracking (10x12 tight core)
+wire [10:0] ship_hb_l     = ship_x + 11'd11;
+wire [10:0] ship_hb_r     = ship_x + 11'd21;
+wire [10:0] ship_hb_t     = ship_y + 11'd10;
+wire [10:0] ship_hb_b     = ship_y + 11'd22;
 wire [10:0] ship_center_x = ship_x + 11'd16;
 
 // Shared combinational grid lookup for current bullet in Collision FSM (driven from registered cur_bul_*_q)
@@ -628,8 +632,8 @@ wire bul_hits_boss = cur_bul_en && boss_active &&
     (cur_bul_x + 11'd6 >= boss_x) && (cur_bul_x <= boss_x + 11'd64) &&
     (cur_bul_y <= boss_y + 11'd62) && (cur_bul_y + 11'd16 >= boss_y);
 
-// Homing target X selection (steers toward Boss, else first active diver, else swaying formation center)
-wire [10:0] homing_target_x = boss_active   ? (boss_x + 11'd16) :
+// Homing target X selection (steers toward Boss center, else first active diver, else swaying formation center)
+wire [10:0] homing_target_x = boss_active   ? (boss_x + 11'd32) :
                               div_active[0] ? div_x[0] :
                               div_active[1] ? div_x[1] :
                               div_active[2] ? div_x[2] :
@@ -652,7 +656,7 @@ reg        player_hit;
 reg        boss_dir;
 reg [5:0]  boss_shoot_cnt;
 reg [1:0]  boss_skill_idx;
-reg [3:0]  next_wave_calc;
+reg [6:0]  next_wave_calc;
 reg        ebul_spawn_en;
 reg [10:0] ebul_spawn_x;
 reg [10:0] ebul_spawn_y;
@@ -690,7 +694,7 @@ always @(posedge clk) begin
         pending_pts          <= 12'h000;
         win                  <= 1'b0;
         game_over            <= 1'b0;
-        wave_num             <= 4'd1;
+        wave_num             <= 7'd1;
         wave_transition      <= 1'b0;
         wave_timer           <= 7'd0;
         wave_entry_offset    <= 8'd192;
@@ -701,7 +705,8 @@ always @(posedge clk) begin
         player_lives         <= `PLAYER_INIT_LIVES;
         player_exploding     <= 1'b0;
         player_respawn_timer <= 6'd0;
-        invuln_timer         <= 7'd60;
+        respawn_invuln_timer <= 7'd120; // 2s true god mode at start
+        invuln_timer         <= 7'd0;   // Item shield only
         power_level          <= 3'd1;
         wingmen_count        <= 2'd0;
         rage_cnt             <= 5'd0;
@@ -854,8 +859,8 @@ always @(posedge clk) begin
         projectile2_x      <= pbul_x[3];
         projectile2_y      <= pbul_y[3];
 
-        // Trigger Overdrive Laser immediately when Center button is pressed and Rage is full
-        if (game_enable && !game_over && (laser_trigger || fire)) begin
+        // Trigger Overdrive Laser ONLY when Center button is tapped (laser_trigger) and Rage is full
+        if (game_enable && !game_over && laser_trigger) begin
             fire_accepted <= 1'b1;
             if ((rage_cnt >= `RAGE_MAX) && (laser_timer == 7'd0)) begin
                 laser_timer <= `LASER_FRAMES;
@@ -867,10 +872,16 @@ always @(posedge clk) begin
 
         // Background O(1) scan pointer advance & pipelined enemy bullet commit between frames
         if (!frame_tick) begin
-            if (!form_alive[diver_scan_ptr] || r_form_diving_mask[diver_scan_ptr])
+            if (!form_alive[diver_scan_ptr] || r_form_diving_mask[diver_scan_ptr] ||
+                (!div_active[0] && (div_step[0] > 6'd0) && (div_idx[0] == diver_scan_ptr)) ||
+                (!div_active[1] && (div_step[1] > 6'd0) && (div_idx[1] == diver_scan_ptr)) ||
+                (!div_active[2] && (div_step[2] > 6'd0) && (div_idx[2] == diver_scan_ptr)) ||
+                (!div_active[3] && (div_step[3] > 6'd0) && (div_idx[3] == diver_scan_ptr)))
                 diver_scan_ptr <= (diver_scan_ptr >= 6'd43) ? 6'd0 : (diver_scan_ptr + 6'd1);
             if (!form_alive[shoot_scan_ptr] || r_form_diving_mask[shoot_scan_ptr])
                 shoot_scan_ptr <= (shoot_scan_ptr >= 6'd43) ? 6'd0 : (shoot_scan_ptr + 6'd1);
+            if (ebul_active[ebul_alloc_ptr] && !ebul_spawn_en_q)
+                ebul_alloc_ptr <= (ebul_alloc_ptr >= 4'd9) ? 4'd0 : (ebul_alloc_ptr + 4'd1);
 
             if (ebul_spawn_en_q) begin
                 ebul_spawn_en_q             <= 1'b0;
@@ -888,9 +899,10 @@ always @(posedge clk) begin
         // =====================================================================
         if (frame_tick && game_enable && !game_over) begin
             if (muzzle_timer > 2'd0)      muzzle_timer      <= muzzle_timer - 2'd1;
-            if (enemy_flash_timer > 3'd0) enemy_flash_timer <= enemy_flash_timer - 3'd1;
-            if (boss_flash_timer > 3'd0)  boss_flash_timer  <= boss_flash_timer - 3'd1;
-            if (invuln_timer > 7'd0)      invuln_timer      <= invuln_timer - 7'd1;
+            if (enemy_flash_timer > 3'd0)    enemy_flash_timer    <= enemy_flash_timer - 3'd1;
+            if (boss_flash_timer > 3'd0)     boss_flash_timer     <= boss_flash_timer - 3'd1;
+            if (invuln_timer > 7'd0)         invuln_timer         <= invuln_timer - 7'd1;
+            if (respawn_invuln_timer > 7'd0) respawn_invuln_timer <= respawn_invuln_timer - 7'd1;
 
             // Update screen shake once per frame (prevents per-pixel LFSR jitter/blurring!)
             if (shake_timer > 4'd0) begin
@@ -986,9 +998,10 @@ always @(posedge clk) begin
                             game_over       <= 1'b1;
                             sound_game_over <= 1'b1;
                         end else begin
-                            ship_x       <= `GAME_SHIP_START_X;
-                            ship_y       <= `GAME_SHIP_Y;
-                            invuln_timer <= 7'd120; // 2s respawn shield
+                            ship_x               <= `GAME_SHIP_START_X;
+                            ship_y               <= `GAME_SHIP_Y;
+                            respawn_invuln_timer <= 7'd120; // 2s true respawn god mode!
+                            invuln_timer         <= 7'd0;
                         end
                     end else begin
                         player_respawn_timer <= player_respawn_timer + 6'd1;
@@ -1091,9 +1104,13 @@ always @(posedge clk) begin
                         end else begin
                             hbul_y[i] <= hbul_y[i] - `GAME_HOMING_SPEED;
                             hbul_x[i] <= hbul_x[i] + {{7{hbul_vx[i][3]}}, hbul_vx[i]};
-                            if (hbul_x[i] + 11'd8 < homing_target_x && hbul_vx[i] < 4'sd4)
+                            if (hbul_x[i] + 11'd48 < homing_target_x && hbul_vx[i] < 4'sd6)
+                                hbul_vx[i] <= hbul_vx[i] + 4'sd2;
+                            else if (hbul_x[i] + 11'd8 < homing_target_x && hbul_vx[i] < 4'sd6)
                                 hbul_vx[i] <= hbul_vx[i] + 4'sd1;
-                            else if (hbul_x[i] > homing_target_x + 11'd8 && hbul_vx[i] > -4'sd4)
+                            else if (hbul_x[i] > homing_target_x + 11'd48 && hbul_vx[i] > -4'sd6)
+                                hbul_vx[i] <= hbul_vx[i] - 4'sd2;
+                            else if (hbul_x[i] > homing_target_x + 11'd8 && hbul_vx[i] > -4'sd6)
                                 hbul_vx[i] <= hbul_vx[i] - 4'sd1;
                         end
                     end
@@ -1124,21 +1141,29 @@ always @(posedge clk) begin
                 if (wave_transition) begin
                     if (wave_timer <= 7'd1) begin
                         wave_transition   <= 1'b0;
-                        next_wave_calc     = (wave_num == 4'd15) ? 4'd15 : (wave_num + 4'd1);
+                        next_wave_calc     = (wave_num >= 7'd99) ? 7'd1 : (wave_num + 7'd1);
                         wave_num          <= next_wave_calc;
                         wave_entry_offset <= 8'd192; // Descend from top of screen on every new wave!
                         div_active        <= 4'h0;
                         div_returning     <= 4'h0;
+                        for (i = 0; i < 4; i = i + 1)
+                            div_step[i] <= 6'd0;
                         r_form_diving_mask <= 44'd0;
                         fleet_offset_x    <= 9'sd0;
                         fleet_dir         <= 1'b1;
-                        dive_cooldown     <= 8'd70;
-                        if (next_wave_calc == 4'd5 || next_wave_calc == 4'd10 || next_wave_calc == 4'd15) begin
+                        dive_cooldown     <= (next_wave_calc >= 7'd4) ? 8'd26 : (next_wave_calc >= 7'd2 ? 8'd36 : 8'd50);
+                        if (next_wave_calc == 7'd5  || next_wave_calc == 7'd10 || next_wave_calc == 7'd15 ||
+                            next_wave_calc == 7'd20 || next_wave_calc == 7'd25 || next_wave_calc == 7'd30 ||
+                            next_wave_calc == 7'd35 || next_wave_calc == 7'd40 || next_wave_calc == 7'd45 ||
+                            next_wave_calc == 7'd50 || next_wave_calc == 7'd55 || next_wave_calc == 7'd60 ||
+                            next_wave_calc == 7'd65 || next_wave_calc == 7'd70 || next_wave_calc == 7'd75 ||
+                            next_wave_calc == 7'd80 || next_wave_calc == 7'd85 || next_wave_calc == 7'd90 ||
+                            next_wave_calc == 7'd95) begin
                             boss_active      <= 1'b1;
                             boss_x           <= 11'd608;
                             boss_y           <= 11'd16; // Boss also descends from top of screen!
-                            boss_hp          <= 8'd60 + {2'b00, next_wave_calc, 2'b00} + {3'b000, next_wave_calc, 1'b0}; // 60 + next_wave_calc * 6
-                            boss_max_hp      <= 8'd60 + {2'b00, next_wave_calc, 2'b00} + {3'b000, next_wave_calc, 1'b0};
+                            boss_hp          <= (next_wave_calc > 7'd48) ? 8'd250 : (8'd60 + {next_wave_calc[5:0], 2'b00});
+                            boss_max_hp      <= (next_wave_calc > 7'd48) ? 8'd250 : (8'd60 + {next_wave_calc[5:0], 2'b00});
                             boss_warn_timer  <= 7'd0;
                             boss_laser_timer <= 7'd0;
                             boss_dir         <= 1'b1;
@@ -1194,7 +1219,7 @@ always @(posedge clk) begin
                             else boss_x <= boss_x - (boss_enraged ? 11'd5 : 11'd3);
                         end
 
-                        if (boss_shoot_cnt >= (boss_enraged ? 6'd28 : 6'd42)) begin
+                        if (boss_shoot_cnt >= (boss_enraged ? 6'd38 : 6'd56)) begin
                             boss_shoot_cnt <= 6'd0;
                             boss_skill_idx <= boss_skill_idx + 2'd1;
 
@@ -1236,7 +1261,7 @@ always @(posedge clk) begin
 
                                 // Move 2: Boss Mega Death-Ray (Telegraph Warning Sight -> Full Column Beam)
                                 2'd2: begin
-                                    boss_warn_timer <= 7'd50; // 0.83s Red Laser Sight Telegraph
+                                    boss_warn_timer <= 7'd60; // 1.0s Red Laser Sight Telegraph with charging phase
                                     sound_dive      <= 1'b1;
                                 end
 
@@ -1276,7 +1301,7 @@ always @(posedge clk) begin
                 has_free_div  = 1'b0;
                 free_div_slot = 2'd0;
                 for (i = 0; i < 4; i = i + 1) begin
-                    if (!has_free_div && !div_active[i]) begin
+                    if (!has_free_div && !div_active[i] && (!form_alive[div_idx[i]] || (div_step[i] == 6'd0))) begin
                         has_free_div  = 1'b1;
                         free_div_slot = i[1:0];
                     end
@@ -1285,7 +1310,12 @@ always @(posedge clk) begin
                 if (!wave_transition) begin
                     if (dive_cooldown > 8'd0) begin
                         dive_cooldown <= dive_cooldown - 8'd1;
-                    end else if ((wave_entry_offset == 8'd0) && has_free_div && form_alive[diver_scan_ptr] && !r_form_diving_mask[diver_scan_ptr]) begin
+                    end else if ((wave_entry_offset == 8'd0) && has_free_div &&
+                                 form_alive[diver_scan_ptr] && !r_form_diving_mask[diver_scan_ptr] &&
+                                 !((!div_active[0] && (div_step[0] > 6'd0) && (div_idx[0] == diver_scan_ptr)) ||
+                                   (!div_active[1] && (div_step[1] > 6'd0) && (div_idx[1] == diver_scan_ptr)) ||
+                                   (!div_active[2] && (div_step[2] > 6'd0) && (div_idx[2] == diver_scan_ptr)) ||
+                                   (!div_active[3] && (div_step[3] > 6'd0) && (div_idx[3] == diver_scan_ptr)))) begin
                         ret_fx = get_form_x(diver_scan_ptr, fleet_offset_x);
                         ret_fy = get_form_y(diver_scan_ptr);
                         div_active[free_div_slot]    <= 1'b1;
@@ -1298,7 +1328,7 @@ always @(posedge clk) begin
                         div_base_y[free_div_slot]    <= ret_fy;
                         div_vx[free_div_slot]        <= (ship_x > ret_fx) ? 5'sd2 : -5'sd2;
                         div_step[free_div_slot]      <= 6'd0;
-                        dive_cooldown                <= (wave_num >= 4'd4) ? 8'd28 : (wave_num >= 4'd2 ? 8'd38 : 8'd50);
+                        dive_cooldown                <= (wave_num >= 4'd4) ? 8'd28 : (wave_num >= 4'd2 ? 8'd38 : 8'd75);
                         sound_dive                   <= 1'b1;
                         diver_scan_ptr               <= (diver_scan_ptr >= 6'd37) ? (diver_scan_ptr - 6'd37) : (diver_scan_ptr + 6'd7);
                     end
@@ -1323,16 +1353,38 @@ always @(posedge clk) begin
                                 else if (div_x[i] > ship_x && div_vx[i] > -5'sd4)
                                     div_vx[i] <= div_vx[i] - 5'sd1;
                             end
-                            div_x[i] <= div_x[i] + {{6{div_vx[i][4]}}, div_vx[i]};
+                            if (div_vx[i][4] && (div_x[i] <= 11'd16))
+                                div_x[i] <= 11'd16;
+                            else if (!div_vx[i][4] && (div_x[i] >= 11'd1232))
+                                div_x[i] <= 11'd1232;
+                            else
+                                div_x[i] <= div_x[i] + {{6{div_vx[i][4]}}, div_vx[i]};
 
                             // Diver fires high-speed Sniper Bolt (at Y=190) or Sine-Wave Orb (at Y=310)
                             if ((div_y[i] == 11'd190) || (div_y[i] == 11'd310)) begin
                                 ebul_spawn_en   = 1'b1;
                                 ebul_spawn_x    = div_x[i] + 11'd12;
                                 ebul_spawn_y    = div_y[i] + 11'd24;
-                                ebul_spawn_vx   = (ship_x > div_x[i] + 11'd40) ? 4'sd2 :
-                                                  (ship_x + 11'd40 < div_x[i]) ? -4'sd2 : 4'sd0;
-                                ebul_spawn_type = (div_y[i] == 11'd190) ? `EBUL_TYPE_SNIPER : `EBUL_TYPE_WAVE;
+                                if (wave_num == 7'd1) begin
+                                    // Wave 1: Only basic fireball, no fast snipers
+                                    ebul_spawn_type = `EBUL_TYPE_FIREBALL;
+                                    ebul_spawn_vx   = 4'sd0;
+                                end else if (div_y[i] == 11'd190) begin
+                                    ebul_spawn_type = `EBUL_TYPE_SNIPER;
+                                    if (ship_x > div_x[i] + 11'd120)
+                                        ebul_spawn_vx = 4'sd3;
+                                    else if (ship_x > div_x[i] + 11'd40)
+                                        ebul_spawn_vx = 4'sd2;
+                                    else if (ship_x + 11'd120 < div_x[i])
+                                        ebul_spawn_vx = -4'sd3;
+                                    else if (ship_x + 11'd40 < div_x[i])
+                                        ebul_spawn_vx = -4'sd2;
+                                    else
+                                        ebul_spawn_vx = 4'sd0;
+                                end else begin
+                                    ebul_spawn_type = `EBUL_TYPE_WAVE;
+                                    ebul_spawn_vx   = (div_x[i] < ship_x) ? 4'sd1 : -4'sd1;
+                                end
                             end
 
                             if (div_y[i] >= 11'd700) begin
@@ -1358,11 +1410,19 @@ always @(posedge clk) begin
                             if ((div_y[i] + 11'd4 >= ret_fy) &&
                                 (div_x[i] + 11'd6 >= ret_fx) &&
                                 (div_x[i] <= ret_fx + 11'd6)) begin
-                                div_active[i]    <= 1'b0;
-                                div_returning[i] <= 1'b0;
+                                div_active[i]                  <= 1'b0;
+                                div_returning[i]               <= 1'b0;
+                                div_step[i]                    <= 6'd63; // ~2.1s post-return rest (126 frames)
                                 r_form_diving_mask[div_idx[i]] <= 1'b0;
+                                if (dive_cooldown < 8'd50)
+                                    dive_cooldown <= 8'd50;              // ~0.83s breather after diver returns
                             end
                         end
+                    end else if (div_step[i] > 6'd0) begin
+                        if (!form_alive[div_idx[i]])
+                            div_step[i] <= 6'd0;
+                        else if (autofire_cnt[0])
+                            div_step[i] <= div_step[i] - 6'd1;
                     end
                 end
 
@@ -1376,16 +1436,42 @@ always @(posedge clk) begin
                         ebul_spawn_en   = 1'b1;
                         ebul_spawn_x    = ret_fx + 11'd12;
                         ebul_spawn_y    = ret_fy + 11'd24;
-                        ebul_spawn_vx   = (ship_x > ret_fx + 11'd60) ? 4'sd1 :
-                                          (ship_x + 11'd60 < ret_fx) ? -4'sd1 : 4'sd0;
-                        if (shoot_scan_ptr < 6'd11)
-                            ebul_spawn_type = lfsr[0] ? `EBUL_TYPE_SEEKER : `EBUL_TYPE_SNIPER;
-                        else if (shoot_scan_ptr < 6'd22)
-                            ebul_spawn_type = `EBUL_TYPE_WAVE;
-                        else
+                        if (wave_num == 7'd1) begin
+                            // Wave 1: Purely basic Fireballs to introduce moving & dodging safely
                             ebul_spawn_type = `EBUL_TYPE_FIREBALL;
+                            ebul_spawn_vx   = (ship_x > ret_fx + 11'd80) ? 4'sd1 :
+                                              (ship_x + 11'd80 < ret_fx) ? -4'sd1 : 4'sd0;
+                        end else if (shoot_scan_ptr < 6'd11) begin
+                            ebul_spawn_type = (wave_num == 7'd2) ? `EBUL_TYPE_WAVE : (lfsr[0] ? `EBUL_TYPE_SEEKER : `EBUL_TYPE_SNIPER);
+                            if (ebul_spawn_type == `EBUL_TYPE_SNIPER) begin // SNIPER aimed trajectory
+                                if (ship_x > ret_fx + 11'd180)
+                                    ebul_spawn_vx = 4'sd3;
+                                else if (ship_x > ret_fx + 11'd70)
+                                    ebul_spawn_vx = 4'sd2;
+                                else if (ship_x > ret_fx + 11'd20)
+                                    ebul_spawn_vx = 4'sd1;
+                                else if (ship_x + 11'd180 < ret_fx)
+                                    ebul_spawn_vx = -4'sd3;
+                                else if (ship_x + 11'd70 < ret_fx)
+                                    ebul_spawn_vx = -4'sd2;
+                                else if (ship_x + 11'd20 < ret_fx)
+                                    ebul_spawn_vx = -4'sd1;
+                                else
+                                    ebul_spawn_vx = 4'sd0;
+                            end else begin
+                                ebul_spawn_vx = (ship_x > ret_fx + 11'd60) ? 4'sd1 :
+                                                (ship_x + 11'd60 < ret_fx) ? -4'sd1 : 4'sd0;
+                            end
+                        end else if (shoot_scan_ptr < 6'd22) begin
+                            ebul_spawn_type = `EBUL_TYPE_WAVE;
+                            ebul_spawn_vx   = (shoot_scan_ptr[0]) ? 4'sd1 : -4'sd1;
+                        end else begin
+                            ebul_spawn_type = `EBUL_TYPE_FIREBALL;
+                            ebul_spawn_vx   = (ship_x > ret_fx + 11'd60) ? 4'sd1 :
+                                              (ship_x + 11'd60 < ret_fx) ? -4'sd1 : 4'sd0;
+                        end
 
-                        shoot_cooldown <= (wave_num >= 4'd4) ? 7'd22 : (wave_num >= 4'd2 ? 7'd30 : 7'd38);
+                        shoot_cooldown <= (wave_num >= 4'd4) ? 7'd22 : (wave_num >= 4'd2 ? 7'd30 : 7'd45);
                         shoot_scan_ptr <= (shoot_scan_ptr >= 6'd35) ? (shoot_scan_ptr - 6'd35) : (shoot_scan_ptr + 6'd9);
                     end
                 end
@@ -1398,8 +1484,17 @@ always @(posedge clk) begin
                         end else begin
                             case (ebul_type[i])
                                 `EBUL_TYPE_WAVE: begin
-                                    ebul_step_dy = 4'd5;
-                                    ebul_step_dx = ebul_y[i][4] ? 5'sd3 : -5'sd3;
+                                    ebul_step_dy = 4'd4;
+                                    case (ebul_y[i][6:4])
+                                        3'd0: ebul_step_dx = ebul_vx[i][3] ? -5'sd3 : 5'sd3;
+                                        3'd1: ebul_step_dx = ebul_vx[i][3] ? -5'sd5 : 5'sd5;
+                                        3'd2: ebul_step_dx = ebul_vx[i][3] ? -5'sd5 : 5'sd5;
+                                        3'd3: ebul_step_dx = ebul_vx[i][3] ? -5'sd3 : 5'sd3;
+                                        3'd4: ebul_step_dx = ebul_vx[i][3] ? 5'sd3 : -5'sd3;
+                                        3'd5: ebul_step_dx = ebul_vx[i][3] ? 5'sd5 : -5'sd5;
+                                        3'd6: ebul_step_dx = ebul_vx[i][3] ? 5'sd5 : -5'sd5;
+                                        default: ebul_step_dx = ebul_vx[i][3] ? 5'sd3 : -5'sd3;
+                                    endcase
                                 end
                                 `EBUL_TYPE_SNIPER: begin
                                     ebul_step_dy = 4'd8;
@@ -1407,8 +1502,20 @@ always @(posedge clk) begin
                                 end
                                 `EBUL_TYPE_SEEKER: begin
                                     ebul_step_dy = 4'd4;
-                                    ebul_step_dx = (ebul_x[i] + 11'd8 < ship_center_x) ? 5'sd1 :
-                                                   (ebul_x[i] > ship_center_x)         ? -5'sd1 : 5'sd0;
+                                    if (ebul_x[i] + 11'd72 < ship_center_x)
+                                        ebul_step_dx = 5'sd3;
+                                    else if (ebul_x[i] + 11'd24 < ship_center_x)
+                                        ebul_step_dx = 5'sd2;
+                                    else if (ebul_x[i] + 11'd8 < ship_center_x)
+                                        ebul_step_dx = 5'sd1;
+                                    else if (ebul_x[i] > ship_center_x + 11'd64)
+                                        ebul_step_dx = -5'sd3;
+                                    else if (ebul_x[i] > ship_center_x + 11'd16)
+                                        ebul_step_dx = -5'sd2;
+                                    else if (ebul_x[i] > ship_center_x)
+                                        ebul_step_dx = -5'sd1;
+                                    else
+                                        ebul_step_dx = 5'sd0;
                                 end
                                 default: begin // EBUL_TYPE_FIREBALL
                                     ebul_step_dy = 4'd5;
@@ -1718,54 +1825,68 @@ always @(posedge clk) begin
                 end
 
                 // -------------------------------------------------------------
-                // Step 3: Overdrive Laser Column Sweep (0..43)
+                // Step 3: Overdrive Laser Column Sweep (0..43: Aliens, 44: Boss & Bullets, 45..47: Asteroids 0..2)
                 // -------------------------------------------------------------
                 C_LASER: begin
                     if (c_phase == 2'd0) begin
-                        hit_eid = c_idx;
-                        kill_x  = get_form_x(hit_eid, fleet_offset_x);
-                        kill_y  = get_form_y(hit_eid);
-                        if (r_form_diving_mask[hit_eid]) begin
-                            for (i = 0; i < 4; i = i + 1) begin
-                                if (div_active[i] && (div_idx[i] == hit_eid)) begin
-                                    kill_x = div_x[i];
-                                    kill_y = div_y[i];
+                        if (c_idx < 6'd44) begin
+                            hit_eid = c_idx;
+                            kill_x  = get_form_x(hit_eid, fleet_offset_x);
+                            kill_y  = get_form_y(hit_eid);
+                            if (r_form_diving_mask[hit_eid]) begin
+                                for (i = 0; i < 4; i = i + 1) begin
+                                    if (div_active[i] && (div_idx[i] == hit_eid)) begin
+                                        kill_x = div_x[i];
+                                        kill_y = div_y[i];
+                                    end
                                 end
                             end
+                            kill_x_q     <= kill_x;
+                            kill_y_q     <= kill_y;
+                            laser_hits_q <= form_alive[hit_eid] &&
+                                            (kill_x + 11'd28 >= ship_x + 11'd4) &&
+                                            (kill_x <= ship_x + 11'd28) &&
+                                            (kill_y <= ship_y);
+                        end else if (c_idx == 6'd44) begin
+                            // Check Boss in laser beam
+                            laser_hits_q <= boss_active &&
+                                            (boss_x + 11'd60 >= ship_x + 11'd4) &&
+                                            (boss_x <= ship_x + 11'd28);
+                        end else begin
+                            // Check Asteroid (c_idx - 45) in laser beam
+                            hit_eid = c_idx - 6'd45; // 0, 1, 2
+                            laser_hits_q <= ast_active[hit_eid[1:0]] &&
+                                            (ast_x[hit_eid[1:0]] + 11'd60 >= ship_x + 11'd4) &&
+                                            (ast_x[hit_eid[1:0]] <= ship_x + 11'd28);
                         end
-                        kill_x_q     <= kill_x;
-                        kill_y_q     <= kill_y;
-                        laser_hits_q <= form_alive[hit_eid] &&
-                                        (kill_x + 11'd28 >= ship_x + 11'd4) &&
-                                        (kill_x <= ship_x + 11'd28) &&
-                                        (kill_y <= ship_y);
-                        c_phase      <= 2'd1;
+                        c_phase <= 2'd1;
                     end else begin
                         c_phase <= 2'd0;
-                        if (laser_hits_q) begin
-                            enemy_flash_timer <= 3'd3;
-                            flash_alien_id    <= c_idx;
-                            if (enemy_hp[c_idx] <= 5'd1) begin
-                                form_alive[c_idx] <= 1'b0;
-                                r_form_diving_mask[c_idx] <= 1'b0;
-                                for (i = 0; i < 4; i = i + 1) begin
-                                    if (div_active[i] && (div_idx[i] == c_idx))
-                                        div_active[i] <= 1'b0;
+                        if (c_idx < 6'd44) begin
+                            if (laser_hits_q) begin
+                                enemy_flash_timer <= 3'd3;
+                                flash_alien_id    <= c_idx;
+                                if (enemy_hp[c_idx] <= 5'd1) begin
+                                    form_alive[c_idx] <= 1'b0;
+                                    r_form_diving_mask[c_idx] <= 1'b0;
+                                    for (i = 0; i < 4; i = i + 1) begin
+                                        if (div_active[i] && (div_idx[i] == c_idx))
+                                            div_active[i] <= 1'b0;
+                                    end
+                                    r_exp_active[exp_alloc_ptr] <= 1'b1;
+                                    r_exp_x[exp_alloc_ptr]      <= kill_x_q;
+                                    r_exp_y[exp_alloc_ptr]      <= kill_y_q;
+                                    r_exp_timer[exp_alloc_ptr]  <= 4'd0;
+                                    exp_alloc_ptr               <= exp_alloc_ptr + 2'd1;
+                                    pending_pts                 <= 12'h050;
+                                    sound_hit                   <= 1'b1;
+                                end else begin
+                                    enemy_hp[c_idx] <= enemy_hp[c_idx] - 5'd1;
                                 end
-                                r_exp_active[exp_alloc_ptr] <= 1'b1;
-                                r_exp_x[exp_alloc_ptr]      <= kill_x_q;
-                                r_exp_y[exp_alloc_ptr]      <= kill_y_q;
-                                r_exp_timer[exp_alloc_ptr]  <= 4'd0;
-                                exp_alloc_ptr               <= exp_alloc_ptr + 2'd1;
-                                pending_pts                 <= 12'h050;
-                                sound_hit                   <= 1'b1;
-                            end else begin
-                                enemy_hp[c_idx] <= enemy_hp[c_idx] - 5'd1;
                             end
-                        end
-
-                        // Also damage Boss, 64x64 Asteroids, and vaporize Enemy Bullets in laser beam on last step
-                        if (c_idx == 6'd43) begin
+                            c_idx <= c_idx + 6'd1;
+                        end else if (c_idx == 6'd44) begin
+                            // Vaporize Enemy Bullets in laser beam
                             for (i = 0; i < 10; i = i + 1) begin
                                 if (ebul_active[i] &&
                                     (ebul_x[i] + 11'd8 >= ship_x + 11'd4) && (ebul_x[i] <= ship_x + 11'd28) &&
@@ -1773,43 +1894,57 @@ always @(posedge clk) begin
                                     ebul_active[i] <= 1'b0;
                                 end
                             end
-                            if (boss_active && (boss_x + 11'd60 >= ship_x + 11'd4) && (boss_x <= ship_x + 11'd28)) begin
+                            // Damage or destroy Boss
+                            if (laser_hits_q) begin
                                 boss_flash_timer <= 3'd3;
                                 if (boss_hp <= 8'd2) begin
                                     boss_active      <= 1'b0;
                                     boss_warn_timer  <= 7'd0;
                                     boss_laser_timer <= 7'd0;
                                     boss_hp          <= 8'd0;
+                                    shake_timer      <= 4'd15;
+                                    freeze_timer     <= 2'd2;
                                     pending_pts      <= 12'h900;
+                                    r_exp_active[0]  <= 1'b1; r_exp_x[0] <= boss_x + 11'd8;  r_exp_y[0] <= boss_y + 11'd16; r_exp_timer[0] <= 4'd0;
+                                    r_exp_active[1]  <= 1'b1; r_exp_x[1] <= boss_x + 11'd36; r_exp_y[1] <= boss_y + 11'd24; r_exp_timer[1] <= 4'd0;
+                                    pu_active[0]     <= 1'b1; pu_x[0]    <= boss_x + 11'd16; pu_y[0]    <= boss_y + 11'd24; pu_type[0]    <= `ITEM_TYPE_POWER;
+                                    pu_active[1]     <= 1'b1; pu_x[1]    <= boss_x + 11'd44; pu_y[1]    <= boss_y + 11'd24; pu_type[1]    <= `ITEM_TYPE_SHIELD;
                                 end else begin
                                     boss_hp <= boss_hp - 8'd2;
                                 end
                             end
-                            for (i = 0; i < 3; i = i + 1) begin
-                                if (ast_active[i] && (ast_x[i] + 11'd60 >= ship_x + 11'd4) && (ast_x[i] <= ship_x + 11'd28)) begin
-                                    if (ast_hp[i] <= 5'd2) begin
-                                        ast_active[i] <= 1'b0;
-                                        pending_pts   <= 12'h150;
-                                    end else begin
-                                        ast_hp[i] <= ast_hp[i] - 5'd2;
-                                    end
+                            c_idx <= 6'd45;
+                        end else begin
+                            // Damage or destroy Asteroid (c_idx - 45)
+                            hit_eid = c_idx - 6'd45;
+                            if (laser_hits_q) begin
+                                if (ast_hp[hit_eid[1:0]] <= 5'd2) begin
+                                    ast_active[hit_eid[1:0]] <= 1'b0;
+                                    pending_pts              <= 12'h150;
+                                end else begin
+                                    ast_hp[hit_eid[1:0]] <= ast_hp[hit_eid[1:0]] - 5'd2;
                                 end
                             end
-                            c_state <= C_PLAYER;
-                            c_idx   <= 6'd0;
-                        end else begin
-                            c_idx <= c_idx + 6'd1;
+                            if (c_idx >= 6'd47) begin
+                                c_state <= C_PLAYER;
+                                c_idx   <= 6'd0;
+                            end else begin
+                                c_idx <= c_idx + 6'd1;
+                            end
                         end
                     end
                 end
 
                 // -------------------------------------------------------------
-                // Step 4: Player Pickups (P / S / R) & Enemy/Asteroid/Bullet Collisions (3-Phase Pipelined)
+                // Step 4: Two serial pickups, then player collision resolution.
                 // -------------------------------------------------------------
                 C_PLAYER: begin
-                    if (c_phase == 2'd0) begin
+                    if ((c_phase == 2'd0) || (c_phase == 2'd3)) begin
                         // Phase 0A: Multi-Type Power-Up Pickup (P = Weapon, S = +1 Life/Shield up to 5, R = +6 Rage)
-                        for (i = 0; i < 2; i = i + 1) begin
+                        // One slot per clock lets slot 1 see slot 0's updated
+                        // resources and lets pending_pts drain between rewards.
+                        begin
+                            i = (c_phase == 2'd0) ? 0 : 1;
                             if (pu_active[i] && !player_exploding &&
                                 (pu_x[i] + 11'd16 >= ship_x) && (pu_x[i] <= ship_x + 11'd32) &&
                                 (pu_y[i] + 11'd16 >= ship_y) && (pu_y[i] <= ship_y + 11'd32)) begin
@@ -1841,26 +1976,31 @@ always @(posedge clk) begin
                             end
                         end
 
-                        // Phase 0B: Enemy Bullets vs Player
-                        player_hit = 1'b0;
-                        if (!player_exploding && player_lives > 3'd0 && (laser_timer == 7'd0)) begin
-                            for (i = 0; i < 10; i = i + 1) begin
-                                if (ebul_active[i] &&
-                                    (ebul_x[i] + ((ebul_type[i] == `EBUL_TYPE_SEEKER) ? 11'd10 : 11'd6) >= ship_hb_l) &&
-                                    (ebul_x[i] <= ship_hb_r) &&
-                                    (ebul_y[i] + ((ebul_type[i] == `EBUL_TYPE_SNIPER) ? 11'd16 : 11'd10) >= ship_hb_t) &&
-                                    (ebul_y[i] <= ship_hb_b)) begin
-                                    ebul_active[i] <= 1'b0;
-                                    player_hit = 1'b1;
+                        if (c_phase == 2'd0) begin
+                            c_phase <= 2'd3;
+                        end else begin
+                            // After both pickups: Enemy Bullets vs Player
+                            player_hit = 1'b0;
+                            if (!player_exploding && player_lives > 3'd0 && (laser_timer == 7'd0)) begin
+                                for (i = 0; i < 10; i = i + 1) begin
+                                    if (ebul_active[i] &&
+                                        (ebul_x[i] + ((ebul_type[i] == `EBUL_TYPE_SEEKER) ? 11'd10 : 11'd6) >= ship_hb_l) &&
+                                        (ebul_x[i] <= ship_hb_r) &&
+                                        (ebul_y[i] + ((ebul_type[i] == `EBUL_TYPE_SNIPER) ? 11'd16 : 11'd10) >= ship_hb_t) &&
+                                        (ebul_y[i] <= ship_hb_b)) begin
+                                        ebul_active[i] <= 1'b0;
+                                        if (respawn_invuln_timer == 7'd0)
+                                            player_hit = 1'b1;
+                                    end
                                 end
                             end
+                            r_player_hit_q <= player_hit;
+                            c_phase        <= 2'd1;
                         end
-                        r_player_hit_q <= player_hit;
-                        c_phase        <= 2'd1;
                     end else if (c_phase == 2'd1) begin
                         // Phase 1: Divers / 64x64 Asteroids / Boss vs Player Ship
                         player_hit = r_player_hit_q;
-                        if (!player_exploding && player_lives > 3'd0 && (laser_timer == 7'd0)) begin
+                        if (!player_exploding && player_lives > 3'd0 && (laser_timer == 7'd0) && (respawn_invuln_timer == 7'd0)) begin
                             for (i = 0; i < 4; i = i + 1) begin
                                 if (div_active[i] &&
                                     (div_x[i] + 11'd26 >= ship_hb_l) && (div_x[i] <= ship_hb_r) &&
@@ -1895,12 +2035,13 @@ always @(posedge clk) begin
                         c_phase        <= 2'd2;
                     end else begin
                         // Phase 2: Resolve Player Hit (Shield absorbs or Player explodes)
-                        if (r_player_hit_q) begin
-                            // If Purple Shield (invuln_timer > 0) is active, Shield absorbs the hit and BREAKS!
+                        if (r_player_hit_q && (respawn_invuln_timer == 7'd0)) begin
+                            // If Purple Shield (invuln_timer > 0) is active, Shield absorbs the hit and breaks!
                             if (invuln_timer > 7'd0) begin
-                                invuln_timer <= 7'd0; // Shield breaks immediately!
-                                shake_timer  <= 4'd8;
-                                sound_hit    <= 1'b1;
+                                invuln_timer         <= 7'd0; // Shield breaks immediately!
+                                respawn_invuln_timer <= 7'd30; // 0.5s mercy invulnerability to prevent unfair multi-hits!
+                                shake_timer          <= 4'd10; // Medium shake for feedback
+                                sound_hit            <= 1'b1;
                                 r_imp_active[imp_alloc_ptr] <= 1'b1;
                                 r_imp_x[imp_alloc_ptr]      <= ship_x + 11'd8;
                                 r_imp_y[imp_alloc_ptr]      <= ship_y + 11'd8;
@@ -1922,7 +2063,7 @@ always @(posedge clk) begin
                                     if (player_lives > 3'd1) begin
                                         pu_active[pu_alloc_ptr] <= 1'b1;
                                         pu_x[pu_alloc_ptr]      <= ship_x + 11'd8;
-                                        pu_y[pu_alloc_ptr]      <= (ship_y > 11'd200) ? (ship_y - 11'd120) : 11'd120;
+                                        pu_y[pu_alloc_ptr]      <= (ship_y > 11'd60) ? (ship_y - 11'd30) : 11'd60;
                                         pu_type[pu_alloc_ptr]   <= `ITEM_TYPE_POWER;
                                         pu_alloc_ptr            <= ~pu_alloc_ptr;
                                     end

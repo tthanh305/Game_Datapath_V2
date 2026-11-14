@@ -19,7 +19,7 @@ wire [2:0] control_state;
 
 wire hit_flag, fire_ready, fire_accepted, win, game_over;
 wire [`GAME_TARGET_ID_WIDTH-1:0] hit_target_id;
-wire [3:0] wave_num;
+wire [6:0] wave_num;
 wire [`GAME_TARGET_COUNT-1:0] alive_flags;
 wire [10:0] ship_x, ship_y, projectile_x, projectile_y;
 wire projectile_active;
@@ -126,15 +126,61 @@ endtask
 
 integer i;
 integer checks = 0;
+integer failures = 0;
 
 task check_cond(input cond, input [8*64-1:0] msg);
     begin
-        if (!cond) begin
+        if (cond !== 1'b1) begin
+            failures = failures + 1;
             $display("FAIL: %0s at time %0t", msg, $time);
             $fatal(1);
         end else begin
             checks = checks + 1;
         end
+    end
+endtask
+
+// Isolate simultaneous pickups from movement/spawning and check public state.
+task check_pickup_pair(
+    input [1:0] type0, type1,
+    input [2:0] initial_power, initial_lives,
+    input [1:0] initial_wingmen,
+    input [4:0] initial_rage,
+    input [2:0] expected_power, expected_lives,
+    input [1:0] expected_wingmen,
+    input [4:0] expected_rage,
+    input [19:0] expected_score
+);
+    integer slot;
+    begin
+        @(negedge clk);
+        rst = 1'b1;
+        buttons_raw = 5'b0;
+        repeat (2) @(negedge clk);
+        rst = 1'b0;
+        @(negedge clk);
+        u_core.datapath_inst.physics_inst.power_level = initial_power;
+        u_core.datapath_inst.physics_inst.player_lives = initial_lives;
+        u_core.datapath_inst.physics_inst.wingmen_count = initial_wingmen;
+        u_core.datapath_inst.physics_inst.rage_cnt = initial_rage;
+        for (slot = 0; slot < 2; slot = slot + 1) begin
+            u_core.datapath_inst.physics_inst.pu_active[slot] = 1'b1;
+            u_core.datapath_inst.physics_inst.pu_type[slot] = slot == 0 ? type0 : type1;
+            u_core.datapath_inst.physics_inst.pu_x[slot] = ship_x + 11'd8;
+            u_core.datapath_inst.physics_inst.pu_y[slot] = ship_y + 11'd8;
+        end
+        // Start at the same player-collision phase reached by the frame scan.
+        u_core.datapath_inst.physics_inst.c_state = 3'd4;
+        u_core.datapath_inst.physics_inst.c_phase = 2'd0;
+        repeat (8) @(negedge clk);
+        check_cond(u_core.datapath_inst.physics_inst.pu_active == 0,
+                   "Both overlapping pickups consumed");
+        check_cond(u_core.datapath_inst.physics_inst.power_level == expected_power &&
+                   u_core.datapath_inst.physics_inst.player_lives == expected_lives &&
+                   u_core.datapath_inst.physics_inst.wingmen_count == expected_wingmen &&
+                   u_core.datapath_inst.physics_inst.rage_cnt == expected_rage,
+                   "Both pickup effects accumulated with limits");
+        check_cond(score == expected_score, "Both pickup BCD rewards accumulated");
     end
 endtask
 
@@ -229,6 +275,7 @@ initial begin
 
     // Verify Active Purple Shield (invuln_timer > 0) absorbs enemy bullet and breaks immediately
     u_core.datapath_inst.physics_inst.player_lives = 3'd5;
+    u_core.datapath_inst.physics_inst.respawn_invuln_timer = 7'd0;
     u_core.datapath_inst.physics_inst.invuln_timer = 7'd80;
     u_core.datapath_inst.physics_inst.laser_timer = 7'd0;
     u_core.datapath_inst.physics_inst.ebul_active[0] = 1'b1;
@@ -245,7 +292,7 @@ initial begin
     u_core.datapath_inst.physics_inst.boss_hp = 8'd20;
     u_core.datapath_inst.physics_inst.boss_max_hp = 8'd80;
     u_core.datapath_inst.physics_inst.boss_skill_idx = 2'd2; // Death-Ray Move
-    u_core.datapath_inst.physics_inst.boss_shoot_cnt = 6'd30;
+    u_core.datapath_inst.physics_inst.boss_shoot_cnt = 6'd38; // Enraged shoot threshold
     step_frame();
     check_cond(u_core.datapath_inst.boss_enraged == 1'b1, "Boss enters Enrage Mode when HP < 50%");
     check_cond(u_core.datapath_inst.boss_warn_timer > 7'd0, "Boss activates Red Telegraph Warning Sight before Death-Ray");
@@ -255,23 +302,58 @@ initial begin
     u_core.datapath_inst.physics_inst.boss_laser_timer = 7'd0;
     u_core.datapath_inst.physics_inst.boss_active = 1'b0;
 
-    // 7. Test Overdrive Laser (Rage Bar = 20, press Center button BTN[2])
+    // 7. Test Overdrive Laser (Rage Bar = 20, tap & release Center button BTN[2])
     u_core.datapath_inst.physics_inst.rage_cnt = 5'd20;
     buttons_raw = 5'b00100; // Press Center
     step_frame();
     step_frame();
-    buttons_raw = 5'b00000;
+    buttons_raw = 5'b00000; // Release Center (triggers laser_trigger on release)
+    step_frame();
     step_frame();
     check_cond(u_core.datapath_inst.physics_inst.laser_timer > 7'd100, "Overdrive Laser activated on Center button press when Rage is full");
     check_cond(u_core.datapath_inst.physics_inst.rage_cnt == 5'd0, "Rage bar consumed upon laser activation");
 
-    // 8. Test Holding Center Button (BTN[2]) for 120 frames (2 seconds) to exit to MENU
+    // 7b. Verify returned diver gets mandatory rest period in formation and does not immediately re-dive
+    u_core.datapath_inst.physics_inst.wave_transition = 1'b0;
+    u_core.datapath_inst.physics_inst.wave_entry_offset = 8'd0;
+    u_core.datapath_inst.physics_inst.form_alive = 44'd1; // Only alien 0 alive
+    u_core.datapath_inst.physics_inst.div_active = 4'b0001;
+    u_core.datapath_inst.physics_inst.div_returning = 4'b0001;
+    u_core.datapath_inst.physics_inst.div_idx[0] = 6'd0;
+    u_core.datapath_inst.physics_inst.r_form_diving_mask = 44'd1;
+    u_core.datapath_inst.physics_inst.div_base_x[0] = 11'd288;
+    u_core.datapath_inst.physics_inst.div_base_y[0] = 11'd72;
+    u_core.datapath_inst.physics_inst.div_x[0] = 11'd288 + u_core.datapath_inst.physics_inst.fleet_offset_x;
+    u_core.datapath_inst.physics_inst.div_y[0] = 11'd70;
+    u_core.datapath_inst.physics_inst.dive_cooldown = 8'd0;
+    step_frame();
+    check_cond(u_core.datapath_inst.physics_inst.div_active[0] == 1'b0 && u_core.datapath_inst.physics_inst.div_step[0] == 6'd63, "Returned diver enters mandatory post-dive rest timer in formation");
+    u_core.datapath_inst.physics_inst.dive_cooldown = 8'd0;
+    u_core.datapath_inst.physics_inst.diver_scan_ptr = 6'd0;
+    step_frame();
+    check_cond(u_core.datapath_inst.physics_inst.r_form_diving_mask[0] == 1'b0 && u_core.datapath_inst.physics_inst.div_active == 4'd0, "Last remaining alien rests in formation instead of diving continuously");
+
+    // 8. Test Holding Center Button (BTN[2]) for >= 60 frames (~1 second) to exit to MENU
     buttons_raw = 5'b00100;
-    for (i = 0; i < 125; i = i + 1) step_frame();
-    check_cond(menu_active == 1'b1, "Holding Center button for 2s exits PLAYING back to MENU");
+    for (i = 0; i < 65; i = i + 1) step_frame();
+    check_cond(menu_active == 1'b1, "Holding Center button for 1s exits PLAYING back to MENU");
     check_cond(selected_option == 2'd1, "Menu highlights Continue after exiting via Center hold");
 
-    $display("PASS: tb_shooter all %0d verification checks succeeded!", checks);
+    // Two pickups in one collision pass: progression, saturation and BCD carry.
+    check_pickup_pair(0, 0, 1, 5, 0, 0, 3, 5, 0, 0, 20'h00000);
+    check_pickup_pair(0, 0, 4, 5, 0, 0, 5, 5, 1, 0, 20'h00000);
+    check_pickup_pair(0, 0, 5, 5, 1, 0, 5, 5, 2, 0, 20'h00500);
+    check_pickup_pair(0, 0, 5, 5, 2, 0, 5, 5, 2, 0, 20'h01000);
+    check_pickup_pair(1, 1, 1, 3, 0, 0, 1, 5, 0, 0, 20'h00400);
+    check_pickup_pair(1, 1, 1, 4, 0, 0, 1, 5, 0, 0, 20'h00400);
+    check_pickup_pair(2, 2, 1, 5, 0, 0, 1, 5, 0, 12, 20'h00400);
+    check_pickup_pair(2, 2, 1, 5, 0, 15, 1, 5, 0, 20, 20'h00400);
+    check_pickup_pair(1, 2, 1, 4, 0, 18, 1, 5, 0, 20, 20'h00400);
+
+    if (failures != 0)
+        $fatal(1, "FAIL: tb_shooter failures=%0d", failures);
+    else
+        $display("PASS: tb_shooter all %0d verification checks succeeded!", checks);
     $finish;
 end
 

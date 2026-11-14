@@ -12,7 +12,7 @@ if {![string equal -nocase [file normalize [get_property DIRECTORY [current_proj
 }
 
 set game_v2_gamefiles [list]
-foreach game_v2_name {game_params.vh palette_lut.vh physics_engine.v game_hud.v color_mapper.v datapath.v auto_game_controller.v game_core.v game_button_input.v game_control_path.v game_menu_renderer.v font_rom.v game_buzzer.v sprite_rom_bank.v galaxian_starfield.v sprite_rom_32x32.v space_bg_stereden.v} {
+foreach game_v2_name {game_params.vh palette_lut.vh physics_engine.v game_hud.v color_mapper.v datapath.v auto_game_controller.v game_core.v game_button_input.v game_control_path.v game_menu_renderer.v font_rom.v game_buzzer.v sprite_rom_bank.v galaxian_starfield.v sprite_rom_32x32.v sprites_32x32.mem space_bg_stereden.v} {
     lappend game_v2_gamefiles [file join $game_v2_root rtl game $game_v2_name]
 }
 set game_v2_unitfiles [list \

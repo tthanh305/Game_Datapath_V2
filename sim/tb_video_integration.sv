@@ -50,8 +50,8 @@ module tb_video_integration;
             expected_de = old_h >= 369 && old_h < 1649 && old_v >= 30 && old_v < 750;
             expected_rgb = 0;
             if (expected_de && !dut.game_reset_pck) begin
-                if (dut.game_video.menu_active) begin
-                    if (dut.game_video.scoreboard_active && dut.game_video.hud_pixel_on)
+                if (dut.game_video.menu_active_d) begin
+                    if (dut.game_video.scoreboard_active_d && dut.game_video.hud_pixel_on)
                         expected_rgb = {dut.game_video.hud_color[23:16],
                                         dut.game_video.hud_color[15:8],
                                         dut.game_video.hud_color[7:0]};
@@ -59,11 +59,6 @@ module tb_video_integration;
                         expected_rgb = {dut.game_video.menu_red,
                                         dut.game_video.menu_green,
                                         dut.game_video.menu_blue};
-                end else if (dut.game_video.hud_pixel_on &&
-                             (dut.game_video.current_win || dut.game_video.scoreboard_active)) begin
-                    expected_rgb = {dut.game_video.hud_color[23:16],
-                                    dut.game_video.hud_color[15:8],
-                                    dut.game_video.hud_color[7:0]};
                 end else begin
                     expected_rgb = {dut.game_video.game_red,
                                     dut.game_video.game_green,

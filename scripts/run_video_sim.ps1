@@ -29,7 +29,8 @@ if ($Suite -in @('All','Integration')) {
     $fullRtl = @('physics_engine.v','game_hud.v','color_mapper.v','datapath.v',
                  'auto_game_controller.v','game_core.v',
                  'game_button_input.v','game_control_path.v','font_rom.v','game_menu_renderer.v',
-                 'game_buzzer.v','galaxian_starfield.v','sprite_rom_bank.v') | ForEach-Object { Join-Path $gameRtl $_ }
+                 'game_buzzer.v','galaxian_starfield.v','sprite_rom_bank.v',
+                 'space_bg_stereden.v','sprite_rom_32x32.v') | ForEach-Object { Join-Path $gameRtl $_ }
     $fullRtl = @($fullRtl) + $unitRtl + @((Join-Path $videoRtl 'game_video.v'),
         (Join-Path $videoRtl 'pattern_multi.v'),$syncgen,
         (Join-Path $projectRoot 'sim\models\pckgen_triple_model.v'))
@@ -38,6 +39,7 @@ if ($Suite -in @('All','Integration')) {
 foreach ($test in $tests) {
     $runDir = Join-Path $projectRoot ('verification\' + $test.Name)
     New-Item -ItemType Directory -Path $runDir -Force | Out-Null
+    Copy-Item -LiteralPath (Join-Path $gameRtl 'sprites_32x32.mem') -Destination $runDir -Force
     Push-Location $runDir
     try {
         Invoke-XsimTool 'xvlog' (@('--work','xil_defaultlib','--include',$gameRtl) +

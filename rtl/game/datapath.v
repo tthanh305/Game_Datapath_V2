@@ -32,7 +32,7 @@ module datapath (
     output wire [`GAME_SCORE_WIDTH-1:0] score,
     output wire win,
     output wire game_over,
-    output wire [3:0] wave_num,
+    output wire [6:0] wave_num,
     output wire [`GAME_TARGET_COUNT-1:0] alive_flags,
     output wire [`GAME_COORD_WIDTH-1:0] ship_x,
     output wire [`GAME_COORD_WIDTH-1:0] ship_y,
@@ -109,6 +109,7 @@ wire [1:0]        wingmen_count;
 wire [4:0]        rage_cnt;
 wire [6:0]        laser_timer;
 wire [6:0]        invuln_timer;
+wire              respawn_invuln;
 
 wire [15:0]       pbul_active;
 wire [16*11-1:0]  pbul_x_flat;
@@ -239,6 +240,7 @@ physics_engine physics_inst (
     .rage_cnt(rage_cnt),
     .laser_timer(laser_timer),
     .invuln_timer(invuln_timer),
+    .respawn_invuln(respawn_invuln),
 
     .pbul_active_out(pbul_active),
     .pbul_x_flat(pbul_x_flat),
@@ -371,6 +373,7 @@ color_mapper color_mapper_inst (
     .rage_cnt(rage_cnt),
     .laser_timer(laser_timer),
     .invuln_timer(invuln_timer),
+    .respawn_invuln(respawn_invuln),
 
     .pbul_active(pbul_active),
     .pbul_x_flat(pbul_x_flat),

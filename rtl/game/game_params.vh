@@ -51,7 +51,7 @@
 `define GAME_PROJECTILE_INIT_X     638
 `define GAME_PROJECTILE_INIT_Y     604
 `define GAME_PROJECTILE_SPEED      19
-`define GAME_HOMING_SPEED          12
+`define GAME_HOMING_SPEED          10
 `define GAME_EBUL_SPEED            6
 
 `define PLAYER_INIT_LIVES          3'd5

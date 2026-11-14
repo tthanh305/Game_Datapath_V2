@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 -------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Sun Nov  8 22:16:30 2026
+| Date         : Sat Nov 14 15:05:56 2026
 | Host         : DESKTOP-3R1JCJH running 64-bit major release  (build 9200)
 | Command      : report_utilization -file system_pattern_hdmi_axi_0_2_utilization_synth.rpt -pb system_pattern_hdmi_axi_0_2_utilization_synth.pb
 | Design       : system_pattern_hdmi_axi_0_2
@@ -31,14 +31,14 @@ Table of Contents
 +-------------------------+-------+-------+------------+-----------+-------+
 |        Site Type        |  Used | Fixed | Prohibited | Available | Util% |
 +-------------------------+-------+-------+------------+-----------+-------+
-| Slice LUTs*             | 12691 |     0 |          0 |     17600 | 72.11 |
-|   LUT as Logic          | 12691 |     0 |          0 |     17600 | 72.11 |
+| Slice LUTs*             | 14896 |     0 |          0 |     17600 | 84.64 |
+|   LUT as Logic          | 14896 |     0 |          0 |     17600 | 84.64 |
 |   LUT as Memory         |     0 |     0 |          0 |      6000 |  0.00 |
-| Slice Registers         |  3361 |     0 |          0 |     35200 |  9.55 |
-|   Register as Flip Flop |  3361 |     0 |          0 |     35200 |  9.55 |
+| Slice Registers         |  3426 |     0 |          0 |     35200 |  9.73 |
+|   Register as Flip Flop |  3426 |     0 |          0 |     35200 |  9.73 |
 |   Register as Latch     |     0 |     0 |          0 |     35200 |  0.00 |
-| F7 Muxes                |   347 |     0 |          0 |      8800 |  3.94 |
-| F8 Muxes                |    34 |     0 |          0 |      4400 |  0.77 |
+| F7 Muxes                |   296 |     0 |          0 |      8800 |  3.36 |
+| F8 Muxes                |    32 |     0 |          0 |      4400 |  0.73 |
 +-------------------------+-------+-------+------------+-----------+-------+
 * Warning! The Final LUT count, after physical optimizations and full implementation, is typically lower. Run opt_design after synthesis, if not already completed, for a more realistic count.
 Warning! LUT value is adjusted to account for LUT combining.
@@ -59,8 +59,8 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 | 0     |          Yes |           - |            - |
 | 9     |          Yes |           - |          Set |
 | 1     |          Yes |           - |        Reset |
-| 205   |          Yes |         Set |            - |
-| 3146  |          Yes |       Reset |            - |
+| 200   |          Yes |         Set |            - |
+| 3216  |          Yes |       Reset |            - |
 +-------+--------------+-------------+--------------+
 
 
@@ -70,9 +70,9 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +-------------------+------+-------+------------+-----------+-------+
 |     Site Type     | Used | Fixed | Prohibited | Available | Util% |
 +-------------------+------+-------+------------+-----------+-------+
-| Block RAM Tile    |    2 |     0 |          0 |        60 |  3.33 |
-|   RAMB36/FIFO*    |    2 |     0 |          0 |        60 |  3.33 |
-|     RAMB36E1 only |    2 |       |            |           |       |
+| Block RAM Tile    |    4 |     0 |          0 |        60 |  6.67 |
+|   RAMB36/FIFO*    |    4 |     0 |          0 |        60 |  6.67 |
+|     RAMB36E1 only |    4 |       |            |           |       |
 |   RAMB18          |    0 |     0 |          0 |       120 |  0.00 |
 +-------------------+------+-------+------------+-----------+-------+
 * Note: Each Block RAM Tile only has one FIFO logic available and therefore can accommodate only one FIFO36E1 or one FIFO18E1. However, if a FIFO18E1 occupies a Block RAM Tile, that tile can still accommodate a RAMB18E1
@@ -152,22 +152,22 @@ Warning! For any ECO changes, please run place_design if there are unplaced inst
 +------------+------+---------------------+
 |  Ref Name  | Used | Functional Category |
 +------------+------+---------------------+
-| LUT6       | 5634 |                 LUT |
-| FDRE       | 3146 |        Flop & Latch |
-| LUT2       | 3127 |                 LUT |
-| LUT4       | 2979 |                 LUT |
-| LUT5       | 2364 |                 LUT |
-| CARRY4     | 1420 |          CarryLogic |
-| LUT3       | 1077 |                 LUT |
-| MUXF7      |  347 |               MuxFx |
-| LUT1       |  297 |                 LUT |
-| FDSE       |  205 |        Flop & Latch |
-| MUXF8      |   34 |               MuxFx |
+| LUT6       | 6906 |                 LUT |
+| LUT4       | 3581 |                 LUT |
+| LUT2       | 3430 |                 LUT |
+| FDRE       | 3216 |        Flop & Latch |
+| LUT5       | 2749 |                 LUT |
+| CARRY4     | 1588 |          CarryLogic |
+| LUT3       | 1307 |                 LUT |
+| LUT1       |  358 |                 LUT |
+| MUXF7      |  296 |               MuxFx |
+| FDSE       |  200 |        Flop & Latch |
+| MUXF8      |   32 |               MuxFx |
 | FDPE       |    9 |        Flop & Latch |
 | OSERDESE2  |    8 |                  IO |
+| RAMB36E1   |    4 |        Block Memory |
 | OBUFDS     |    4 |                  IO |
 | BUFG       |    3 |               Clock |
-| RAMB36E1   |    2 |        Block Memory |
 | DSP48E1    |    2 |    Block Arithmetic |
 | MMCME2_ADV |    1 |               Clock |
 | FDCE       |    1 |        Flop & Latch |

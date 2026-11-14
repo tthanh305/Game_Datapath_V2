@@ -12,7 +12,7 @@
 // =============================================================================
 module game_control_path #(
     parameter integer BUTTON_ACTIVE_LOW = 1,
-    parameter integer DEBOUNCE_FRAMES = 3
+    parameter integer DEBOUNCE_FRAMES = 1
 )(
     input  wire       clk,
     input  wire       rst,
@@ -41,7 +41,6 @@ module game_control_path #(
 
 localparam [2:0] MENU       = 3'd0,
                  PLAYING    = 3'd1,
-                 PAUSED     = 3'd2,
                  SCOREBOARD = 3'd3,
                  WIN_SCREEN = 3'd4,
                  GAME_OVER  = 3'd5;
@@ -84,9 +83,12 @@ assign move_right        = game_enable && btn_right_held && !btn_left_held;
 assign move_up           = game_enable && btn_up_held    && !btn_down_held;
 assign move_down         = game_enable && btn_down_held  && !btn_up_held;
 assign fire              = game_enable && (fire_pending || laser_trigger);
-assign menu_active       = (state == MENU) || (state == PAUSED) || (state == SCOREBOARD);
+assign menu_active       = (state == MENU) || (state == SCOREBOARD);
 assign scoreboard_active = (state == SCOREBOARD);
 assign state_debug       = state;
+
+wire record_score_now = ((state == PLAYING) && (game_win || game_over)) ||
+                        ((state == MENU) && btn_center_pulse && (selected_option == 2'd0) && game_started);
 
 always @(posedge clk) begin
     if (rst) begin
@@ -108,42 +110,38 @@ always @(posedge clk) begin
 
         if (!game_enable || fire_accepted)
             fire_pending <= 1'b0;
-        else if (btn_center_pulse && !center_hold_lock)
-            fire_pending <= 1'b1;
 
-        // Release lock once center button is let go
-        if (!btn_center_held) begin
-            center_hold_lock <= 1'b0;
-            center_hold_cnt  <= 8'd0;
+        // In non-playing states, release center hold lock when button is let go
+        if (state != PLAYING) begin
+            if (!btn_center_held) begin
+                center_hold_lock <= 1'b0;
+                center_hold_cnt  <= 8'd0;
+            end
+        end
+
+        // Record score only when a run finishes (win / game_over) or is abandoned for a new mission
+        if (record_score_now) begin
+            if (score > high_score) begin
+                high_score_3 <= high_score_2;
+                high_score_2 <= high_score;
+                high_score   <= score;
+            end else if (score > high_score_2) begin
+                high_score_3 <= high_score_2;
+                high_score_2 <= score;
+            end else if (score > high_score_3) begin
+                high_score_3 <= score;
+            end
         end
 
         // Transitions from PLAYING: Win or Game Over
         if ((state == PLAYING) && game_win) begin
-            state <= WIN_SCREEN;
-            if (score > high_score) begin
-                high_score_3 <= high_score_2;
-                high_score_2 <= high_score;
-                high_score   <= score;
-            end else if (score > high_score_2) begin
-                high_score_3 <= high_score_2;
-                high_score_2 <= score;
-            end else if (score > high_score_3) begin
-                high_score_3 <= score;
-            end
+            state           <= WIN_SCREEN;
+            game_started    <= 1'b0;
             fire_pending    <= 1'b0;
             center_hold_cnt <= 8'd0;
         end else if ((state == PLAYING) && game_over) begin
-            state <= GAME_OVER;
-            if (score > high_score) begin
-                high_score_3 <= high_score_2;
-                high_score_2 <= high_score;
-                high_score   <= score;
-            end else if (score > high_score_2) begin
-                high_score_3 <= high_score_2;
-                high_score_2 <= score;
-            end else if (score > high_score_3) begin
-                high_score_3 <= score;
-            end
+            state           <= GAME_OVER;
+            game_started    <= 1'b0;
             fire_pending    <= 1'b0;
             center_hold_cnt <= 8'd0;
         end else begin
@@ -186,27 +184,13 @@ always @(posedge clk) begin
                 end
 
                 PLAYING: begin
-                    // Press Center -> Fire Overdrive Laser immediately (if Rage is full)
-                    if (btn_center_pulse && !center_hold_lock) begin
-                        laser_trigger <= 1'b1;
-                    end
-
-                    // Hold Center >= 2 seconds (120 frames) -> Exit to Menu (Continue highlighted)
+                    // Tap Center (Press & Release < 60 frames ~ 1.0s) -> Fire Overdrive Laser on release!
+                    // Hold Center >= 60 frames (~1.0s) -> Exit to Pause/Menu without wasting Laser!
                     if (btn_center_held && !center_hold_lock) begin
                         if (frame_tick) begin
-                            if (center_hold_cnt >= `EXIT_HOLD_FRAMES - 1) begin
-                                if (score > high_score) begin
-                                    high_score_3 <= high_score_2;
-                                    high_score_2 <= high_score;
-                                    high_score   <= score;
-                                end else if (score > high_score_2) begin
-                                    high_score_3 <= high_score_2;
-                                    high_score_2 <= score;
-                                end else if (score > high_score_3) begin
-                                    high_score_3 <= score;
-                                end
+                            if (center_hold_cnt >= 8'd60) begin
                                 state            <= MENU;
-                                selected_option  <= 2'd1; // Highlight "CONTINUE"
+                                selected_option  <= 2'd1; // Highlight "CONTINUE/RESUME"
                                 center_hold_cnt  <= 8'd0;
                                 center_hold_lock <= 1'b1;
                             end else begin
@@ -214,24 +198,14 @@ always @(posedge clk) begin
                             end
                         end
                     end else begin
-                        center_hold_cnt <= 8'd0;
-                    end
-                end
-
-                PAUSED: begin
-                    if (btn_up_pulse) begin
-                        selected_option <= (selected_option == 2'd0) ? 2'd2 : selected_option - 1'b1;
-                    end else if (btn_down_pulse) begin
-                        selected_option <= (selected_option >= 2'd2) ? 2'd0 : selected_option + 1'b1;
-                    end else if (btn_left_pulse) begin
-                        state <= PLAYING;
-                    end else if (btn_center_pulse) begin
-                        case (selected_option)
-                            2'd0: begin game_reset <= 1'b1; game_started <= 1'b1; center_hold_lock <= 1'b1; state <= PLAYING; end
-                            2'd1: begin center_hold_lock <= 1'b1; state <= PLAYING; end
-                            2'd2: begin return_state <= PAUSED; state <= SCOREBOARD; end
-                            default: selected_option <= 2'd1;
-                        endcase
+                        if (!btn_center_held) begin
+                            if (!center_hold_lock && (center_hold_cnt > 8'd0) && (center_hold_cnt < 8'd60)) begin
+                                laser_trigger <= 1'b1;
+                                fire_pending  <= 1'b1;
+                            end
+                            center_hold_lock <= 1'b0;
+                            center_hold_cnt  <= 8'd0;
+                        end
                     end
                 end
 

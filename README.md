@@ -7,8 +7,8 @@
 [![Platform](https://img.shields.io/badge/FPGA-Xilinx%20Zynq--7010-red?style=for-the-badge&logo=amd)](https://www.amd.com/)
 [![Board](https://img.shields.io/badge/Board-EBAZ4205-blue?style=for-the-badge)](https://github.com/tomorrow56/EBAZ4205_tutorial)
 [![Video](https://img.shields.io/badge/HDMI-1280x720%20%40%2060Hz-00F5D4?style=for-the-badge)](https://en.wikipedia.org/wiki/720p)
-[![Timing](https://img.shields.io/badge/Post--Route%20WNS-%2B0.473%20ns%20(PASS)-success?style=for-the-badge)](#3-kiến-trúc-phần-cứng--đóng-timing-720p)
-[![Verification](https://img.shields.io/badge/XSim%20RTL%20Tests-32%2F32%20PASS-brightgreen?style=for-the-badge)](#6-hướng-dẫn-mô-phỏng-tổng-hợp--nạp-mạch)
+[![Timing](https://img.shields.io/badge/Post--Route%20WNS-%2B0.103%20ns%20(PASS)-success?style=for-the-badge)](#4-kiến-trúc-phần-cứng-rtl--đóng-timing-720p)
+[![Verification](https://img.shields.io/badge/XSim%20RTL%20Tests-59%2F59%20PASS-brightgreen?style=for-the-badge)](#6-hướng-dẫn-mô-phỏng-tổng-hợp--nạp-mạch)
 
 <br/>
 
@@ -36,16 +36,16 @@
 
 **`Game_Datapath_V2`** là hệ thống trò chơi bắn súng không gian (**Arcade Shoot 'em up — Shmup**) kết hợp lối chơi đội hình bổ nhào kinh điển của **Namco Galaxian** với hệ thống vũ khí hạng nặng, hiệu ứng hạt và Boss Mẫu Hạm của **Steredenn**.
 
-Toàn bộ cơ chế vật lý, trí tuệ nhân tạo (AI) của 44 quái vật và Boss, bộ kiểm tra va chạm đa pha, bộ kết xuất đồ họa **Dual-Port Block RAM** và bộ tổng hợp âm thanh đa tầng đều được thực thi **100% bằng phần cứng số (Verilog/SystemVerilog RTL)** ở miền xung nhịp Pixel Clock **`74.25 MHz`** (không dùng framebuffer DDR, độ trễ hiển thị bằng 0). Khối xử lý ARM Cortex-A9 (`PS7`) trên Zynq-7010 chỉ đảm nhận việc khởi tạo xung nhịp tham chiếu `100 MHz` và cấu hình thanh ghi chế độ xuất hình HDMI `720p@60Hz` lúc bật nguồn.
+Toàn bộ cơ chế vật lý, trí tuệ nhân tạo (AI) của 44 quái vật và Boss, bộ kiểm tra va chạm đa pha, bộ kết xuất đồ họa **Dual-Port Block RAM** và bộ tổng hợp âm thanh đa tầng đều được thực thi **100% bằng phần cứng số (Verilog/SystemVerilog RTL)** ở miền xung nhịp Pixel Clock **`74.25 MHz`** (không dùng framebuffer DDR, render có pipeline theo pixel, không lưu toàn bộ frame). Khối xử lý ARM Cortex-A9 (`PS7`) trên Zynq-7010 chỉ đảm nhận việc khởi tạo xung nhịp tham chiếu `100 MHz` và cấu hình thanh ghi chế độ xuất hình HDMI `720p@60Hz` lúc bật nguồn.
 
 | Thông số Kỹ thuật | Giá trị / Chi tiết |
 | :--- | :--- |
 | **Bo mạch & Chip FPGA** | **EBAZ4205** — SoC **Xilinx Zynq-7010 (`xc7z010clg400-1`)** |
 | **Độ phân giải & Tần số quét** | **HDMI 1280×720p @ 60Hz** (`Pixel Clock = 74.25 MHz`, `TMDS Serial Clock = 371.25 MHz`) |
-| **Kiến trúc Đồ họa** | Kết xuất trực tiếp theo tia quét (*Scanline Racing*), **Dual-Port BRAM** 12 Tiles `32×32×4-bit` |
+| **Kiến trúc Đồ họa** | Kết xuất trực tiếp theo tia quét (*Scanline Racing*), **Dual-Port BRAM** 32 Tiles `32×32×4-bit` (kèm Sprite `64×64` nguyên bản) |
 | **Hệ thống Âm thanh** | Bộ tổng hợp sóng vuông điều chế FM đa tầng ưu tiên phát qua còi Buzzer (`D18`) |
-| **Độ dự trữ Thời gian (Timing)** | **`WNS = +0.473 ns`**, **`WHS = +0.063 ns`**, `0 Failing Endpoints` (Đóng kín hoàn toàn ở `74.25 MHz`) |
-| **Kiểm chứng Mô phỏng** | **`32/32 PASS`** bài kiểm tra tự động trong `sim/tb_shooter.sv` (Vivado XSim 2024.2) |
+| **Độ dự trữ Thời gian (Timing)** | **`WNS = +0.103 ns`**, **`WHS = +0.028 ns`**, `0 Failing Endpoints` (báo cáo `impl_1` ngày 11/11/2026; cần build lại sau bản vá `game_menu_renderer.v`) |
+| **Kiểm chứng Mô phỏng** | **`59/59 PASS`** bài kiểm tra tự động trong `sim/tb_shooter.sv` (Vivado XSim 2024.2) |
 
 ---
 
@@ -58,17 +58,17 @@ Các hình ảnh dưới đây được trích xuất nguyên bản từng pixel
 | <img src="docs/images/menu.png" alt="Main Menu" width="100%"/> | <img src="docs/images/gameplay_combat.png" alt="Gameplay Combat" width="100%"/> |
 | *Giao diện Menu đầu game (`NEW GAME`, `RESUME / CONTINUE`, `SCORE BOARD`) với nền lưới không gian tối.* | *Đội hình 44 quái (`11×4`), 5 tia đạn chính, 2 Wingmen bắn đạn đuổi, Khiên Tím, 2 Thiên thạch `64×64px` kèm thanh máu và vật phẩm `P`, `S`.* |
 
-| Trận chiến Boss Mẫu Hạm & Đại pháo Overdrive Laser | Ngân hàng 12 Sprite Tile `32×32px` 4-Bit trong Block RAM |
+| Trận chiến Boss Mẫu Hạm & Đại pháo Overdrive Laser | Ngân hàng 32 Sprite Tile `32×32px` & `64×64px` 4-Bit trong Block RAM |
 | :---: | :---: |
-| <img src="docs/images/boss_overdrive.png" alt="Boss Battle and Overdrive Laser" width="100%"/> | <img src="galaxian_steredenn_fpga_assets/spritesheet_vfx_preview.png" alt="12-Tile 32x32 4-bit Sprite Bank" width="88%"/> |
-| *Wave 05: Boss Mẫu Hạm `64×64px` ở chế độ Cuồng Nộ (`Enrage Mode`), bật tia ngắm đỏ chuẩn bị phóng Death-Ray đối đầu với cột đại pháo **Overdrive Laser** của người chơi.* | *12 Tile `32×32px` (16 màu) lưu trong khối `RAMB18E1` Dual-Port BRAM (`sprite_rom_32x32.v`).* |
+| <img src="docs/images/boss_overdrive.png" alt="Boss Battle and Overdrive Laser" width="100%"/> | <img src="galaxian_steredenn_fpga_assets/spritesheet_vfx_preview.png" alt="32-Tile 32x32 4-bit Sprite Bank" width="88%"/> |
+| *Wave 05: Boss Mẫu Hạm `64×64px` nguyên bản (4 Tile ghép), bật tia ngắm đỏ chuẩn bị phóng Death-Ray đối đầu với cột đại pháo xoắn **Overdrive Laser** của người chơi.* | *32 Tile `32×32px` (16 màu, gồm cả Boss `64×64` và Thiên thạch `64×64` độ phân giải gốc) lưu trong Dual-Port BRAM (`sprite_rom_32x32.v`).* |
 
 ---
 
 ## 🎮 3. Tính năng Gameplay & Cơ chế Chiến đấu
 
 ### 3.1. Điều khiển Tàu & Hệ thống Vũ khí / Phòng thủ
-- **Bay 4 hướng tự do (`Lên / Xuống / Trái / Phải`)**: Tàu người chơi di chuyển mượt trong vùng chiến đấu (`X = 160..1088`, `Y = 360..648`) với hiệu ứng nghiêng cánh 3 góc (`Tile 0, 9, 10`) và lửa động cơ phản lực Plasma nhấp nháy.
+- **Bay 4 hướng tự do (`Lên / Xuống / Trái / Phải`)**: Tàu người chơi di chuyển mượt trong vùng chiến đấu (`X = 32..1216`, `Y = 360..648`) với hiệu ứng nghiêng cánh 3 góc (`Tile 0, 16, 20`) và lửa động cơ phản lực Plasma nhấp nháy.
 - **5 Mạng khởi đầu (`PLAYER_INIT_LIVES = 5`, tối đa 5 mạng)**: Hiển thị trực quan bằng 5 huy hiệu tàu màu Cyan dưới thanh HUD đáy màn hình (`SHIPS`).
 - **Tự động bắn (`Auto-fire`) bay hết màn hình**:
   - Bộ đệm 15 viên đạn chính (`pbul[0:14]`) được phân hoạch thành **5 luồng × 3 slot riêng biệt mỗi luồng**, tốc độ **`19 px/frame`**, bay xuyên suốt tới sát mép trên màn hình (`Y = 20`) không bao giờ bị biến mất giữa chừng.
@@ -105,7 +105,7 @@ Các hình ảnh dưới đây được trích xuất nguyên bản từng pixel
   - Mỗi viên đạn chạm vào quái vật, Boss hoặc thiên thạch đều tạo vòng sóng xung kích lục lam nở rộng kèm hạt tia lửa văng ngược lại.
   - Khi nổ lớn, màn hình rung chấn (`shake_dx`, `shake_dy` chốt mỗi frame 60Hz) nhưng **giữ cố định tọa độ vẽ tàu nhân vật** nên hình ảnh tàu luôn sắc nét tuyệt đối.
 - **Menu Tương tác & Bảng xếp hạng Top 3 Điểm cao (`1ST / 2ND / 3RD`)**:
-  - Gồm `New Game`, `Resume / Continue` (khi nhấn giữ nút Giữa `KEY3` 2 giây trong lúc chơi), và `Scoreboard` lưu tự động 3 kỷ lục điểm cao nhất.
+  - Gồm `New Game`, `Resume / Continue` (khi nhấn giữ nút Giữa `KEY3` ~1 giây / 60 frames trong lúc chơi), và `Scoreboard` lưu tự động 3 kỷ lục điểm cao nhất.
 
 ---
 
@@ -130,27 +130,28 @@ flowchart LR
 - **`clk_fpga_0` (`100.00 MHz`)**: Cấp từ khối ARM Processing System (`PS7 FCLK_CLK0`) cho giao tiếp AXI-Lite và đầu vào tham chiếu của khối `MMCME2_ADV`.
 - **`game_pck_720p` (`74.25 MHz`, chu kỳ `13.468 ns`)**: Miền xung nhịp đồng bộ duy nhất vận hành toàn bộ lõi Game (`physics_engine`, `color_mapper`, `sprite_rom_32x32`, `game_control_path`, `game_buzzer`) và bộ đếm quét hình 720p (`syncgen_multi`).
 - **`game_serial_720p` (`371.25 MHz`, chu kỳ `2.694 ns`)**: Xung nhịp tuần tự hóa 5× DDR cho 8 bộ `OSERDESE2` phát tín hiệu vi sai TMDS ra cổng HDMI.
-- **4 Kỹ thuật Kiến trúc giúp đạt `WNS = +0.473 ns` ở `74.25 MHz`:**
+- **4 Kỹ thuật Kiến trúc giúp đạt `WNS = +0.354 ns` ở `74.25 MHz`:**
   1. **Tiền giải mã cột X (`col_vis_rows[3:0]`)** song song với bộ so sánh hàng Y trong `color_mapper.v`, rút ngắn đường địa chỉ Dual-Port BRAM Port A xuống chỉ còn 6 tầng logic.
   2. **FSM Kiểm tra Va chạm Tuần tự 3 Pha (`c_phase = 0, 1, 2`)** trong `physics_engine.v`: Tách bước đọc tọa độ đạn (`Fetch`), bước phát hiện va chạm (`Hit Detect`) và bước cập nhật máu/VFX (`Damage & VFX`) thành 3 chu kỳ xung nhịp riêng biệt.
   3. **Bộ cộng điểm BCD 5 chữ số (`bcd_add`)** qua thanh ghi đệm `pending_pts`, loại bỏ hoàn toàn các mạch chia thập phân `/ 10`, `% 10`.
   4. **Chốt tọa độ Rung màn hình (`shake_dx`, `shake_dy`)** tại xung `frame_tick` đầu mỗi khung hình 60Hz.
 
-### 4.3. Ngân hàng 12 Sprite Tile `32×32` 4-Bit trong Dual-Port Block RAM (`sprite_rom_32x32.v`)
-Mỗi Tile có kích thước chuẩn **`32 × 32 = 1.024 pixels`** ($2^5 \times 2^5$), giúp phép tính địa chỉ trong phần cứng chỉ là phép ghép bit `{tile_id[3:0], dy[4:0], dx[4:0]}` mà không tốn bộ nhân:
+### 4.3. Ngân hàng 32 Sprite Tile `32×32` 4-Bit trong Dual-Port Block RAM (`sprite_rom_32x32.v`)
+Mỗi Tile có kích thước chuẩn **`32 × 32 = 1.024 pixels`** ($2^5 \times 2^5$), tổng cộng **`32 × 1.024 = 32.768 words × 4-bit`**, giúp phép tính địa chỉ trong phần cứng chỉ là phép ghép bit `{tile_id[4:0], dy[4:0], dx[4:0]}` mà không tốn bộ nhân hay mạch cộng:
 
 | `tile_id` | Địa chỉ BRAM | Đối tượng Hiển thị | Kích thước Hiển thị trên Màn hình |
 | :---: | :---: | :--- | :--- |
-| **`0, 9, 10`** | `0..1023`, `9216..11263` | **Tàu người chơi** (Bay thẳng, Nghiêng Trái, Nghiêng Phải) | `32×32 px` (và `16×16 px` cho 2 Wingmen bằng `dx<<1, dy<<1`) |
-| **`1`** | `1024 .. 2047` | **Quái Hàng 0 Tinh nhuệ (`Row 0 Elite`) & Boss Mẫu Hạm** | `32×32 px` (Quái Hàng 0) / **`64×64 px`** cho Boss Mẫu Hạm (`dx>>1, dy>>1`) |
-| **`2`** | `2048 .. 3071` | **Quái Hàng 1 Hộ vệ (`Row 1 Escort`)** | `32×32 px` |
-| **`3`** | `3072 .. 4095` | **Quái Hàng 2 & 3 (`Row 2/3 Drone`)** | `32×32 px` (Hàng 3 tự động đổi bảng màu sang Giáp Vàng Hoàng Kim) |
-| **`4`** | `4096 .. 5119` | **Hiệu ứng Vụ nổ (`Explosion Sprite`)** | `32×32 px` (đổi bảng màu động theo pha thời gian nổ) |
-| **`5`** | `5120 .. 6143` | **Thiên thạch Khổng lồ (`Giant Asteroid`)** | **`64×64 px`** (phóng đại 2× từ Tile `32×32` bằng `adx[5:1], ady[5:1]`) |
-| **`6`** | `6144 .. 7167` | **Vật phẩm nâng cấp (`Power-Up Item P / S / R`)** | Sub-tile `16×16 px` đổi màu theo loại `P` (Vàng), `S` (Xanh Ngọc), `R` (Xanh Lam) |
-| **`7`** | `7168 .. 8191` | **Vòng Khiên Năng lượng (`Energy Shield Ring`)** | `32×32 px` bao quanh tàu người chơi khi `invuln_timer > 0` |
-| **`8`** | `8192 .. 9215` | **Chớp lửa đầu nòng (`Muzzle Flash`)** | `32×32 px` phía trước mũi tàu khi khai hỏa |
+| **`0, 16, 20`** | `0..1023`, `16384..17407`, `20480..21503` | **Tàu người chơi** (Bay thẳng, Nghiêng Trái 3D, Nghiêng Phải 3D) | `32×32 px` (và `16×16 px` cho 2 Wingmen bằng `dx<<1, dy<<1`) |
+| **`1, 17, 21`** | `1024..2047`, `17408..18431`, `21504..22527` | **Quái Hàng 0 Tinh nhuệ (`Row 0 Elite`) — Hoạt ảnh 4 frame mượt mà** | `32×32 px` (Chu kỳ vỗ cánh & chớp sừng năng lượng: `F0 -> F1 -> F2 -> F1`) |
+| **`2, 18, 22`** | `2048..3071`, `18432..19455`, `22528..23551` | **Quái Hàng 1 Hộ vệ (`Row 1 Escort`) — Hoạt ảnh 4 frame mượt mà** | `32×32 px` (Chu kỳ quét chém lưỡi dao Scythe & quét đèn visor: `F0 -> F1 -> F2 -> F1`) |
+| **`3, 19, 23`** | `3072..4095`, `19456..20479`, `23552..24575` | **Quái Hàng 2 & 3 (`Row 2/3 Drone`) — Hoạt ảnh 4 frame mượt mà** | `32×32 px` (Xúc tu máy co duỗi & nạp nòng súng; Hàng 3 tự động đổi sang Giáp Vàng) |
+| **`4`** | `4096 .. 5119` | **Vòng Khiên Năng lượng Lục giác (`Hex Energy Shield`)** | `32×32 px` bao quanh tàu người chơi khi `invuln_timer > 0` |
+| **`6`** | `6144 .. 7167` | **Chớp lửa đầu nòng & 3 Viên nang Vật phẩm `[P]`, `[S]`, `[R]`** | 4 Sub-tile `16×16 px` riêng biệt cho Muzzle Flash, `[P]`, `[S]`, `[R]` |
+| **`7 .. 10`** | `7168 .. 11263` | **Chuỗi Vụ nổ 4 Giai đoạn (`4-Stage Explosion`)** | `32×32 px` (Chớp lõi trắng $\rightarrow$ Cầu lửa $\rightarrow$ Sóng xung kích $\rightarrow$ Khói tàn) |
 | **`11`** | `11264 .. 12287` | **Vòng xung kích Đại pháo (`Overdrive Laser Shockwave`)** | `32×32 px` tại đầu mũi tàu khi đang phóng đại pháo Laser |
+| **`12 .. 15`** | `12288 .. 16383` | **Thiên thạch Hố va chạm & Nham thạch (`Native 64×64 Asteroid`)** | **`64×64 px` độ phân giải gốc** (`{3'b011, ady[5], adx[5], ady[4:0], adx[4:0]}`) |
+| **`24 .. 27`** | `24576 .. 28671` | **Boss Mẫu Hạm Dreadnought — Frame 0 (`Native 64×64 Boss F0`)** | **`64×64 px` độ phân giải gốc** (`{3'b110, bdy[5], bdx[5], bdy[4:0], bdx[4:0]}`) |
+| **`28 .. 31`** | `28672 .. 32767` | **Boss Mẫu Hạm Dreadnought — Frame 1 (`Native 64×64 Boss F1`)** | **`64×64 px` độ phân giải gốc** (Lõi phản vật chất đập & Càng kẹp chuyển động) |
 
 ---
 
@@ -169,7 +170,7 @@ Mỗi Tile có kích thước chuẩn **`32 × 32 = 1.024 pixels`** ($2^5 \times
 | :--- | :---: | :---: | :--- | :--- |
 | **KEY1 (Right)** | `buttons_raw[0]` | `T19` | — | **Bay sang Phải** (`move_right`) |
 | **KEY2 (Up)** | `buttons_raw[1]` | `P19` | **Di chuyển Lên** | **Bay Lên trên** (`move_up`) |
-| **KEY3 (Center)** | `buttons_raw[2]` | `U20` | **Chọn mục Menu** / Thoát bảng điểm | • **Bấm nhanh**: Khai hỏa **Overdrive Laser** (khi thanh nộ đầy 20/20)<br>• **Nhấn giữ 2 giây (120 frames)**: Tạm dừng về Menu (**Resume**) |
+| **KEY3 (Center)** | `buttons_raw[2]` | `U20` | **Chọn mục Menu** / Thoát bảng điểm | • **Bấm & nhả nhanh (< 60 frames ~ 1 giây)**: Khai hỏa **Overdrive Laser** (khi thanh nộ đầy 20/20)<br>• **Nhấn giữ ≥ 60 frames (~1 giây)**: Tạm dừng về Menu (**Resume**) |
 | **KEY4 (Left)** | `buttons_raw[3]` | `U19` | — | **Bay sang Trái** (`move_left`) |
 | **KEY5 (Down)** | `buttons_raw[4]` | `V20` | **Di chuyển Xuống** | **Bay Xuống dưới** (`move_down`) |
 
@@ -181,7 +182,7 @@ Mỗi Tile có kích thước chuẩn **`32 × 32 = 1.024 pixels`** ($2^5 \times
 | **HDMI 720p@60Hz** | `HDMI_D1_P / N` | `C20 / B20` | `TMDS_33` | Kênh Green |
 | **HDMI 720p@60Hz** | `HDMI_D2_P / N` | `B19 / A20` | `TMDS_33` | Kênh Red |
 | **Âm thanh Buzzer** | `buzzer_out` (`BEEP`) | `D18` | `LVCMOS33` | Điều chế âm thanh đa tầng qua transistor Q2 S8050 |
-| **Đèn LED trạng thái** | `LED1 / LED2 / LED3` | `E19 / K17 / H18` | `LVCMOS33` | Hiển thị `fire_ready` / `hit_flag` / `win` |
+| **Đèn LED trạng thái** | `LED1 / LED2 / LED3` | `E19 / K17 / H18` | `LVCMOS33` | Tùy chọn phần cứng (chưa nối ra top-level `pattern_multi` / XDC hiện tại) |
 | **UART Type-C** | `UART_0_rxd / txd` | `H16 / H17` | `LVCMOS33` | Giao tiếp log khởi tạo từ ARM PS7 (`115200 baud`) |
 
 ---
@@ -190,25 +191,27 @@ Mỗi Tile có kích thước chuẩn **`32 × 32 = 1.024 pixels`** ($2^5 \times
 
 Dự án được tối ưu hóa sâu ở mức kiến trúc RTL (gom bảng màu Palette tập trung, FSM va chạm 3 pha chia nhỏ combinational path, khử phép nhân bằng phép dịch bit, pipeline đạn/divers, cách ly thứ bậc `keep_hierarchy`). Kết quả tổng hợp và thực thi (Place & Route) thực tế trên chip **AMD/Xilinx Zynq-7010 (`xc7z010clg400-1`)**:
 
-### 6.1. Bảng Sử dụng Tài nguyên Logic & Bộ nhớ (Post-Route Utilization)
+> **Phạm vi số liệu:** Các bảng tài nguyên/timing dưới đây lấy từ `Game_Datapath_V2.runs/impl_1/system_wrapper_utilization_placed.rpt` và `system_wrapper_timing_summary_routed.rpt` ngày 14/11/2026 (đã đồng bộ với `system_wrapper.bit` và `BOOT.BIN`).
+
+### 6.1. Bảng Sử dụng Tài nguyên Logic & Bộ nhớ (Placed Utilization)
 
 | Loại tài nguyên phần cứng (Resource) | Đã sử dụng (Used) | Tổng dung lượng kit (Available) | Tỷ lệ sử dụng (%) | Ghi chú & Tối ưu hóa |
 | :--- | :---: | :---: | :---: | :--- |
-| **Slice LUTs** | **12,787** | 17,600 | **72.65%** | **Tiết kiệm 665 LUTs** so với bản gốc (13,452 LUTs - 76.43%) |
-| **Slice Registers (Flip-Flops)** | **3,661** | 35,200 | **10.40%** | Dồi dào, gần 90% FF còn trống |
-| **Total Slices** | **3,927** | 4,400 | **89.25%** | **Giảm 188 Slices** (từ 4,115 Slices - 93.52% xuống 89.25%) |
-| **Block RAM (BRAM Tile RAMB36)** | **2** | 60 | **3.33%** | Chứa 12 sprite tile 32×32; còn trống 58 khối sẵn sàng mở rộng animation |
-| **DSP48E1 Slices** | **2** | 66 | **3.03%** | Điều chế sóng âm còi Buzzer; hitbox & render dùng 0 DSP (toàn bộ dùng shift-and-add) |
+| **Slice LUTs** | **14,902** | 17,600 | **84.67%** | Báo cáo placed ngày 14/11/2026 |
+| **Slice Registers (Flip-Flops)** | **3,716** | 35,200 | **10.56%** | Báo cáo placed ngày 14/11/2026 |
+| **Total Slices** | **4,346** | 4,400 | **98.77%** | Báo cáo placed ngày 14/11/2026 |
+| **Block RAM (BRAM Tile RAMB36)** | **4** | 60 | **6.67%** | ROM 32 tile × 32×32 × 4-bit |
+| **DSP48E1 Slices** | **2** | 80 | **2.50%** | Điều chế sóng âm còi Buzzer; hitbox & render dùng 0 DSP (toàn bộ dùng shift-and-add) |
 | **Khối MMCM (`MMCME2_ADV`)** | **1** | 2 | **50.00%** | Khóa xung nhịp kép 74.25 MHz (Pixel) và 371.25 MHz (Serial 5×) |
 | **Bộ tuần tự hóa `OSERDESE2`** | **8** | 64 | **12.50%** | 4 kênh TMDS DDR 10:1 xuất hình trực tiếp ra cổng HDMI |
 
 ### 6.2. Kết quả Đóng gói Thời gian thực (Timing Closure @ 720p 60FPS)
 
-Toàn bộ hệ thống quét hình HDMI đạt chuẩn thời gian khắt khe mà không bị trượt chu kỳ (Zero Timing Violations):
+Báo cáo routed ngày 14/11/2026 ghi nhận các kết quả sau:
 - **Tần số Pixel Clock thực tế**: `74.25 MHz` (chu kỳ `13.468 ns`)
-- **Tần số Serial TMDS Clock**: `371.25 MHz` (chu kỳ `2.693 ns`)
-- **Worst Negative Slack (WNS)**: `+0.246 ns` (Dương – hoàn toàn đạt chuẩn Timing Closure)
-- **Worst Hold Slack (WHS)**: `+0.059 ns` (Dương)
+- **Tần số Serial TMDS Clock**: `371.25 MHz` (chu kỳ `2.694 ns`)
+- **Worst Negative Slack (WNS)**: `+0.084 ns` (Dương – đạt chuẩn Timing Closure)
+- **Worst Hold Slack (WHS)**: `+0.054 ns` (Dương)
 - **Worst Pulse Width Slack (WPWS)**: `+0.538 ns`
 - **Failing Endpoints**: **`0 / 0 / 0`** (100% đường truyền đạt chuẩn)
 
@@ -224,7 +227,7 @@ Game_Datapath_V2/
 │   │   ├── palette_lut.vh            # Bảng màu 16-color RGB 24-bit cho các Sprite ngân hàng BRAM
 │   │   ├── physics_engine.v          # Engine vật lý, AI quái/Boss, đạn, vật phẩm & FSM va chạm 3 pha
 │   │   ├── color_mapper.v            # Bộ kết xuất đồ họa pixel-by-pixel, HUD, HP bar & hiệu ứng VFX
-│   │   ├── sprite_rom_32x32.v        # Dual-Port Block RAM chứa 12 Tile 32x32x4-bit (steredenn_enemy_bank.hex)
+│   │   ├── sprite_rom_32x32.v        # Dual-Port Block RAM chứa 32 Tile 32x32x4-bit (sprites_32x32.mem)
 │   │   ├── space_bg_stereden.v       # Nền vũ trụ tối kèm 3 tầng sao Parallax trôi mượt
 │   │   ├── game_hud.v                # Hiển thị điểm số BCD 5 chữ số, Wave, Game Over & Top 3 High Score
 │   │   ├── game_menu_renderer.v      # Giao diện Menu đầu game (New Game / Resume / Scoreboard)
@@ -241,7 +244,7 @@ Game_Datapath_V2/
 │       └── pattern_multi.v           # Tầng tích hợp Video + bộ tạo xung đồng bộ syncgen_multi
 ├── constraints/                      # File ràng buộc chân phần cứng XDC và timing 720p
 ├── sim/
-│   └── tb_shooter.sv                 # Testbench tự động kiểm tra toàn diện 32 hạng mục gameplay & đồ họa
+│   └── tb_shooter.sv                 # Testbench tự động kiểm tra toàn diện 59 hạng mục gameplay & đồ họa
 ├── scripts/
 │   ├── build_all_v2.tcl              # Script tổng hợp OOC -> Full Synth -> Place & Route -> Bitstream & XSA
 │   ├── program_jtag.tcl              # Script XSDB nạp Bitstream + khởi tạo ARM PS7 + chạy ELF qua JTAG
@@ -260,20 +263,38 @@ Game_Datapath_V2/
 
 ## 🚀 8. Hướng dẫn Mô phỏng, Tổng hợp & Nạp Mạch
 
-> **Tính khả chuyển (Portability):** Toàn bộ các file cấu hình (`boot.bif`, `scripts/*.tcl`, `*.bat`) đều sử dụng **đường dẫn tương đối (relative paths)** nên bạn có thể `git clone` dự án về bất kỳ ổ đĩa hoặc thư mục nào trên máy tính và chạy ngay.
+> **Asset ROM:** Nguồn chính là `rtl/game/sprites_32x32.mem`. Vivado đã đăng ký file này trong `sources_1`; script shooter/video copy nó vào thư mục chạy trước khi mô phỏng. `$readmemh` dùng tên file tương đối. Khi đổi máy, cần kiểm tra đường dẫn toolchain (tham số `-VivadoBin`) và workspace Vitis; chưa kiểm chứng khả chuyển của toàn bộ quy trình boot.
 
-### 8.1. Chạy mô phỏng kiểm thử RTL (`sim/tb_shooter.sv` — 32 bài test tự động)
-Mở PowerShell tại thư mục gốc của dự án (sau khi đã thêm thư mục `bin` của Vivado vào `PATH` hoặc mở từ *Vivado Command Prompt*):
+### 8.1. Chạy mô phỏng kiểm thử RTL (`sim/tb_shooter.sv` — 59 kiểm tra tự động)
+Mở PowerShell tại thư mục gốc của dự án và chạy script tự động:
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_shooter_sim.ps1
+```
+Hoặc chạy thủ công từng bước với Vivado:
 ```powershell
 $files = (Get-ChildItem rtl/game/*.v, sim/tb_shooter.sv).FullName
+Copy-Item rtl/game/sprites_32x32.mem . -Force
 xvlog --sv -i rtl/game $files
 xelab tb_shooter -s tb_shooter_sim
 xsim tb_shooter_sim -R
 ```
 Kết quả mong đợi:
 ```text
-PASS: tb_shooter all 32 verification checks succeeded!
+PASS: tb_shooter all 59 verification checks succeeded!
 ```
+
+Để kiểm tra đồng bộ video quét hình HDMI 720p 60Hz 2 frame đầy đủ:
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/run_video_sim.ps1
+```
+
+Bộ shooter gồm 32 kiểm tra cũ và 27 kiểm tra bổ sung cho hai pickup đồng thời: nâng cấp súng/wingman, giới hạn mạng/rage và cộng điểm BCD. Pickup xử lý theo thứ tự slot 0 rồi slot 1, thêm một chu kỳ pixel clock vào lượt collision. High score chỉ lưu trong thanh ghi và bị xóa khi reset.
+
+### 8.1.1. Kiến trúc Độc lập 100% Phần cứng (Pure RTL Hardware)
+
+Toàn bộ hệ thống trò chơi vận hành trực tiếp trên chip FPGA Xilinx Zynq-7010 (kit EBAZ4205), không phụ thuộc vào PC hay bất kỳ phần mềm mô phỏng nào. Tất cả logic game từ vật lý, kiểm tra va chạm, âm thanh còi buzzer cho đến bộ kết xuất HDMI 720p 60Hz đều do các khối phần cứng số RTL đảm nhiệm. Khối ARM Cortex-A9 chỉ khởi tạo xung nhịp ban đầu lúc bật nguồn.
+
+Kiểm chứng bản sửa pickup ngày 10/11/2026 (Vivado/XSim 2024.2): shooter **59/59 PASS**, video unit **110 kiểm tra PASS**, video integration **1.522 kiểm tra PASS / 2 frame 720p**. Synthesis riêng `game_core` từ bản sao ở thư mục khác thành công, đọc ROM tương đối và suy diễn **4 BRAM**; có warning, không có critical warning/error. Chưa chạy lại place-and-route toàn hệ thống hoặc kiểm tra trên board cho bản sửa này.
 
 ### 8.2. Tổng hợp lại Bitstream và tạo file `BOOT.BIN`
 ```powershell

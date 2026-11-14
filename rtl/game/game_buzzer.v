@@ -40,7 +40,6 @@ reg [6:0]  ch_a_timer;
 reg [18:0] ch_a_half_period;
 reg [18:0] ch_a_counter;
 reg        ch_a_wave;
-reg [3:0]  ch_a_vol;
 
 always @(posedge clk) begin
     if (rst) begin
@@ -84,20 +83,16 @@ always @(posedge clk) begin
                 ch_a_half_period <= 19'd24750 + (ch_a_timer[1:0] * 19'd800);
             else
                 ch_a_half_period <= 19'd35357 - (ch_a_timer[1:0] * 19'd800);
-            ch_a_vol <= 4'd12;
         end
 
         CH_A_POWERUP: begin
             // 3-note rising power-up arpeggio: E5 (659Hz) -> G#5 (830Hz) -> B5 (987Hz)
             if (ch_a_timer > 7'd12) begin
                 ch_a_half_period <= 19'd56335; // E5
-                ch_a_vol <= 4'd15;
             end else if (ch_a_timer > 7'd6) begin
                 ch_a_half_period <= 19'd44696; // G#5
-                ch_a_vol <= 4'd15;
             end else begin
                 ch_a_half_period <= 19'd37614; // B5
-                ch_a_vol <= 4'd15;
             end
         end
 
@@ -109,44 +104,34 @@ always @(posedge clk) begin
                 2'd2: ch_a_half_period <= 19'd42187;
                 2'd3: ch_a_half_period <= 19'd63281;
             endcase
-            ch_a_vol <= 4'd14;
         end
 
         CH_A_WIN: begin
             if (ch_a_timer > 7'd36) begin
                 ch_a_half_period <= 19'd70984; // C5
-                ch_a_vol <= 4'd14;
             end else if (ch_a_timer > 7'd24) begin
                 ch_a_half_period <= 19'd56335; // E5
-                ch_a_vol <= 4'd14;
             end else if (ch_a_timer > 7'd12) begin
                 ch_a_half_period <= 19'd47353; // G5
-                ch_a_vol <= 4'd14;
             end else begin
                 ch_a_half_period <= 19'd35492; // C6
-                ch_a_vol <= {1'b0, ch_a_timer[3:1]} + 4'd7;
             end
         end
 
         CH_A_GAME_OVER: begin
             if (ch_a_timer > 7'd45) begin
                 ch_a_half_period <= 19'd142241; // C4
-                ch_a_vol <= 4'd13;
             end else if (ch_a_timer > 7'd30) begin
                 ch_a_half_period <= 19'd150914; // B3
-                ch_a_vol <= 4'd13;
             end else if (ch_a_timer > 7'd15) begin
                 ch_a_half_period <= 19'd159334; // Bb3
-                ch_a_vol <= 4'd12;
             end else begin
                 ch_a_half_period <= 19'd168750; // A3
-                ch_a_vol <= {1'b0, ch_a_timer[3:1]} + 4'd4;
             end
         end
 
         default: begin
             ch_a_half_period <= 19'd0;
-            ch_a_vol         <= 4'd0;
         end
     endcase
 end
@@ -173,7 +158,6 @@ reg [4:0]  ch_b_timer;
 reg [18:0] ch_b_half_period;
 reg [18:0] ch_b_counter;
 reg        ch_b_wave;
-reg [3:0]  ch_b_vol;
 
 always @(posedge clk) begin
     if (rst) begin
@@ -190,10 +174,8 @@ end
 always @(posedge clk) begin
     if (ch_b_timer > 5'd0) begin
         ch_b_half_period <= 19'd15468 + ((5'd11 - ch_b_timer) * 19'd4200);
-        ch_b_vol         <= (ch_b_timer > 5'd3) ? 4'd15 : {1'b0, ch_b_timer[2:0], 1'b0};
     end else begin
         ch_b_half_period <= 19'd0;
-        ch_b_vol         <= 4'd0;
     end
 end
 
@@ -218,7 +200,6 @@ reg [5:0]  ch_c_timer;
 reg [15:0] noise_lfsr;
 reg [16:0] noise_clk_div;
 reg [16:0] noise_period;
-reg [3:0]  ch_c_vol;
 reg        noise_out;
 
 always @(posedge clk) begin
@@ -238,10 +219,8 @@ end
 always @(posedge clk) begin
     if (ch_c_timer > 6'd0) begin
         noise_period <= 17'd12000 + ((6'd36 - ch_c_timer) * 17'd1100);
-        ch_c_vol     <= (ch_c_timer > 6'd4) ? 4'd15 : {1'b0, ch_c_timer[2:0], 1'b0};
     end else begin
         noise_period <= 17'd0;
-        ch_c_vol     <= 4'd0;
     end
 end
 

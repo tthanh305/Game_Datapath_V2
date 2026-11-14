@@ -4,7 +4,7 @@
 // debounce, held level outputs, and one PCK-wide pulse on each press.
 module game_button_input #(
     parameter integer BUTTON_ACTIVE_LOW = 1,
-    parameter integer DEBOUNCE_FRAMES = 3
+    parameter integer DEBOUNCE_FRAMES = 1
 )(
     input  wire       clk,
     input  wire       rst,
@@ -24,8 +24,8 @@ integer index;
 
 always @(posedge clk) begin
     if (rst) begin
-        sync_meta <= BUTTON_ACTIVE_LOW ? 5'h1f : 5'h00;
-        sync_buttons <= BUTTON_ACTIVE_LOW ? 5'h1f : 5'h00;
+        sync_meta <= 5'b0;
+        sync_buttons <= 5'b0;
         buttons_pressed <= 5'b0;
         buttons_press_pulse <= 5'b0;
         for (index = 0; index < 5; index = index + 1)
